@@ -1,12 +1,13 @@
 import React from "react";
-import { Container } from "react-bootstrap";
 import HomeBanner from "../components/HomeBanner";
+import WhyUs from "../components/WhyUs";
 
 const Home = () => {
   return (
-    <Container>
+    <div>
       <HomeBanner />
-    </Container>
+      <WhyUs />
+    </div>
   );
 };
 

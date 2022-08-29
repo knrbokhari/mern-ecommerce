@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, Card, Carousel, Col, Row } from "react-bootstrap";
+import { Button, Card, Carousel, Col, Container, Row } from "react-bootstrap";
 
 const HomeBanner = () => {
   return (
-    <>
+    <Container>
       <Row>
-        <Col lg={8}>
+        <Col lg={9}>
           <Carousel>
             <Carousel.Item className="rounded-2" interval={5000}>
               <img
@@ -69,11 +69,12 @@ const HomeBanner = () => {
             </Carousel.Item>
           </Carousel>
         </Col>
-        <Col lg={4} className="d-none d-lg-block">
+        <Col lg={3} className="d-none d-lg-block">
           <Card style={{ height: "190px", background: "#f0f2f5f2" }}>
             <Card.Img
               src="https://www.journal-theme.com/1/image/cache/catalog/journal3/slider/demo1/b1-320x210w.png.webp"
               alt="Card image"
+              height={190}
             />
             <Card.ImgOverlay>
               <Card.Title className="mt-5 mb-0" style={{ color: "#0d52d6" }}>
@@ -95,6 +96,7 @@ const HomeBanner = () => {
             <Card.Img
               src="https://www.journal-theme.com/1/image/cache/catalog/journal3/slider/demo1/b2-320x210w.png.webp"
               alt="Card image"
+              height={190}
             />
             <Card.ImgOverlay>
               <Card.Title className="mt-5 mb-0" style={{ color: "#0d52d6" }}>
@@ -107,7 +109,7 @@ const HomeBanner = () => {
           </Card>
         </Col>
       </Row>
-    </>
+    </Container>
   );
 };
 
