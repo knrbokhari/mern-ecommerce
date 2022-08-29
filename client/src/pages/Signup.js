@@ -1,10 +1,10 @@
 import React from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import "./Signup.css";
 
-function Login() {
+const Signup = () => {
   const {
     register,
     formState: { errors },
@@ -15,13 +15,32 @@ function Login() {
   return (
     <Container>
       <Row>
-        <Col md={6} className="login__form--container">
+        <Col md={6} className="signup__form--container">
           <Form style={{ width: "100%" }} onSubmit={handleSubmit(onSubmit)}>
-            <h1>Login to your account</h1>
+            <h1>Create an account</h1>
             <Form.Group className="mt-5">
+              <Form.Label className="fs-5">Your Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Your Name"
+                className="fs-5"
+                {...register("name", {
+                  required: {
+                    value: true,
+                    message: "Name is Required",
+                  },
+                })}
+              />
+              <Form.Label>
+                {errors.name?.type === "required" && (
+                  <span className="text-danger">{errors.name.message}</span>
+                )}
+              </Form.Label>
+            </Form.Group>
+
+            <Form.Group>
               <Form.Label className="fs-5">Email Address</Form.Label>
               <Form.Control
-                // type="email"
                 placeholder="Your Email"
                 className="fs-5"
                 {...register("email", {
@@ -35,7 +54,7 @@ function Login() {
                   },
                 })}
               />
-              <Form.Label className="mt-1">
+              <Form.Label>
                 {errors.email?.type === "required" && (
                   <span className="text-danger">{errors.email.message}</span>
                 )}
@@ -45,7 +64,7 @@ function Login() {
               </Form.Label>
             </Form.Group>
 
-            <Form.Group className="">
+            <Form.Group className="mb-3">
               <Form.Label className="fs-5">Password</Form.Label>
               <Form.Control
                 type="password"
@@ -62,7 +81,7 @@ function Login() {
                   },
                 })}
               />
-              <Form.Label className="m-1">
+              <Form.Label>
                 {errors.password?.type === "required" && (
                   <span className="text-danger">{errors.password.message}</span>
                 )}
@@ -74,19 +93,18 @@ function Login() {
 
             <Form.Group>
               <Button type="submit" className="fs-5 btn-lg">
-                Login
+                Create account
               </Button>
             </Form.Group>
-
             <p className="pt-3 text-center fs-5">
-              Don't have an account? <Link to="/signup">Create account</Link>{" "}
+              Have an account? <Link to="/login">Login</Link>{" "}
             </p>
           </Form>
         </Col>
-        <Col md={6} className="login__image--container"></Col>
+        <Col md={6} className="signup__image--container"></Col>
       </Row>
     </Container>
   );
-}
+};
 
-export default Login;
+export default Signup;
