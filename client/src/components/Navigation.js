@@ -12,8 +12,8 @@ import {
 const Navigation = () => {
   return (
     <Navbar key={"md"} bg="light" expand={"md"} className="mb-3">
-      <Container fluid>
-        <Navbar.Brand href="#">Navbar Offcanvas</Navbar.Brand>
+      <Container>
+        <Navbar.Brand href="/">ECOM</Navbar.Brand>
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${"md"}`} />
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-${"md"}`}
@@ -22,15 +22,14 @@ const Navigation = () => {
         >
           <Offcanvas.Header closeButton>
             <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${"md"}`}>
-              Offcanvas
+              {/* Offcanvas */}
             </Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3">
-              <Nav.Link href="#action1">Home</Nav.Link>
-              <Nav.Link href="#action2">Link</Nav.Link>
+              <Nav.Link href="/">Home</Nav.Link>
               <NavDropdown
-                title="Dropdown"
+                title="Product"
                 id={`offcanvasNavbarDropdown-expand-${"md"}`}
               >
                 <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
@@ -42,6 +41,7 @@ const Navigation = () => {
                   Something else here
                 </NavDropdown.Item>
               </NavDropdown>
+              <Nav.Link href="/login">Login</Nav.Link>
             </Nav>
             <Form className="d-flex">
               <Form.Control
