@@ -83,7 +83,7 @@ function Login() {
             </p>
           </Form>
         </Col>
-        <Col md={6} className="login__image--container"></Col>
+        <Col md={6} className="login__image--container d-none d-md-block"></Col>
       </Row>
     </Container>
   );

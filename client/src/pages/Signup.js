@@ -101,7 +101,10 @@ const Signup = () => {
             </p>
           </Form>
         </Col>
-        <Col md={6} className="signup__image--container"></Col>
+        <Col
+          md={6}
+          className="signup__image--container  d-none d-md-block"
+        ></Col>
       </Row>
     </Container>
   );
