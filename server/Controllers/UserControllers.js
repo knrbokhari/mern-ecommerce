@@ -21,5 +21,13 @@ exports.login = async (req, res) => {
     res.status(400).send(e.message);
   }
 };
-//  exports.signup = async (req, res) => {}
+
+exports.getUser = async (req, res) => {
+  try {
+    const users = await User.find({ isAdmin: false }).populate("orders");
+    res.status(200).json(users);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
 //  exports.signup = async (req, res) => {}
