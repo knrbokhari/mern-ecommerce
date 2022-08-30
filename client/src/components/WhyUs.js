@@ -12,7 +12,7 @@ const WhyUs = () => {
       <div style={{ background: "#3a4555" }}>
         <div className="container">
           <Row>
-            <Col lg={6} xl={3} className="p-3">
+            <Col md={6} xl={3} className="p-3">
               <div className="d-flex align-items-center">
                 <div
                   className="p-3 rounded-circle border-2 me-3"
@@ -31,7 +31,7 @@ const WhyUs = () => {
               </div>
             </Col>
 
-            <Col lg={6} xl={3} className="p-3">
+            <Col md={6} xl={3} className="p-3">
               <div className="d-flex align-items-center">
                 <div
                   className="p-3 rounded-circle border-2 me-3"
@@ -48,7 +48,7 @@ const WhyUs = () => {
               </div>
             </Col>
 
-            <Col lg={6} xl={3} className="p-3">
+            <Col md={6} xl={3} className="p-3">
               <div className="d-flex align-items-center">
                 <div
                   className="p-3 rounded-circle border-2 me-3"
@@ -67,7 +67,7 @@ const WhyUs = () => {
               </div>
             </Col>
 
-            <Col lg={6} xl={3} className="p-3">
+            <Col md={6} xl={3} className="p-3">
               <div className="d-flex align-items-center">
                 <div
                   className="p-3 rounded-circle border-2 me-3"
