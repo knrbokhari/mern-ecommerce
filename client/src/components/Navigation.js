@@ -10,12 +10,15 @@ import {
 } from "react-bootstrap";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import { BiHeart } from "react-icons/bi";
+import { LinkContainer } from "react-router-bootstrap";
 
 const Navigation = () => {
   return (
     <Navbar key={"lg"} bg="light" expand={"lg"} className="mb-3">
       <Container>
-        <Navbar.Brand href="/">ECOM</Navbar.Brand>
+        <LinkContainer to="/">
+          <Navbar.Brand>ECOM</Navbar.Brand>
+        </LinkContainer>
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${"lg"}`} />
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-${"lg"}`}
@@ -38,31 +41,38 @@ const Navigation = () => {
                 />
                 <Button variant="outline-success">Search</Button>
               </Form>
-              <Nav.Link href="/">Home</Nav.Link>
+              <LinkContainer to="/">
+                <Nav.Link>Home</Nav.Link>
+              </LinkContainer>
               <NavDropdown
                 title="Category"
                 id={`offcanvasNavbarDropdown-expand-${"lg"}`}
               >
-                <NavDropdown.Item href="category/technology">
-                  Technology
-                </NavDropdown.Item>
-                <NavDropdown.Item href="category/phones">
-                  Phones
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="category/laptops">
-                  laptops
-                </NavDropdown.Item>
+                <LinkContainer to="/category/technology">
+                  <NavDropdown.Item>Technology</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/category/phones">
+                  <NavDropdown.Item>Phones</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/category/laptops">
+                  <NavDropdown.Item>laptops</NavDropdown.Item>
+                </LinkContainer>
               </NavDropdown>
-              <Nav.Link href="/login">
-                <BiHeart style={{ width: "30px", height: "30px" }} />
-              </Nav.Link>
-              <Nav.Link href="/login">
-                <BsFillCartCheckFill
-                  style={{ width: "30px", height: "30px" }}
-                />
-              </Nav.Link>
-              <Nav.Link href="/login">Login</Nav.Link>
+              <LinkContainer to="/Wishlist">
+                <Nav.Link>
+                  <BiHeart style={{ width: "30px", height: "30px" }} />
+                </Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/cart">
+                <Nav.Link>
+                  <BsFillCartCheckFill
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/login">
+                <Nav.Link>Login</Nav.Link>
+              </LinkContainer>
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
