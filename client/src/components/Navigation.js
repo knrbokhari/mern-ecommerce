@@ -11,8 +11,11 @@ import {
 import { BsFillCartCheckFill } from "react-icons/bs";
 import { BiHeart } from "react-icons/bi";
 import { LinkContainer } from "react-router-bootstrap";
+import { useSelector } from "react-redux";
 
 const Navigation = () => {
+  const user = useSelector((state) => state.user);
+
   return (
     <Navbar key={"lg"} bg="light" expand={"lg"} className="mb-3">
       <Container>
@@ -27,12 +30,12 @@ const Navigation = () => {
         >
           <Offcanvas.Header closeButton>
             <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${"lg"}`}>
-              {/* Offcanvas */}
+              {user ? user.email : "Menu"}
             </Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3 align-items-center">
-              <Form className="d-flex">
+              {/* <Form className="d-flex">
                 <Form.Control
                   type="search"
                   placeholder="Search"
@@ -40,7 +43,7 @@ const Navigation = () => {
                   aria-label="Search"
                 />
                 <Button variant="outline-success">Search</Button>
-              </Form>
+              </Form> */}
               <LinkContainer to="/">
                 <Nav.Link>Home</Nav.Link>
               </LinkContainer>
@@ -70,9 +73,46 @@ const Navigation = () => {
                   />
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/login">
-                <Nav.Link>Login</Nav.Link>
-              </LinkContainer>
+              {user && (
+                <NavDropdown
+                  title="Dashboard"
+                  id={`offcanvasNavbarDropdown-expand-${"lg"}`}
+                >
+                  {user.isAdmin && (
+                    <LinkContainer to="/dashboard/users">
+                      <NavDropdown.Item>All Users</NavDropdown.Item>
+                    </LinkContainer>
+                  )}
+                  {user.isAdmin && (
+                    <LinkContainer to="/dashboard/addProduct">
+                      <NavDropdown.Item>Create Product</NavDropdown.Item>
+                    </LinkContainer>
+                  )}
+                  {user.isAdmin && (
+                    <LinkContainer to="/dashboard/allProduct">
+                      <NavDropdown.Item>All Product</NavDropdown.Item>
+                    </LinkContainer>
+                  )}
+                  {user.isAdmin && (
+                    <LinkContainer to="/dashboard/allOrder">
+                      <NavDropdown.Item>All Order</NavDropdown.Item>
+                    </LinkContainer>
+                  )}
+                  <LinkContainer to="/dashboard/myOrder">
+                    <NavDropdown.Item>My Order</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/dashboard/">
+                    <NavDropdown.Item>My Order</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
+              )}
+              {user ? (
+                <Nav.Link>Logout</Nav.Link>
+              ) : (
+                <LinkContainer to="/login">
+                  <Nav.Link>Login</Nav.Link>
+                </LinkContainer>
+              )}
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
