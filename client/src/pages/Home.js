@@ -1,6 +1,7 @@
 import React from "react";
 import HomeBanner from "../components/HomeBanner";
 import HomeCategories from "../components/HomeCategories";
+import HomeProduct from "../components/HomeProduct";
 import WhyUs from "../components/WhyUs";
 import "./Home.css";
 
@@ -9,6 +10,7 @@ const Home = () => {
     <div>
       <HomeBanner />
       <WhyUs />
+      <HomeProduct />
       <HomeCategories />
     </div>
   );

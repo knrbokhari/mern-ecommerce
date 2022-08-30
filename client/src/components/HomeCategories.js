@@ -9,7 +9,10 @@ const HomeCategories = () => {
       <h2>Categories</h2>
       <Row>
         {categories.map((category) => (
-          <LinkContainer to={`/category/${category.name.toLocaleLowerCase()}`}>
+          <LinkContainer
+            key={category.name}
+            to={`/category/${category.name.toLocaleLowerCase()}`}
+          >
             <Col md={4}>
               <div
                 style={{

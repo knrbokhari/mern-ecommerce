@@ -43,13 +43,15 @@ const Navigation = () => {
                 title="Category"
                 id={`offcanvasNavbarDropdown-expand-${"lg"}`}
               >
-                <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action4">
-                  Another action
+                <NavDropdown.Item href="category/technology">
+                  Technology
+                </NavDropdown.Item>
+                <NavDropdown.Item href="category/phones">
+                  Phones
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#action5">
-                  Something else here
+                <NavDropdown.Item href="category/laptops">
+                  laptops
                 </NavDropdown.Item>
               </NavDropdown>
               <Nav.Link href="/login">
