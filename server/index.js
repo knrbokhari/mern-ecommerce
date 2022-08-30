@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 5000;
 require("./Connection");
 
 // import routes
+const User = require("./Models/User");
 const userRoutes = require("./Routes/UserRoutes");
 
 app.use(cors());
