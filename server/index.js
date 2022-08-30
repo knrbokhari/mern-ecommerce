@@ -11,9 +11,15 @@ const io = new Server(server, {
 const PORT = process.env.PORT || 5000;
 require("./Connection");
 
+// import routes
+const userRoutes = require("./Routes/UserRoutes");
+
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// routes middleware
+app.use("/users", userRoutes);
 
 server.listen(PORT, () => {
   console.log("server running at port", PORT);

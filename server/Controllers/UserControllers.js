@@ -1,6 +1,6 @@
-import User from "../Models/User";
+const User = require("../Models/User");
 
-export const signup = async (req, res) => {
+exports.signup = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
@@ -11,6 +11,15 @@ export const signup = async (req, res) => {
     res.status(400).send(e.message);
   }
 };
-// export const signup = async (req, res) => {}
-// export const signup = async (req, res) => {}
-// export const signup = async (req, res) => {}
+
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findByCredentials(email, password);
+    res.status(200).json(user);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
+//  exports.signup = async (req, res) => {}
+//  exports.signup = async (req, res) => {}
