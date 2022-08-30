@@ -14,6 +14,10 @@ export const userSlice = createSlice({
       appApi.endpoints.signup.matchFulfilled,
       (_, { payload }) => payload
     );
+    builder.addMatcher(
+      appApi.endpoints.login.matchFulfilled,
+      (_, { payload }) => payload
+    );
   },
 });
 

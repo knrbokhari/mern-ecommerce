@@ -3,14 +3,26 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "./Signup.css";
+import { useLoginMutation } from "../api/appApi";
+import { toast } from "react-toastify";
 
 function Login() {
+  const [login, { error, isLoading, isError }] = useLoginMutation();
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  if (isError) {
+    toast.error(error.data);
+  }
+
+  const onSubmit = (data) => {
+    const { email, password } = data;
+    login({ email, password });
+  };
 
   return (
     <Container>
@@ -73,7 +85,11 @@ function Login() {
             </Form.Group>
 
             <Form.Group>
-              <Button type="submit" className="fs-5 btn-lg">
+              <Button
+                type="submit"
+                className="fs-5 btn-lg"
+                disabled={isLoading}
+              >
                 Login
               </Button>
             </Form.Group>
