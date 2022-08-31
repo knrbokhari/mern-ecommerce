@@ -11,10 +11,16 @@ import {
 import { BsFillCartCheckFill } from "react-icons/bs";
 import { BiHeart } from "react-icons/bi";
 import { LinkContainer } from "react-router-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../features/userSlice";
 
 const Navigation = () => {
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <Navbar key={"lg"} bg="light" expand={"lg"} className="mb-3">
@@ -107,7 +113,7 @@ const Navigation = () => {
                 </NavDropdown>
               )}
               {user ? (
-                <Nav.Link>Logout</Nav.Link>
+                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
               ) : (
                 <LinkContainer to="/login">
                   <Nav.Link>Login</Nav.Link>
