@@ -14,7 +14,7 @@ const verifyJWT = async (req, res, next) => {
     if (err) {
       return res.status(403).send({ Message: "Forbidden access" });
     }
-    req.user = decoded?.email;
+    req.user = decoded?.id;
     next();
   });
 };

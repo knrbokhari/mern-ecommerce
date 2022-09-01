@@ -1,5 +1,6 @@
 const { getProduct, addProduct } = require("../Controllers/ProductControllers");
 const verifyJWT = require("../Middleware/verifyJWT");
+const verifyAdmin = require("../Middleware/verifyAdmin");
 
 const router = require("express").Router();
 
@@ -7,6 +8,6 @@ const router = require("express").Router();
 router.get("/", getProduct);
 
 //create product
-router.post("/", verifyJWT, addProduct);
+router.post("/", verifyJWT, verifyAdmin, addProduct);
 
 module.exports = router;
