@@ -21,7 +21,7 @@ const ProductSchema = mongoose.Schema(
       type: String,
       required: [true, "can't be blank"],
     },
-    pictures: {
+    images: {
       type: Array,
       required: true,
     },

@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { FiDelete } from "react-icons/fi";
+import { MdClear } from "react-icons/md";
 import { useForm } from "react-hook-form";
+import axios from "../axios";
+import { useNavigate } from "react-router-dom";
+import { useCreateProductMutation } from "../api/appApi";
+import { toast } from "react-toastify";
 import "./CreateProduct.css";
 
 const CreateProduct = () => {
+  const [createProduct, { isError, error, isLoading, isSuccess }] =
+    useCreateProductMutation();
   const [images, setImages] = useState([]);
   const [imgToRemove, setImgToRemove] = useState(null);
   const [category, setCategory] = useState("");
+  const navigate = useNavigate();
 
   const {
     register,
@@ -15,16 +22,64 @@ const CreateProduct = () => {
     handleSubmit,
   } = useForm();
 
-  const handleRemoveImg = (imgObj) => {};
+  if (isError) {
+    toast.error(error.message);
+  }
 
-  const showWidget = () => {};
+  const showWidget = () => {
+    const widget = window.cloudinary.createUploadWidget(
+      {
+        cloudName: "dbnaeem",
+        uploadPreset: "l7km97n1",
+      },
+      (error, result) => {
+        if (!error && result.event === "success") {
+          setImages((prev) => [
+            ...prev,
+            { url: result.info.url, public_id: result.info.public_id },
+          ]);
+        }
+      }
+    );
+    widget.open();
+  };
 
-  const onSubmit = (data) => console.log(data, category);
+  const handleRemoveImg = (imgObj) => {
+    setImgToRemove(imgObj.public_id);
+    axios
+      .delete(`/images/${imgObj.public_id}/`)
+      .then((res) => {
+        setImgToRemove(null);
+        setImages((prev) =>
+          prev.filter((img) => img.public_id !== imgObj.public_id)
+        );
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const onSubmit = (data) => {
+    const { name, description, price, quantity } = data;
+    createProduct({
+      name,
+      description,
+      price,
+      quantity,
+      category,
+      images,
+    }).then(({ data }) => {
+      if (data.length > 0) {
+        setTimeout(() => {
+          navigate("/");
+          toast.success("Product Created");
+        }, 1500);
+      }
+    });
+  };
 
   return (
     <Container>
       <Row>
-        <Col md={6} className="new-product__form--container">
+        <Col lg={6} className="new-product__form--container">
           <Form style={{ width: "100%" }} onSubmit={handleSubmit(onSubmit)}>
             <h1 className="mt-4">Create a product</h1>
 
@@ -78,13 +133,13 @@ const CreateProduct = () => {
             >
               <Form.Label>Category</Form.Label>
               <Form.Select>
-                <option disabled selected>
+                <option disabled selected required>
                   -- Select One --
                 </option>
-                <option value="technology">technology</option>
-                <option value="tablets">tablets</option>
-                <option value="phones">phones</option>
-                <option value="laptops">laptops</option>
+                <option value="technology">Technology</option>
+                <option value="tablets">Tablets</option>
+                <option value="phones">Phones</option>
+                <option value="laptops">Laptops</option>
               </Form.Select>
             </Form.Group>
 
@@ -114,7 +169,7 @@ const CreateProduct = () => {
                   <div className="image-preview">
                     <img src={image.url} alt="" />
                     {imgToRemove !== image.public_id && (
-                      <FiDelete onClick={() => handleRemoveImg(image)} />
+                      <MdClear onClick={() => handleRemoveImg(image)} />
                     )}
                   </div>
                 ))}
@@ -122,11 +177,16 @@ const CreateProduct = () => {
             </Form.Group>
 
             <Form.Group>
-              <Button type="submit">Create Product</Button>
+              <Button type="submit" disabled={isLoading || isSuccess}>
+                Create Product
+              </Button>
             </Form.Group>
           </Form>
         </Col>
-        <Col md={6} className="new-product__image--container"></Col>
+        <Col
+          md={6}
+          className="new-product__image--container d-none d-lg-block"
+        ></Col>
       </Row>
     </Container>
   );

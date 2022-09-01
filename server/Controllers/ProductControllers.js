@@ -33,7 +33,7 @@ exports.addProduct = async (req, res) => {
 exports.updateProduct = async (req, res) => {
   const { id } = req.params;
   try {
-    const { name, description, price, category, images: pictures } = req.body;
+    const { name, description, price, category, images } = req.body;
     const product = await Product.findByIdAndUpdate(id, {
       name,
       description,

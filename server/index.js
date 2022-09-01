@@ -22,7 +22,7 @@ app.use(express.json());
 
 // routes middleware
 app.use("/users", userRoutes);
-app.use("/product", productRoutes);
+app.use("/products", productRoutes);
 
 server.listen(PORT, () => {
   console.log("server running at port", PORT);
