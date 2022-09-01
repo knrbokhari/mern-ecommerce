@@ -4,6 +4,7 @@ const {
   deleteProduct,
   updateProduct,
   getAProduct,
+  getBestSellingProducts,
 } = require("../Controllers/ProductControllers");
 const verifyJWT = require("../Middleware/verifyJWT");
 const verifyAdmin = require("../Middleware/verifyAdmin");
@@ -15,6 +16,9 @@ router.get("/", getProduct);
 
 //get a products;
 router.get("/:id", getAProduct);
+
+// get best selling products  in all category
+router.get("/bestselling", getBestSellingProducts);
 
 //create product
 router.post("/", verifyJWT, verifyAdmin, addProduct);

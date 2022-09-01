@@ -53,9 +53,21 @@ const CreateProduct = () => {
               />
               <Form.Label>
                 {errors.price?.type === "required" && (
-                  <span className="text-danger">
-                    "Price description is required"
-                  </span>
+                  <span className="text-danger">"Price is required"</span>
+                )}
+              </Form.Label>
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label>Quantity</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Quantity"
+                {...register("quantity", { required: true })}
+              />
+              <Form.Label>
+                {errors.price?.type === "required" && (
+                  <span className="text-danger">"Quantity is required"</span>
                 )}
               </Form.Label>
             </Form.Group>
@@ -80,6 +92,7 @@ const CreateProduct = () => {
               <Form.Label>Product description</Form.Label>
               <Form.Control
                 as="textarea"
+                rows={5}
                 placeholder="Product description"
                 {...register("productDesc", { required: true })}
               />

@@ -29,6 +29,7 @@ exports.addProduct = async (req, res) => {
   }
 };
 
+// update Product
 exports.updateProduct = async (req, res) => {
   const { id } = req.params;
   try {
@@ -47,6 +48,7 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
+// delete product
 exports.deleteProduct = async (req, res) => {
   const id = req.params.id;
   console.log(id);
@@ -64,7 +66,9 @@ exports.deleteProduct = async (req, res) => {
   }
 };
 
+// get a product
 exports.getAProduct = async (req, res) => {
+  const id = req.params.id;
   try {
     const product = await Product.findById(id);
     const similar = await Product.find({ category: product.category }).limit(5);
@@ -73,7 +77,9 @@ exports.getAProduct = async (req, res) => {
     res.status(400).send(e.message);
   }
 };
-// exports.deleteProduct = async (req, res) => {};
+
+// get best selling products  in all category
+exports.getBestSellingProducts = async (req, res) => {};
 // exports.deleteProduct = async (req, res) => {};
 // exports.deleteProduct = async (req, res) => {};
 // exports.deleteProduct = async (req, res) => {};

@@ -10,7 +10,11 @@ const ProductSchema = mongoose.Schema(
       required: [true, "can't be blank"],
     },
     price: {
-      type: String,
+      type: Number,
+      required: [true, "can't be blank"],
+    },
+    quantity: {
+      type: Number,
       required: [true, "can't be blank"],
     },
     category: {
@@ -20,6 +24,10 @@ const ProductSchema = mongoose.Schema(
     pictures: {
       type: Array,
       required: true,
+    },
+    totalSell: {
+      type: Number,
+      default: 0,
     },
   },
   { minimize: false }
