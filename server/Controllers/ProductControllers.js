@@ -1,4 +1,4 @@
-import Product from "../Models/Product";
+const Product = require("../Models/Product");
 
 //get products
 exports.getProduct = async (req, res) => {
@@ -28,5 +28,13 @@ exports.addProduct = async (req, res) => {
     res.status(400).send(e.message);
   }
 };
-// exports.getProduct = async (req, res) =>{}
-// exports.getProduct = async (req, res) =>{}
+
+exports.updateProduct = async (req, res) => {};
+
+exports.deleteProduct = async (req, res) => {};
+// exports.deleteProduct = async (req, res) => {};
+// exports.deleteProduct = async (req, res) => {};
+// exports.deleteProduct = async (req, res) => {};
+// exports.deleteProduct = async (req, res) => {};
+// exports.deleteProduct = async (req, res) => {};
+// exports.deleteProduct = async (req, res) => {};

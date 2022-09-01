@@ -14,6 +14,7 @@ require("./Connection");
 // import routes
 const User = require("./Models/User");
 const userRoutes = require("./Routes/UserRoutes");
+const productRoutes = require("./Routes/ProductRoutes");
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -21,6 +22,7 @@ app.use(express.json());
 
 // routes middleware
 app.use("/users", userRoutes);
+app.use("/product", productRoutes);
 
 server.listen(PORT, () => {
   console.log("server running at port", PORT);
