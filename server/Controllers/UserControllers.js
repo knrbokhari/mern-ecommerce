@@ -1,11 +1,19 @@
 const User = require("../Models/User");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
 
 exports.signup = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
     const user = await User.create({ name, email, password });
-    res.status(200).json(user);
+    // jwt token
+    const token = jwt.sign(
+      { name: user.name, id: user._id },
+      process.env.JWTKEY,
+      { expiresIn: "1d" }
+    );
+    res.status(200).json({ user, token });
   } catch (e) {
     if (e.code === 11000) return res.status(400).send("Email already exists");
     res.status(400).send(e.message);
@@ -16,7 +24,13 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findByCredentials(email, password);
-    res.status(200).json(user);
+    // jwt token
+    const token = jwt.sign(
+      { name: user.name, id: user._id },
+      process.env.JWTKEY,
+      { expiresIn: "1d" }
+    );
+    res.status(200).json({ user, token });
   } catch (e) {
     res.status(400).send(e.message);
   }
