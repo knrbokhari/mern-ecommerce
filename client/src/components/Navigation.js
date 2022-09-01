@@ -89,7 +89,7 @@ const Navigation = () => {
                       <NavDropdown.Item>All Users</NavDropdown.Item>
                     </LinkContainer>
                   )}
-                  {user.isAdmin && (
+                  {!user.isAdmin && (
                     <LinkContainer to="/dashboard/addProduct">
                       <NavDropdown.Item>Create Product</NavDropdown.Item>
                     </LinkContainer>
