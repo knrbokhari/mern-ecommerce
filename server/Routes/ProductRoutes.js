@@ -1,4 +1,9 @@
-const { getProduct, addProduct } = require("../Controllers/ProductControllers");
+const {
+  getProduct,
+  addProduct,
+  deleteProduct,
+  updateProduct,
+} = require("../Controllers/ProductControllers");
 const verifyJWT = require("../Middleware/verifyJWT");
 const verifyAdmin = require("../Middleware/verifyAdmin");
 
@@ -11,6 +16,9 @@ router.get("/", getProduct);
 router.post("/", verifyJWT, verifyAdmin, addProduct);
 
 // update product
-router.patch("/:id", verifyJWT, verifyAdmin);
+router.patch("/:id", verifyJWT, verifyAdmin, updateProduct);
+
+// delete product
+router.delete("/:id", verifyJWT, verifyAdmin, deleteProduct);
 
 module.exports = router;
