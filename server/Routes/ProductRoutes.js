@@ -10,4 +10,7 @@ router.get("/", getProduct);
 //create product
 router.post("/", verifyJWT, verifyAdmin, addProduct);
 
+// update product
+router.patch("/:id", verifyJWT, verifyAdmin);
+
 module.exports = router;
