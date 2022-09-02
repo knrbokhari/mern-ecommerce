@@ -15,6 +15,7 @@ require("./Connection");
 const User = require("./Models/User");
 const userRoutes = require("./Routes/UserRoutes");
 const productRoutes = require("./Routes/ProductRoutes");
+const ImageRoutes = require("./Routes/ImageRoutes");
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -23,6 +24,7 @@ app.use(express.json());
 // routes middleware
 app.use("/users", userRoutes);
 app.use("/products", productRoutes);
+app.use("/images", ImageRoutes);
 
 server.listen(PORT, () => {
   console.log("server running at port", PORT);
