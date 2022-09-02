@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 import CreateProduct from "./pages/CreateProduct";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Product from "./pages/Product";
 import Signup from "./pages/Signup";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/product/:id" element={<Product />} />
         {/* <Route path="/dashboard" element={<Signup />}> */}
         <Route path="/dashboard/addProduct" element={<CreateProduct />} />
         {/* </Route> */}
