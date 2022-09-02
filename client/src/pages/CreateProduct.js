@@ -62,12 +62,13 @@ const CreateProduct = () => {
     createProduct({
       name,
       description,
-      price,
-      quantity,
+      price: parseInt(price),
+      quantity: parseInt(quantity),
       category,
       images,
-    }).then(({ data }) => {
-      if (data.length > 0) {
+    }).then((res) => {
+      console.log(res);
+      if (res.data.length > 0) {
         setTimeout(() => {
           navigate("/");
           toast.success("Product Created");
@@ -88,10 +89,10 @@ const CreateProduct = () => {
               <Form.Control
                 type="text"
                 placeholder="Enter product name"
-                {...register("productName", { required: true })}
+                {...register("name", { required: true })}
               />
               <Form.Label>
-                {errors.productName?.type === "required" && (
+                {errors.name?.type === "required" && (
                   <span className="text-danger">
                     "Product name is required"
                   </span>
@@ -121,7 +122,7 @@ const CreateProduct = () => {
                 {...register("quantity", { required: true })}
               />
               <Form.Label>
-                {errors.price?.type === "required" && (
+                {errors.quantity?.type === "required" && (
                   <span className="text-danger">"Quantity is required"</span>
                 )}
               </Form.Label>
@@ -149,10 +150,10 @@ const CreateProduct = () => {
                 as="textarea"
                 rows={5}
                 placeholder="Product description"
-                {...register("productDesc", { required: true })}
+                {...register("description", { required: true })}
               />
               <Form.Label>
-                {errors.productDesc?.type === "required" && (
+                {errors.description?.type === "required" && (
                   <span className="text-danger">
                     "Product description is required"
                   </span>

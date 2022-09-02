@@ -14,13 +14,21 @@ exports.getProduct = async (req, res) => {
 //create product
 exports.addProduct = async (req, res) => {
   try {
-    const { name, description, price, category, images: pictures } = req.body;
+    const {
+      name,
+      description,
+      price,
+      category,
+      quantity,
+      images: pictures,
+    } = req.body;
     const product = await Product.create({
       name,
       description,
       price,
       category,
       pictures,
+      quantity,
     });
     const products = await Product.find();
     res.status(201).json(products);
@@ -33,12 +41,13 @@ exports.addProduct = async (req, res) => {
 exports.updateProduct = async (req, res) => {
   const { id } = req.params;
   try {
-    const { name, description, price, category, images } = req.body;
+    const { name, description, price, category, quantity, images } = req.body;
     const product = await Product.findByIdAndUpdate(id, {
       name,
       description,
       price,
       category,
+      quantity,
       pictures,
     });
     const products = await Product.find();

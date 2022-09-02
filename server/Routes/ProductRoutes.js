@@ -21,7 +21,7 @@ router.get("/:id", getAProduct);
 router.get("/bestselling", getBestSellingProducts);
 
 //create product
-router.post("/", verifyJWT, verifyAdmin, addProduct);
+router.post("/", verifyJWT, addProduct);
 
 // update product
 router.patch("/:id", verifyJWT, verifyAdmin, updateProduct);
