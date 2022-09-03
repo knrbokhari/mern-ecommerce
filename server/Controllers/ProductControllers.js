@@ -89,7 +89,24 @@ exports.getAProduct = async (req, res) => {
 
 // get best selling products  in all category
 exports.getBestSellingProducts = async (req, res) => {};
-// exports.deleteProduct = async (req, res) => {};
+
+exports.category = async (req, res) => {
+  const { category } = req.params;
+  console.log(category);
+  try {
+    const sort = { _id: -1 };
+    if (category === "all") {
+      const products = await Product.find().sort(sort);
+      res.status(200).json(products);
+    } else {
+      const products = await Product.find({ category }).sort(sort);
+      res.status(200).json(products);
+    }
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
+
 // exports.deleteProduct = async (req, res) => {};
 // exports.deleteProduct = async (req, res) => {};
 // exports.deleteProduct = async (req, res) => {};
