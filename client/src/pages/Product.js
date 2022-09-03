@@ -7,7 +7,6 @@ import {
   Container,
   Form,
   Row,
-  Spinner,
 } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useParams } from "react-router-dom";
@@ -49,7 +48,7 @@ const Product = () => {
           </Swiper>
           <Swiper
             loop={true}
-            spaceBetween={10}
+            spaceBetween={20}
             slidesPerView={3}
             freeMode={true}
             watchSlidesProgress={true}
@@ -58,9 +57,10 @@ const Product = () => {
           >
             {product?.images?.map((item, index) => (
               <SwiperSlide key={index}>
-                <div className="product-images-slider-thumbs-wrapper">
+                <div>
                   <img
                     src={item.url}
+                    className="product-images"
                     alt="product images"
                     onClick={() => {
                       setUrl(item.url);

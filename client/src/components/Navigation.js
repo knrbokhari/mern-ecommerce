@@ -57,6 +57,9 @@ const Navigation = () => {
                 title="Category"
                 id={`offcanvasNavbarDropdown-expand-${"lg"}`}
               >
+                <LinkContainer to="/category/all">
+                  <NavDropdown.Item>All Products</NavDropdown.Item>
+                </LinkContainer>
                 <LinkContainer to="/category/technology">
                   <NavDropdown.Item>Technology</NavDropdown.Item>
                 </LinkContainer>
@@ -89,7 +92,7 @@ const Navigation = () => {
                       <NavDropdown.Item>All Users</NavDropdown.Item>
                     </LinkContainer>
                   )}
-                  {!user.isAdmin && (
+                  {user.isAdmin && (
                     <LinkContainer to="/dashboard/addProduct">
                       <NavDropdown.Item>Create Product</NavDropdown.Item>
                     </LinkContainer>
@@ -104,8 +107,8 @@ const Navigation = () => {
                       <NavDropdown.Item>All Order</NavDropdown.Item>
                     </LinkContainer>
                   )}
-                  <LinkContainer to="/dashboard/myOrder">
-                    <NavDropdown.Item>My Order</NavDropdown.Item>
+                  <LinkContainer to="/dashboard/profile">
+                    <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to="/dashboard/">
                     <NavDropdown.Item>My Order</NavDropdown.Item>

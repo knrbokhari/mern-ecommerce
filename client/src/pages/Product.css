@@ -1,39 +1,29 @@
-/* .product__carousel--image {
-  max-width: 100%;
-  object-fit: cover;
-  max-height: 500px;
-}
-.product__carousel--image:hover {
-  border: 1px solid red;
-  cursor: pointer;
-}
-.alice-carousel__prev-btn,
-.alice-carousel__next-btn {
-  display: none !important;
-} */
-
 .mySwiper2 {
-  height: 80%;
+  height: 450px;
   width: 100%;
 }
 
 .mySwiper {
-  height: 20%;
+  height: 100px;
   box-sizing: border-box;
   padding: 10px 0;
 }
 
 .mySwiper .swiper-slide {
-  width: 25%;
-  height: 100%;
-}
-
-.mySwiper:hover .swiper-slide {
-  opacity: 1;
+  width: 100px;
+  height: 100px;
 }
 
 .swiper-slide img {
   display: block;
   width: 100%;
   object-fit: cover;
+}
+.product-images {
+  height: 90px;
+  width: 100px;
+}
+.product-images:hover {
+  border: 5px solid red;
+  height: 90px;
 }

@@ -67,7 +67,7 @@ const ProductPreview = ({ product }) => {
               </p>
               <p
                 className="text-secondary mb-2 fs-6"
-                style={{ fontSize: "16px" }}
+                style={{ fontSize: "16px", textTransform: "capitalize" }}
               >
                 Category: {category}
               </p>
