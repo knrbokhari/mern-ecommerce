@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
 import axios from "../axios";
-// import { updateProducts } from "../features/productSlice";
 import { useState } from "react";
 import ProductPreview from "./ProductPreview";
 

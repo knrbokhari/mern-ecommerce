@@ -48,7 +48,7 @@ exports.updateProduct = async (req, res) => {
       price,
       category,
       quantity,
-      pictures,
+      images,
     });
     const products = await Product.find();
     res.status(200).json(products);
@@ -80,7 +80,10 @@ exports.getAProduct = async (req, res) => {
   const id = req.params.id;
   try {
     const product = await Product.findById(id);
-    const similar = await Product.find({ category: product.category }).limit(5);
+    const similar = await Product.find({
+      category: product.category,
+    }).limit(5);
+    // console.log(similar);
     res.status(200).json({ product, similar });
   } catch (e) {
     res.status(400).send(e.message);

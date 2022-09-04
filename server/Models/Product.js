@@ -22,7 +22,7 @@ const ProductSchema = mongoose.Schema(
       required: [true, "can't be blank"],
     },
     images: {
-      type: Array,
+      type: [],
       required: true,
     },
     totalSell: {

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, FloatingLabel, Form, Row } from "react-bootstrap";
+import { Container, FloatingLabel, Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import axios from "../axios";
-import ProductPreview from "../components/ProductPreview";
 import Pagination from "../components/Pagination";
+import Preview from "../components/Preview";
 
 const CategoryPage = () => {
   const { category } = useParams();
@@ -33,11 +33,18 @@ const CategoryPage = () => {
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const ProductSearch = () => {
-    return productsSearch.map((product) => (
-      <ProductPreview key={product._id} product={product} />
-    ));
-  };
+  function ProductSearch({ _id, category, name, images, quantity, price }) {
+    return (
+      <Preview
+        _id={_id}
+        category={category}
+        name={name}
+        images={images}
+        quantity={quantity}
+        price={price}
+      />
+    );
+  }
 
   return (
     <div className="category-page-container">
@@ -48,13 +55,7 @@ const CategoryPage = () => {
           {category.charAt(0).toUpperCase() + category.slice(1)}
         </h1>
       </div>
-      <div className="filters-container pt-4 pb-4">
-        {/* <input
-          type="search"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="mx-auto d-block"
-        /> */}
+      <div className="filters-container d-flex justify-content-center pt-4 pb-4">
         <FloatingLabel
           controlId="floatingInput"
           label="Search"
@@ -72,17 +73,13 @@ const CategoryPage = () => {
         <h1>No products to show</h1>
       ) : (
         <Container>
-          <Row>
-            {/* <Col md={{ span: 10, offset: 1 }}> */}
-            <Pagination
-              data={productsSearch}
-              RenderComponent={ProductSearch}
-              pageLimit={1}
-              dataLimit={5}
-              tablePagination={false}
-            />
-            {/* </Col> */}
-          </Row>
+          <Pagination
+            data={productsSearch}
+            RenderComponent={ProductSearch}
+            pageLimit={1}
+            dataLimit={8}
+            tablePagination={false}
+          />
         </Container>
       )}
     </div>

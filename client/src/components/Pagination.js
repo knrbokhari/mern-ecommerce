@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Row } from "react-bootstrap";
 import "./Pagination.css";
 const Pagination = ({
   data,
@@ -10,6 +11,8 @@ const Pagination = ({
 }) => {
   const [pages] = useState(Math.floor(data.length / dataLimit) + 1);
   const [currentPage, setCurrentPage] = useState(1);
+
+  console.log(data.length / dataLimit);
 
   const goToNextPage = () => {
     setCurrentPage((page) => page + 1);
@@ -43,13 +46,13 @@ const Pagination = ({
           <RenderComponent key={idx} {...data} />
         ))
       ) : (
-        <div className="dataContainer">
+        <Row style={{ rowGap: "20px" }}>
           <h1>{title}</h1>
 
           {getPaginatedData().map((data, idx) => (
             <RenderComponent key={idx} {...data} />
           ))}
-        </div>
+        </Row>
       )}
 
       {/* show the next and previous buttons */}

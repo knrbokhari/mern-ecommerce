@@ -12,18 +12,18 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "../axios";
+import ProductPreview from "../components/ProductPreview";
 import "./Product.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation, Thumbs } from "swiper";
+import { Pagination } from "swiper";
 import "swiper/css";
-import ProductPreview from "../components/ProductPreview";
+import "swiper/css/pagination";
 
 const Product = () => {
   const { id } = useParams();
   const user = useSelector((state) => state.user);
   const [product, setProduct] = useState([]);
   const [similar, setSimilar] = useState([]);
-  const [url, setUrl] = useState(null);
   // const [addToCart, { isSuccess }] = useAddToCartMutation();
 
   useEffect(() => {
@@ -32,40 +32,27 @@ const Product = () => {
       setProduct(res.data.product);
       setSimilar(res.data.similar);
     });
-  }, []);
-  const similarProducts = similar.filter((i) => i._id !== product._id);
+  }, [id]);
+  const similarProducts = similar
+    .filter((i) => i._id !== product._id)
+    .slice(0, 4);
 
   return (
     <Container className="pt-4" style={{ position: "relative" }}>
       <Row>
-        <Col lg={6}>
-          <Swiper className="mySwiper2">
-            {product?.images?.map((item, index) => (
-              <SwiperSlide key={index}>
-                <img src={url || item.url} alt="product images" />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+        <Col lg={6} className="body">
           <Swiper
-            loop={true}
-            spaceBetween={20}
-            slidesPerView={3}
-            freeMode={true}
-            watchSlidesProgress={true}
-            modules={[FreeMode, Navigation, Thumbs]}
+            spaceBetween={30}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[Pagination]}
             className="mySwiper"
           >
             {product?.images?.map((item, index) => (
               <SwiperSlide key={index}>
                 <div>
-                  <img
-                    src={item.url}
-                    className="product-images"
-                    alt="product images"
-                    onClick={() => {
-                      setUrl(item.url);
-                    }}
-                  />
+                  <img src={item.url} alt="product images" />
                 </div>
               </SwiperSlide>
             ))}
@@ -73,16 +60,18 @@ const Product = () => {
         </Col>
         <Col lg={6} className="pt-4">
           <h1>{product?.name}</h1>
-          <p>
-            <Badge bg="primary">{product?.category}</Badge>
+          <p className="m-0 mb-1 fs-5">
+            Category:{" "}
+            <Badge bg="primary" className="text-uppercase">
+              {" "}
+              {product?.category}
+            </Badge>
           </p>
-          <p className="product__price">${product?.price}</p>
-          <p style={{ textAlign: "justify" }} className="py-3">
-            <strong>Description:</strong> {product?.description}
-          </p>
+          <p className="m-0 mb-1 fs-5">Price: ${product?.price}</p>
+          <p className="m-0 mb-1 fs-5">Quantity: {product?.quantity}</p>
           {user && !user.isAdmin && (
-            <ButtonGroup style={{ width: "90%" }}>
-              <Form.Select
+            <div className="d-block w-100">
+              {/* <Form.Select
                 size="lg"
                 style={{ width: "40%", borderRadius: "0" }}
               >
@@ -91,8 +80,9 @@ const Product = () => {
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
-              </Form.Select>
+              </Form.Select> */}
               <Button
+                className="d-block w-100 mb-2 text-white fw-bolder fs-4"
                 size="lg"
                 // onClick={() =>
                 //   addToCart({
@@ -105,7 +95,14 @@ const Product = () => {
               >
                 Add to cart
               </Button>
-            </ButtonGroup>
+              <Button
+                size="lg"
+                className="d-block w-100 btn-warning text-white fw-bolder fs-4"
+                // onClick={() => )}
+              >
+                Buy Now
+              </Button>
+            </div>
           )}
           {user && user.isAdmin && (
             <LinkContainer to={`/product/${product._id}/edit`}>
@@ -113,13 +110,16 @@ const Product = () => {
             </LinkContainer>
           )}
         </Col>
+        <p style={{ textAlign: "justify" }} className="px-3 m-0 mt-4">
+          <strong>Description:</strong> {product?.description}
+        </p>
       </Row>
       <div className="my-4">
-        <h2>Similar Products</h2>
+        <h2 className="mb-4">Similar Products</h2>
         <div>
-          {similar?.length === 0 && <p>Similar Products Not found</p>}
-          <Row>
-            {similar.map((product, i) => (
+          {similarProducts?.length === 0 && <p>Similar Products Not found</p>}
+          <Row style={{ rowGap: "20px" }}>
+            {similarProducts.map((product, i) => (
               <ProductPreview key={i} product={product} />
             ))}
           </Row>

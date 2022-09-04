@@ -6,7 +6,7 @@ import { LinkContainer } from "react-router-bootstrap";
 const ProductPreview = ({ product }) => {
   const { _id, category, name, images, price, quantity } = product;
 
-  const url = images[0].url;
+  const url = images[0]?.url;
 
   return (
     <Col sm={6} lg={3} className="gap-3">
@@ -16,6 +16,7 @@ const ProductPreview = ({ product }) => {
           style={{
             cursor: "pointer",
             backgroundColor: "#e1e1e1",
+            height: "430px",
           }}
           className="w-100"
         >
@@ -71,10 +72,16 @@ const ProductPreview = ({ product }) => {
               >
                 Category: {category}
               </p>
-              <div className="d-grid">
-                <button className="btn btn-primary">Add to Cart</button>
+              <div className="position-absolute" style={{ bottom: "15px" }}>
+                <button className="btn btn-primary" style={{ width: "90%" }}>
+                  Add to Cart
+                </button>
 
-                <button className="btn btn-success mt-2" type="button">
+                <button
+                  className="btn btn-success mt-2"
+                  type="button"
+                  style={{ width: "90%" }}
+                >
                   Buy Now
                 </button>
               </div>

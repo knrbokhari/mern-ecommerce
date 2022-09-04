@@ -66,7 +66,7 @@ const Navigation = () => {
                 <LinkContainer to="/category/phones">
                   <NavDropdown.Item>Phones</NavDropdown.Item>
                 </LinkContainer>
-                <LinkContainer to="/category/laptops">
+                <LinkContainer to="/category/laptop">
                   <NavDropdown.Item>laptops</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>
