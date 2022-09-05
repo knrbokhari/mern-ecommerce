@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Navigation from "./components/Navigation";
 import ScrollToTop from "./components/ScrollToTop";
+import CartPage from "./pages/CartPage";
 import CategoryPage from "./pages/CategoryPage";
 import CreateProduct from "./pages/CreateProduct";
 import Home from "./pages/Home";
@@ -22,9 +23,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/category/:category" element={<CategoryPage />} />
-        {/* <Route path="/dashboard" element={<Signup />}> */}
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/dashboard/addProduct" element={<CreateProduct />} />
-        {/* </Route> */}
       </Routes>
       <ToastContainer />
     </div>

@@ -12,8 +12,6 @@ const Pagination = ({
   const [pages] = useState(Math.floor(data.length / dataLimit) + 1);
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log(data.length / dataLimit);
-
   const goToNextPage = () => {
     setCurrentPage((page) => page + 1);
   };
