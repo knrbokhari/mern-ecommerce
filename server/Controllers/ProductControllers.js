@@ -129,7 +129,22 @@ exports.addToCart = async (req, res) => {
   }
 };
 
-exports.removeFromCart = async (req, res) => {};
+exports.removeFromCart = async (req, res) => {
+  const { userId, productId, price } = req.body;
+  try {
+    const user = await User.findById(userId);
+    const userCart = user.cart;
+    userCart.total -= Number(userCart[productId]) * Number(price);
+    userCart.count -= userCart[productId];
+    delete userCart[productId];
+    user.cart = userCart;
+    user.markModified("cart");
+    await user.save();
+    res.status(200).json(user);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
 
 exports.increaseCartProduct = async (req, res) => {};
 
