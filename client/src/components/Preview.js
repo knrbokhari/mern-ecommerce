@@ -1,89 +1,113 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Card, Col } from "react-bootstrap";
 import { BiHeart } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useAddToCartMutation } from "../api/appApi";
+import { logout } from "../features/userSlice";
+import Cookies from "js-cookie";
 
 const Preview = ({ _id, category, name, images, quantity, price }) => {
+  const user = useSelector((state) => state.user);
+  const [addToCart, { isSuccess, error }] = useAddToCartMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  if (error) {
+    dispatch(logout());
+    navigate("/login");
+    Cookies.remove("token");
+  }
+
+  if (isSuccess) {
+    // toast.success(`${name} is added to your cart`);
+  }
+
   return (
-    <div className="position-relative overflow-hidden col-11 col-md-6 col-lg-3">
-      <LinkContainer
-        to={`/product/${_id}`}
+    <Col md={6} lg={3}>
+      <div
         style={{
-          cursor: "pointer",
           backgroundColor: "#e1e1e1",
           height: "430px",
+          width: "100%",
         }}
-        className="w-100"
+        className="position-relative"
       >
-        <Card>
-          <Card.Img
-            variant="top"
-            className="product-preview-img p-2 pb-0"
-            src={images[0].url}
-            style={{ height: "200px", objectFit: "cover" }}
+        <img
+          variant="top"
+          className="product-preview-img p-2 pb-0 w-100"
+          src={images[0].url}
+          style={{ height: "200px", objectFit: "cover" }}
+          alt=""
+        />
+        {quantity === 0 ? (
+          <p
+            className="bg-danger text-white fw-semibold text-center position-absolute"
+            style={{
+              padding: "10px",
+              top: "0px",
+              width: "100%",
+              backgroundColor: "#6d726fe3",
+            }}
+          >
+            OUT OF STOCK
+          </p>
+        ) : (
+          <BiHeart
+            className="position-absolute"
+            style={{
+              width: "30px",
+              height: "30px",
+              color: "red",
+              top: "10px",
+              right: "10px",
+              cursor: "pointer",
+            }}
           />
-          {quantity === 0 ? (
-            <p
-              className="bg-danger text-white fw-semibold text-center position-absolute"
-              style={{
-                padding: "10px",
-                top: "0px",
-                width: "100%",
-                backgroundColor: "#6d726fe3",
-              }}
-            >
-              OUT OF STOCK
-            </p>
-          ) : (
-            <BiHeart
-              className="position-absolute"
-              style={{
-                width: "30px",
-                height: "30px",
-                color: "red",
-                top: "10px",
-                right: "10px",
-              }}
-            />
-          )}
+        )}
 
-          <Card.Body>
+        <div style={{ padding: "5%" }}>
+          <LinkContainer to={`/product/${_id}`} style={{ cursor: "pointer" }}>
             <Card.Title
-              className=""
+              className="mb-2"
               style={{ fontSize: "20px", marginBottom: "5px" }}
             >
               {name}
             </Card.Title>
-
-            <p
-              className="text-secondary mb-1 fs-6"
-              style={{ fontSize: "16px" }}
+          </LinkContainer>
+          <p className="text-secondary mb-1 fs-6" style={{ fontSize: "16px" }}>
+            Price: ${price}
+          </p>
+          <p
+            className="text-secondary mb-2 fs-6"
+            style={{ fontSize: "16px", textTransform: "capitalize" }}
+          >
+            Category: {category}
+          </p>
+          <div
+            className="position-absolute"
+            style={{ bottom: "15px", width: "90%" }}
+          >
+            <button
+              className="btn btn-primary w-100"
+              onClick={() =>
+                addToCart({
+                  userId: user._id,
+                  productId: _id,
+                  price: price,
+                  image: images[0].url,
+                })
+              }
             >
-              Price: ${price}
-            </p>
-            <p
-              className="text-secondary mb-2 fs-6"
-              style={{ fontSize: "16px", textTransform: "capitalize" }}
-            >
-              Category: {category}
-            </p>
-            <div className="position-absolute" style={{ bottom: "15px" }}>
-              <button className="btn btn-primary" style={{ width: "90%" }}>
-                Add to Cart
-              </button>
-
-              <button
-                className="btn btn-success mt-2"
-                type="button"
-                style={{ width: "90%" }}
-              >
-                Buy Now
-              </button>
-            </div>
-          </Card.Body>
-        </Card>
-      </LinkContainer>
-    </div>
+              Add to Cart
+            </button>
+            <button className="btn btn-success mt-2 w-100">Buy Now</button>
+          </div>
+        </div>
+      </div>
+    </Col>
   );
 };
 

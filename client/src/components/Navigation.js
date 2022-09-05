@@ -88,7 +88,7 @@ const Navigation = () => {
                     ) : (
                       <>
                         {user?.cart?.count}
-                        <span className="visually-hidden">unread messages</span>
+                        <span className="visually-hidden">items</span>
                       </>
                     )}
                   </span>

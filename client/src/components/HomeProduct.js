@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "../axios";
 import { useState } from "react";
-import ProductPreview from "./ProductPreview";
+import Preview from "./Preview";
 
 const HomeProduct = () => {
   const [products, setProducts] = useState([]);
@@ -17,8 +17,17 @@ const HomeProduct = () => {
       <h2 className="mb-4">Last products</h2>
       <div className="row gy-4">
         {lastProducts.map((product) => (
-          <ProductPreview key={product._id} product={product} />
+          <Preview
+            key={product._id}
+            _id={product._id}
+            category={product.category}
+            name={product.name}
+            images={product.images}
+            quantity={product.quantity}
+            price={product.price}
+          />
         ))}
+        {/*    */}
       </div>
       <div>
         <Link

@@ -4,7 +4,6 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../axios";
-import ProductPreview from "../components/ProductPreview";
 import "./Product.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
@@ -14,6 +13,7 @@ import { useAddToCartMutation } from "../api/appApi";
 import { logout } from "../features/userSlice";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import Preview from "../components/Preview";
 
 const Product = () => {
   const { id } = useParams();
@@ -25,16 +25,15 @@ const Product = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // const fetchProduct = async () => {
-    //   await
-    axios.get(`/products/${id}`).then((res) => {
-      //   console.log(res);
-      setProduct(res.data.product);
-      setSimilar(res.data.similar);
-    });
-    // };
+    const feachProduct = async () => {
+      await axios.get(`/products/${id}`).then((res) => {
+        //   console.log(res);
+        setProduct(res.data.product);
+        setSimilar(res.data.similar);
+      });
+    };
 
-    // fetchProduct();
+    feachProduct();
   }, [id]);
 
   if (error) {
@@ -42,12 +41,9 @@ const Product = () => {
     navigate("/login");
     Cookies.remove("token");
   }
-  console.log(user);
-  // console.log(what);
 
   if (isSuccess) {
-    // toast.success(`${product.name} is in your cart`);
-    // console.log(`${product.name} is in your cart`);
+    // toast.success(`${product.name} is added to your cart`);
   }
 
   const similarProducts = similar
@@ -137,7 +133,15 @@ const Product = () => {
           {similarProducts?.length === 0 && <p>Similar Products Not found</p>}
           <Row style={{ rowGap: "20px" }}>
             {similarProducts.map((product, i) => (
-              <ProductPreview key={i} product={product} />
+              <Preview
+                key={product._id}
+                _id={product._id}
+                category={product.category}
+                name={product.name}
+                images={product.images}
+                quantity={product.quantity}
+                price={product.price}
+              />
             ))}
           </Row>
         </div>
