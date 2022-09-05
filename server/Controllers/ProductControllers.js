@@ -89,7 +89,6 @@ exports.getBestSellingProducts = async (req, res) => {};
 
 exports.category = async (req, res) => {
   const { category } = req.params;
-  console.log(category);
   try {
     const sort = { _id: -1 };
     if (category === "all") {

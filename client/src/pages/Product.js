@@ -12,10 +12,12 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { useAddToCartMutation } from "../api/appApi";
 import { logout } from "../features/userSlice";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const Product = () => {
   const { id } = useParams();
-  const user = useSelector((state) => state?.user?.user);
+  const user = useSelector((state) => state.user);
   const [product, setProduct] = useState([]);
   const [similar, setSimilar] = useState([]);
   const [addToCart, { isSuccess, error }] = useAddToCartMutation();
@@ -23,22 +25,29 @@ const Product = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      await axios.get(`/products/${id}`).then((res) => {
-        //   console.log(res);
-        setProduct(res.data.product);
-        setSimilar(res.data.similar);
-      });
-    };
-    fetchProduct();
+    // const fetchProduct = async () => {
+    //   await
+    axios.get(`/products/${id}`).then((res) => {
+      //   console.log(res);
+      setProduct(res.data.product);
+      setSimilar(res.data.similar);
+    });
+    // };
+
+    // fetchProduct();
   }, [id]);
 
   if (error) {
-    // dispatch(logout());
-    // navigate("/login");
+    dispatch(logout());
+    navigate("/login");
+    Cookies.remove("token");
   }
+  console.log(user);
+  // console.log(what);
+
   if (isSuccess) {
-    alert("add to card");
+    // toast.success(`${product.name} is in your cart`);
+    // console.log(`${product.name} is in your cart`);
   }
 
   const similarProducts = similar

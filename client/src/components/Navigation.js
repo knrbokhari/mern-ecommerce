@@ -13,6 +13,7 @@ import { BiHeart } from "react-icons/bi";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/userSlice";
+import Cookies from "js-cookie";
 
 const Navigation = () => {
   const user = useSelector((state) => state.user);
@@ -20,6 +21,7 @@ const Navigation = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    Cookies.remove("token");
   };
 
   return (

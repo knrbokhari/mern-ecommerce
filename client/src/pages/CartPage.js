@@ -5,13 +5,11 @@ import { Link } from "react-router-dom";
 import useProduct from "../hooks/useProduct";
 
 const CartPage = () => {
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user);
   const userCartObj = user.cart;
   const [products] = useProduct();
   let cart = products.filter((product) => userCartObj[product._id] != null);
 
-  //   console.log(user);
-  //   console.log(cart);
   return (
     <Container className="cart-container">
       <Row>
@@ -37,8 +35,8 @@ const CartPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {cart.map((item) => (
-                    <tr>
+                  {cart.map((item, i) => (
+                    <tr key={i}>
                       <td>&nbsp;</td>
                       <td>
                         <img

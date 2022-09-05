@@ -5,9 +5,10 @@ import { useForm } from "react-hook-form";
 import "./Signup.css";
 import { useLoginMutation } from "../api/appApi";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 function Login() {
-  const [login, { error, isLoading, isError }] = useLoginMutation();
+  const [login, { error, isLoading, isError, data }] = useLoginMutation();
 
   const {
     register,
@@ -23,6 +24,10 @@ function Login() {
     const { email, password } = data;
     login({ email, password });
   };
+
+  if (data?.token) {
+    Cookies.set("token", data?.token, { expires: 1 });
+  }
 
   return (
     <Container>

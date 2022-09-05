@@ -13,7 +13,11 @@ exports.signup = async (req, res) => {
       process.env.JWTKEY,
       { expiresIn: "1d" }
     );
-    res.status(200).json({ user, token });
+
+    const userWithToken = Object.assign({}, user?._doc);
+    userWithToken.token = token;
+
+    res.status(200).json(userWithToken);
   } catch (e) {
     if (e.code === 11000) return res.status(400).send("Email already exists");
     res.status(400).send(e.message);
@@ -30,7 +34,10 @@ exports.login = async (req, res) => {
       process.env.JWTKEY,
       { expiresIn: "1d" }
     );
-    res.status(200).json({ user, token });
+    const userWithToken = Object.assign({}, user?._doc);
+    userWithToken.token = token;
+
+    res.status(200).json(userWithToken);
   } catch (e) {
     res.status(400).send(e.message);
   }

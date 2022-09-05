@@ -20,6 +20,22 @@ export const userSlice = createSlice({
       appApi.endpoints.login.matchFulfilled,
       (_, { payload }) => payload
     );
+    builder.addMatcher(
+      appApi.endpoints.addToCart.matchFulfilled,
+      (_, { payload }) => payload
+    );
+    builder.addMatcher(
+      appApi.endpoints.removeFromCart.matchFulfilled,
+      (_, { payload }) => payload
+    );
+    builder.addMatcher(
+      appApi.endpoints.increaseCartProduct.matchFulfilled,
+      (_, { payload }) => payload
+    );
+    builder.addMatcher(
+      appApi.endpoints.decreaseCartProduct.matchFulfilled,
+      (_, { payload }) => payload
+    );
   },
 });
 

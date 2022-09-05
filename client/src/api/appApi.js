@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import Cookies from "js-cookie";
 
-// get Bearer token from localStorage
-const token = `Bearer ${
-  JSON.parse(JSON.parse(localStorage?.getItem("persist:root"))?.user)?.token
-}`;
+// get Bearer token from Cookie
+const token = `Bearer ${Cookies.get("token")}`;
+
+// console.log(token);
 
 // create the api
 export const appApi = createApi({
@@ -25,6 +26,7 @@ export const appApi = createApi({
         body: user,
       }),
     }),
+
     // creating product
     createProduct: builder.mutation({
       query: (product) => ({

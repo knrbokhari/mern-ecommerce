@@ -5,9 +5,14 @@ import { Link } from "react-router-dom";
 import "./Signup.css";
 import { useSignupMutation } from "../api/appApi";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const Signup = () => {
-  const [signup, { error, isLoading, isError }] = useSignupMutation();
+  const [signup, { error, isLoading, isError, data }] = useSignupMutation();
+
+  if (data?.token) {
+    Cookies.set("token", data?.token, { expires: 1 });
+  }
 
   const {
     register,

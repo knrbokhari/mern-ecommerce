@@ -37,7 +37,7 @@ router.patch("/:id", verifyJWT, verifyAdmin, updateProduct);
 router.delete("/:id", verifyJWT, verifyAdmin, deleteProduct);
 
 // cart routes
-router.post("/add-to-cart", verifyJWT, addToCart);
+router.post("/add-to-cart", addToCart);
 
 router.post("/remove-from-cart", verifyJWT, removeFromCart);
 
