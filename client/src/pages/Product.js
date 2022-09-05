@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Badge, Button, Col, Container, Row } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "../axios";
 import ProductPreview from "../components/ProductPreview";
 import "./Product.css";
@@ -10,21 +10,37 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
+import { useAddToCartMutation } from "../api/appApi";
+import { logout } from "../features/userSlice";
 
 const Product = () => {
   const { id } = useParams();
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state?.user?.user);
   const [product, setProduct] = useState([]);
   const [similar, setSimilar] = useState([]);
-  // const [addToCart, { isSuccess }] = useAddToCartMutation();
+  const [addToCart, { isSuccess, error }] = useAddToCartMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`/products/${id}`).then((res) => {
-      //   console.log(res);
-      setProduct(res.data.product);
-      setSimilar(res.data.similar);
-    });
+    const fetchProduct = async () => {
+      await axios.get(`/products/${id}`).then((res) => {
+        //   console.log(res);
+        setProduct(res.data.product);
+        setSimilar(res.data.similar);
+      });
+    };
+    fetchProduct();
   }, [id]);
+
+  if (error) {
+    // dispatch(logout());
+    // navigate("/login");
+  }
+  if (isSuccess) {
+    alert("add to card");
+  }
+
   const similarProducts = similar
     .filter((i) => i._id !== product._id)
     .slice(0, 4);
@@ -74,22 +90,22 @@ const Product = () => {
                 <option value="5">5</option>
               </Form.Select> */}
               <Button
-                className="d-block w-100 mb-2 text-white fw-bolder fs-4"
+                className="d-block w-100 mb-2 text-white fs-4"
                 size="lg"
-                // onClick={() =>
-                //   addToCart({
-                //     userId: user._id,
-                //     productId: id,
-                //     price: product.price,
-                //     image: product.image[0].url,
-                //   })
-                // }
+                onClick={() =>
+                  addToCart({
+                    userId: user._id,
+                    productId: id,
+                    price: product.price,
+                    image: product.images[0].url,
+                  })
+                }
               >
                 Add to cart
               </Button>
               <Button
                 size="lg"
-                className="d-block w-100 btn-warning text-white fw-bolder fs-4"
+                className="d-block w-100 btn-warning text-white fs-4"
                 // onClick={() => )}
               >
                 Buy Now

@@ -1,4 +1,5 @@
 const Product = require("../Models/Product");
+const User = require("../Models/User");
 
 //get products
 exports.getProduct = async (req, res) => {
@@ -14,20 +15,13 @@ exports.getProduct = async (req, res) => {
 //create product
 exports.addProduct = async (req, res) => {
   try {
-    const {
-      name,
-      description,
-      price,
-      category,
-      quantity,
-      images: pictures,
-    } = req.body;
+    const { name, description, price, category, quantity, images } = req.body;
     const product = await Product.create({
       name,
       description,
       price,
       category,
-      pictures,
+      images,
       quantity,
     });
     const products = await Product.find();
@@ -109,6 +103,37 @@ exports.category = async (req, res) => {
     res.status(400).send(e.message);
   }
 };
+
+// add product to cart
+exports.addToCart = async (req, res) => {
+  const { userId, productId, price } = req.body;
+
+  // console.log(req.body);
+
+  try {
+    const user = await User.findById(userId);
+    const userCart = user.cart;
+    if (user.cart[productId]) {
+      userCart[productId] += 1;
+    } else {
+      userCart[productId] = 1;
+    }
+    userCart.count += 1;
+    userCart.total = Number(userCart.total) + Number(price);
+    user.cart = userCart;
+    user.markModified("cart");
+    await user.save();
+    res.status(200).json(user);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
+
+exports.removeFromCart = async (req, res) => {};
+
+exports.increaseCartProduct = async (req, res) => {};
+
+exports.decreaseCartProduct = async (req, res) => {};
 
 // exports.deleteProduct = async (req, res) => {};
 // exports.deleteProduct = async (req, res) => {};

@@ -6,6 +6,10 @@ const {
   getAProduct,
   getBestSellingProducts,
   category,
+  addToCart,
+  removeFromCart,
+  decreaseCartProduct,
+  increaseCartProduct,
 } = require("../Controllers/ProductControllers");
 const verifyJWT = require("../Middleware/verifyJWT");
 const verifyAdmin = require("../Middleware/verifyAdmin");
@@ -31,5 +35,14 @@ router.patch("/:id", verifyJWT, verifyAdmin, updateProduct);
 
 // delete product
 router.delete("/:id", verifyJWT, verifyAdmin, deleteProduct);
+
+// cart routes
+router.post("/add-to-cart", verifyJWT, addToCart);
+
+router.post("/remove-from-cart", verifyJWT, removeFromCart);
+
+router.post("/increase-cart", verifyJWT, increaseCartProduct);
+
+router.post("/decrease-cart", verifyJWT, decreaseCartProduct);
 
 module.exports = router;

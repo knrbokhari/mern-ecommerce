@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // get Bearer token from localStorage
 const token = `Bearer ${
-  JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).token
+  JSON.parse(JSON.parse(localStorage?.getItem("persist:root"))?.user)?.token
 }`;
 
 // create the api
