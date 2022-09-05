@@ -33,7 +33,7 @@ const CategoryPage = () => {
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  function ProductSearch({ _id, category, name, images, quantity, price }) {
+  const ProductSearch = ({ _id, category, name, images, quantity, price }) => {
     return (
       <Preview
         _id={_id}
@@ -44,7 +44,7 @@ const CategoryPage = () => {
         price={price}
       />
     );
-  }
+  };
 
   return (
     <div className="category-page-container">

@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Navigation from "./components/Navigation";
+import ScrollToTop from "./components/ScrollToTop";
 import CategoryPage from "./pages/CategoryPage";
 import CreateProduct from "./pages/CreateProduct";
 import Home from "./pages/Home";
@@ -13,6 +14,7 @@ import Signup from "./pages/Signup";
 function App() {
   return (
     <div>
+      <ScrollToTop />
       <Navigation />
       <Routes>
         <Route index element={<Home />} />
