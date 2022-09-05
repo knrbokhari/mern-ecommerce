@@ -78,10 +78,20 @@ const Navigation = () => {
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/cart">
-                <Nav.Link>
+                <Nav.Link className="position-relative">
                   <BsFillCartCheckFill
                     style={{ width: "30px", height: "30px" }}
                   />
+                  <span className="position-absolute translate-middle badge rounded-pill bg-danger">
+                    {user?.cart?.count < 0 ? (
+                      <></>
+                    ) : (
+                      <>
+                        {user?.cart?.count}
+                        <span className="visually-hidden">unread messages</span>
+                      </>
+                    )}
+                  </span>
                 </Nav.Link>
               </LinkContainer>
               {user && (
