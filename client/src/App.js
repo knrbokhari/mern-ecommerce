@@ -10,6 +10,7 @@ import Checkout from "./pages/Checkout";
 import CreateProduct from "./pages/CreateProduct";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import OrderPage from "./pages/OrderPage";
 import Product from "./pages/Product";
 import Signup from "./pages/Signup";
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/category/:category" element={<CategoryPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/dashboard/odrer" element={<OrderPage />} />
         <Route path="/dashboard/addProduct" element={<CreateProduct />} />
       </Routes>
       <ToastContainer />

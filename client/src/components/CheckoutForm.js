@@ -49,7 +49,7 @@ const CheckoutForm = () => {
           if (!isLoading && !isError) {
             toast.success(`Payment ${paymentIntent.status}`);
             setTimeout(() => {
-              navigate("/orders");
+              navigate("/dashboard/odrer");
             }, 3000);
           }
         }
