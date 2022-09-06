@@ -1,10 +1,13 @@
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
-import { Badge, Button, Modal, Table } from "react-bootstrap";
+import { Badge, Button, Container, Modal, Table } from "react-bootstrap";
 import { BsEyeFill } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import axios from "../axios";
 import Loading from "../components/Loading";
 import Pagination from "../components/Pagination";
+import { logout } from "../features/userSlice";
 import useProduct from "../hooks/useProduct";
 
 const AllOrder = () => {
@@ -13,15 +16,33 @@ const AllOrder = () => {
   const [products] = useProduct();
   const [orderToShow, setOrderToShow] = useState([]);
   const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = Cookies.get("token");
 
   const handleClose = () => setShow(false);
 
   const markShipped = (orderId, ownerId) => {
     axios
-      .patch(`/orders/${orderId}/mark-shipped`, { ownerId })
+      .patch(
+        `/orders/${orderId}/mark-shipped`,
+        { body: ownerId },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then(({ data }) => setOrders(data))
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        console.log(e);
+        if (e.response.status === 401 || e.response.status === 403) {
+          dispatch(logout());
+          navigate("/login");
+          Cookies.remove("token");
+        }
+      });
   };
 
   const showOrder = (productsObj) => {
@@ -97,7 +118,8 @@ const AllOrder = () => {
   };
 
   return (
-    <>
+    <Container>
+      <h2 className="text-center mb-4">All Orders</h2>
       <Table responsive striped bordered hover>
         <thead>
           <tr>
@@ -145,7 +167,7 @@ const AllOrder = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </Container>
   );
 };
 
