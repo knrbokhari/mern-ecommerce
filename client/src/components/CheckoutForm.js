@@ -49,7 +49,7 @@ const CheckoutForm = () => {
           if (!isLoading && !isError) {
             toast.success(`Payment ${paymentIntent.status}`);
             setTimeout(() => {
-              // navigate("/orders");
+              navigate("/orders");
             }, 3000);
           }
         }
@@ -117,9 +117,10 @@ const CheckoutForm = () => {
         <Button
           className="mt-3 fs-5 px-5"
           type="submit"
-          disabled={user?.cart?.count <= 0 || paying || isSuccess}
+          // disabled={user?.cart?.count <= 0 || paying || isSuccess}
         >
-          {paying ? "Processing..." : "Pay"}
+          {/* {paying ? "Processing..." : "Pay"} */}
+          pay
         </Button>
       </Form>
     </Col>
