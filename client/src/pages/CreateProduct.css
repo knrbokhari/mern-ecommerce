@@ -37,3 +37,13 @@
   background-position: center;
   /* height: 90vh; */
 }
+.dashboard-product-preview {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+.dashboard-product-preview {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}

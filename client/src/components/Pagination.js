@@ -9,7 +9,8 @@ const Pagination = ({
   dataLimit,
   tablePagination,
 }) => {
-  const [pages] = useState(Math.floor(data.length / dataLimit) + 1);
+  // const [pages] = useState(Math.floor(data.length / dataLimit) + 1);
+  const pages = Math.floor(data.length / dataLimit) + 1;
   const [currentPage, setCurrentPage] = useState(1);
 
   const goToNextPage = () => {

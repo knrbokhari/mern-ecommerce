@@ -9,6 +9,7 @@ import CartPage from "./pages/CartPage";
 import CategoryPage from "./pages/CategoryPage";
 import Checkout from "./pages/Checkout";
 import CreateProduct from "./pages/CreateProduct";
+import GetAllProducts from "./pages/GetAllProducts";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import OrderPage from "./pages/OrderPage";
@@ -31,12 +32,16 @@ function App() {
         <Route path="/cart" element={user ? <CartPage /> : <Home />} />
         <Route path="/checkout" element={user ? <Checkout /> : <Home />} />
         <Route
-          path="/dashboard/odrer"
+          path="dashboard/myodrer"
           element={user ? <OrderPage /> : <Home />}
         />
         <Route
           path="/dashboard/addProduct"
-          element={user ? <CreateProduct /> : <Home />}
+          element={user?.isAdmin ? <CreateProduct /> : <Home />}
+        />
+        <Route
+          path="/dashboard/allProduct"
+          element={user?.isAdmin ? <GetAllProducts /> : <Home />}
         />
       </Routes>
       <ToastContainer />

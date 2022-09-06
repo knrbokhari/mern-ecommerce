@@ -55,7 +55,7 @@ const CheckoutForm = () => {
           if (!isLoading && !isError) {
             toast.success(`Payment ${paymentIntent.status}`);
             setTimeout(() => {
-              navigate("/dashboard/odrer");
+              navigate("/dashboard/myodrer");
             }, 1000);
           }
         }

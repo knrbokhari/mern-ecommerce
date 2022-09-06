@@ -122,7 +122,7 @@ const Navigation = () => {
                   <LinkContainer to="/dashboard/profile">
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to="/dashboard/odrer">
+                  <LinkContainer to="/dashboard/myodrer">
                     <NavDropdown.Item>My Order</NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>
