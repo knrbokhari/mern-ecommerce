@@ -58,7 +58,7 @@ const CheckoutForm = () => {
   }
 
   return (
-    <Col className="mt-4">
+    <Col className="mt-3">
       <Form onSubmit={handlePay}>
         <Row>
           <Col md={6}>
