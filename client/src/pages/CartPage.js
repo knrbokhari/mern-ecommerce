@@ -1,7 +1,7 @@
 import React from "react";
 import { Alert, Col, Container, Row, Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useProduct from "../hooks/useProduct";
 import {
   useIncreaseCartProductMutation,
@@ -21,6 +21,7 @@ const CartPage = () => {
   const [increaseCart] = useIncreaseCartProductMutation();
   const [decreaseCart] = useDecreaseCartProductMutation();
   const [removeFromCart, { isLoading }] = useRemoveFromCartMutation();
+  const navigate = useNavigate();
 
   if (isLoading) {
     return <Loading />;
@@ -121,8 +122,12 @@ const CartPage = () => {
               </Table>
               <div className="d-flex align-items-center justify-content-between">
                 <h3 className="h4 m-0">Total: ${user.cart.total}</h3>
-                <button className="btn btn-warning px-5 d-block fs-5">
-                  Buy Now
+                <button
+                  disabled={user?.cart.count === 0}
+                  className="btn btn-warning px-5 d-block fs-5"
+                  onClick={() => navigate("/checkout")}
+                >
+                  Checkout
                 </button>
               </div>
             </>

@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 import ScrollToTop from "./components/ScrollToTop";
 import CartPage from "./pages/CartPage";
 import CategoryPage from "./pages/CategoryPage";
+import Checkout from "./pages/Checkout";
 import CreateProduct from "./pages/CreateProduct";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -24,6 +25,7 @@ function App() {
         <Route path="/product/:id" element={<Product />} />
         <Route path="/category/:category" element={<CategoryPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/dashboard/addProduct" element={<CreateProduct />} />
       </Routes>
       <ToastContainer />
