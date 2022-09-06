@@ -11,6 +11,7 @@ import {
 import { AiTwotoneDelete } from "react-icons/ai";
 import { ImMinus } from "react-icons/im";
 import { BiPlusMedical } from "react-icons/bi";
+import Loading from "../components/Loading";
 
 const CartPage = () => {
   const user = useSelector((state) => state.user);
@@ -20,6 +21,10 @@ const CartPage = () => {
   const [increaseCart] = useIncreaseCartProductMutation();
   const [decreaseCart] = useDecreaseCartProductMutation();
   const [removeFromCart, { isLoading }] = useRemoveFromCartMutation();
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Container className="cart-container">
