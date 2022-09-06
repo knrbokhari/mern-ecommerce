@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Col, Container, Form, Row, Button } from "react-bootstrap";
+import { Col, Container, Form, Row, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { MdClear } from "react-icons/md";
+// import { MdClear } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useUpdateProductMutation } from "../api/appApi";
@@ -13,7 +13,7 @@ const EditProductPage = () => {
     useUpdateProductMutation();
 
   const [images, setImages] = useState([]);
-  const [imgToRemove, setImgToRemove] = useState(null);
+  //   const [imgToRemove, setImgToRemove] = useState(null);
   const [category, setCategory] = useState("");
   const navigate = useNavigate();
 
@@ -46,36 +46,36 @@ const EditProductPage = () => {
     toast.error(error.message);
   }
 
-  const showWidget = () => {
-    const widget = window.cloudinary.createUploadWidget(
-      {
-        cloudName: "dbnaeem",
-        uploadPreset: "l7km97n1",
-      },
-      (error, result) => {
-        if (!error && result.event === "success") {
-          setImages((prev) => [
-            ...prev,
-            { url: result.info.url, public_id: result.info.public_id },
-          ]);
-        }
-      }
-    );
-    widget.open();
-  };
+  //   const showWidget = () => {
+  //     const widget = window.cloudinary.createUploadWidget(
+  //       {
+  //         cloudName: "dbnaeem",
+  //         uploadPreset: "l7km97n1",
+  //       },
+  //       (error, result) => {
+  //         if (!error && result.event === "success") {
+  //           setImages((prev) => [
+  //             ...prev,
+  //             { url: result.info.url, public_id: result.info.public_id },
+  //           ]);
+  //         }
+  //       }
+  //     );
+  //     widget.open();
+  //   };
 
-  const handleRemoveImg = (imgObj) => {
-    setImgToRemove(imgObj.public_id);
-    axios
-      .delete(`/images/${imgObj.public_id}/`)
-      .then((res) => {
-        setImgToRemove(null);
-        setImages((prev) =>
-          prev.filter((img) => img.public_id !== imgObj.public_id)
-        );
-      })
-      .catch((e) => console.log(e));
-  };
+  //   const handleRemoveImg = (imgObj) => {
+  //     setImgToRemove(imgObj.public_id);
+  //     axios
+  //       .delete(`/images/${imgObj.public_id}/`)
+  //       .then((res) => {
+  //         setImgToRemove(null);
+  //         setImages((prev) =>
+  //           prev.filter((img) => img.public_id !== imgObj.public_id)
+  //         );
+  //       })
+  //       .catch((e) => console.log(e));
+  //   };
 
   const onSubmit = (data) => {
     const { name, description, price, quantity } = data;
@@ -186,7 +186,7 @@ const EditProductPage = () => {
               </Form.Label>
             </Form.Group>
 
-            <Form.Group className="mb-3">
+            {/* <Form.Group className="mb-3">
               <Button type="button" onClick={showWidget}>
                 Upload Images
               </Button>
@@ -200,7 +200,7 @@ const EditProductPage = () => {
                   </div>
                 ))}
               </div>
-            </Form.Group>
+            </Form.Group> */}
 
             <Form.Group>
               <Button type="submit" disabled={isLoading || isSuccess}>

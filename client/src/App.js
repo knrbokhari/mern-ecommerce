@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Navigation from "./components/Navigation";
 import ScrollToTop from "./components/ScrollToTop";
+import AllOrder from "./pages/AllOrder";
 import CartPage from "./pages/CartPage";
 import CategoryPage from "./pages/CategoryPage";
 import Checkout from "./pages/Checkout";
@@ -47,6 +48,10 @@ function App() {
         <Route
           path="/dashboard/allProduct"
           element={user?.isAdmin ? <GetAllProducts /> : <Home />}
+        />
+        <Route
+          path="/dashboard/allOrder"
+          element={user?.isAdmin ? <AllOrder /> : <Home />}
         />
       </Routes>
       <ToastContainer />

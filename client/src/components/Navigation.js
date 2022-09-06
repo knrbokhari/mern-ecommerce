@@ -119,12 +119,16 @@ const Navigation = () => {
                       <NavDropdown.Item>All Order</NavDropdown.Item>
                     </LinkContainer>
                   )}
-                  <LinkContainer to="/dashboard/profile">
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/dashboard/myodrer">
-                    <NavDropdown.Item>My Order</NavDropdown.Item>
-                  </LinkContainer>
+                  {!user.isAdmin && (
+                    <LinkContainer to="/dashboard/profile">
+                      <NavDropdown.Item>Profile</NavDropdown.Item>
+                    </LinkContainer>
+                  )}
+                  {!user.isAdmin && (
+                    <LinkContainer to="/dashboard/myodrer">
+                      <NavDropdown.Item>My Order</NavDropdown.Item>
+                    </LinkContainer>
+                  )}
                 </NavDropdown>
               )}
               {user ? (
