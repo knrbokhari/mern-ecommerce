@@ -1,17 +1,25 @@
+import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Badge, Container, Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import axios from "../axios";
+import Loading from "../components/Loading";
 
 const OrderPage = () => {
   const user = useSelector((state) => state.user);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const token = Cookies.get("token");
+
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`/users/${user._id}/orders`)
+      .get(`/users/${user._id}/orders`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then(({ data }) => {
         setLoading(false);
         setOrders(data);
@@ -23,7 +31,7 @@ const OrderPage = () => {
   }, []);
 
   if (loading) {
-    // return <Loading />;
+    return <Loading />;
   }
 
   if (orders.length === 0) {
@@ -43,7 +51,7 @@ const OrderPage = () => {
           </tr>
         </thead>
         <tbody>
-          {orders.map((order) => (
+          {orders?.map((order) => (
             <tr>
               <td>{order._id}</td>
               <td>

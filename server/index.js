@@ -11,6 +11,7 @@ const io = new Server(server, {
   methods: "*",
 });
 const PORT = process.env.PORT || 5000;
+const verifyJWT = require("./Middleware/verifyJWT");
 require("./Connection");
 
 // import routes
@@ -29,7 +30,7 @@ app.use("/products", productRoutes);
 app.use("/images", ImageRoutes);
 
 // creating payment with stripe
-app.post("/create-payment", async (req, res) => {
+app.post("/create-payment", verifyJWT, async (req, res) => {
   const { amount } = req.body;
   try {
     const paymentIntent = await stripe.paymentIntents.create({
