@@ -9,6 +9,7 @@ import CartPage from "./pages/CartPage";
 import CategoryPage from "./pages/CategoryPage";
 import Checkout from "./pages/Checkout";
 import CreateProduct from "./pages/CreateProduct";
+import EditProductPage from "./pages/EditProductPage";
 import GetAllProducts from "./pages/GetAllProducts";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -38,6 +39,10 @@ function App() {
         <Route
           path="/dashboard/addProduct"
           element={user?.isAdmin ? <CreateProduct /> : <Home />}
+        />
+        <Route
+          path="/product/:id/edit"
+          element={user?.isAdmin ? <EditProductPage /> : <Home />}
         />
         <Route
           path="/dashboard/allProduct"

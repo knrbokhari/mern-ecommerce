@@ -41,10 +41,21 @@ export const appApi = createApi({
     deleteProduct: builder.mutation({
       query: ({ product_id, user_id }) => ({
         url: `/products/${product_id}`,
+        headers: { Authorization: token },
         body: {
           user_id,
         },
         method: "DELETE",
+      }),
+    }),
+
+    // update product
+    updateProduct: builder.mutation({
+      query: (product) => ({
+        url: `/products/${product.id}`,
+        headers: { Authorization: token },
+        body: product,
+        method: "PATCH",
       }),
     }),
 
@@ -110,6 +121,7 @@ export const {
   useDecreaseCartProductMutation,
   useCreateOrderMutation,
   useDeleteProductMutation,
+  useUpdateProductMutation,
 } = appApi;
 
 export default appApi;
