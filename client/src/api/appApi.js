@@ -82,6 +82,7 @@ export const appApi = createApi({
       query: (body) => ({
         url: "/orders",
         method: "POST",
+        headers: { Authorization: token },
         body,
       }),
     }),

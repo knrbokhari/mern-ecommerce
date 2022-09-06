@@ -15,9 +15,9 @@ import Loading from "../components/Loading";
 
 const CartPage = () => {
   const user = useSelector((state) => state.user);
-  const userCartObj = user.cart;
+  const userCartObj = user?.cart;
   const [products] = useProduct();
-  let cart = products.filter((product) => userCartObj[product._id] != null);
+  let cart = products.filter((product) => userCartObj[product?._id] != null);
   const [increaseCart] = useIncreaseCartProductMutation();
   const [decreaseCart] = useDecreaseCartProductMutation();
   const [removeFromCart, { isLoading }] = useRemoveFromCartMutation();
@@ -53,7 +53,7 @@ const CartPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {cart.map((item, i) => (
+                  {cart?.map((item, i) => (
                     <tr key={i}>
                       <td className="fs-4">{i + 1}</td>
                       <td>

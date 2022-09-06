@@ -75,23 +75,25 @@ const Navigation = () => {
                   <BiHeart style={{ width: "30px", height: "30px" }} />
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/cart">
-                <Nav.Link className="position-relative">
-                  <BsFillCartCheckFill
-                    style={{ width: "30px", height: "30px" }}
-                  />
-                  <span className="position-absolute translate-middle badge rounded-pill bg-danger">
-                    {user?.cart?.count < 0 ? (
-                      <></>
-                    ) : (
-                      <>
-                        {user?.cart?.count}
-                        <span className="visually-hidden">items</span>
-                      </>
-                    )}
-                  </span>
-                </Nav.Link>
-              </LinkContainer>
+              {user && (
+                <LinkContainer to="/cart">
+                  <Nav.Link className="position-relative">
+                    <BsFillCartCheckFill
+                      style={{ width: "30px", height: "30px" }}
+                    />
+                    <span className="position-absolute translate-middle badge rounded-pill bg-danger">
+                      {user?.cart?.count < 0 ? (
+                        <></>
+                      ) : (
+                        <>
+                          {user?.cart?.count}
+                          <span className="visually-hidden">items</span>
+                        </>
+                      )}
+                    </span>
+                  </Nav.Link>
+                </LinkContainer>
+              )}
               {user && (
                 <NavDropdown
                   title="Dashboard"

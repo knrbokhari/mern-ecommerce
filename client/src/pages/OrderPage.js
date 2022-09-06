@@ -52,7 +52,7 @@ const OrderPage = () => {
         </thead>
         <tbody>
           {orders?.map((order) => (
-            <tr>
+            <tr key={order._id}>
               <td>{order._id}</td>
               <td>
                 <Badge

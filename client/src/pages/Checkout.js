@@ -20,7 +20,7 @@ const Checkout = () => {
     <Container>
       <Row>
         <Col md={6}>
-          <Table responsive="sm" className="cart-table" striped>
+          <Table className="cart-table" responsive striped>
             <thead>
               <tr>
                 <th>#</th>
@@ -31,7 +31,7 @@ const Checkout = () => {
               </tr>
             </thead>
             <tbody>
-              {cart.map((item, i) => (
+              {cart?.map((item, i) => (
                 <tr key={i}>
                   <td className="fs-4">{i + 1}</td>
                   <td>

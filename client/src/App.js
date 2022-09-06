@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,6 +16,8 @@ import Product from "./pages/Product";
 import Signup from "./pages/Signup";
 
 function App() {
+  const user = useSelector((state) => state?.user);
+
   return (
     <div>
       <ScrollToTop />
@@ -25,10 +28,16 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/category/:category" element={<CategoryPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/dashboard/odrer" element={<OrderPage />} />
-        <Route path="/dashboard/addProduct" element={<CreateProduct />} />
+        <Route path="/cart" element={user ? <CartPage /> : <Home />} />
+        <Route path="/checkout" element={user ? <Checkout /> : <Home />} />
+        <Route
+          path="/dashboard/odrer"
+          element={user ? <OrderPage /> : <Home />}
+        />
+        <Route
+          path="/dashboard/addProduct"
+          element={user ? <CreateProduct /> : <Home />}
+        />
       </Routes>
       <ToastContainer />
     </div>

@@ -1,10 +1,11 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useCreateOrderMutation } from "../api/appApi";
 import { toast } from "react-toastify";
+import { logout } from "../features/userSlice";
 import Cookies from "js-cookie";
 
 const CheckoutForm = () => {
@@ -12,12 +13,11 @@ const CheckoutForm = () => {
   const elements = useElements();
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const [createOrder, { isLoading, isError, isSuccess }] =
-    useCreateOrderMutation();
+  const [createOrder, { isLoading, isError }] = useCreateOrderMutation();
   const [country, setCountry] = useState("");
   const [address, setAddress] = useState("");
   const [paying, setPaying] = useState(false);
-
+  const dispatch = useDispatch();
   const token = Cookies.get("token");
 
   async function handlePay(e) {
@@ -34,13 +34,19 @@ const CheckoutForm = () => {
         },
         body: JSON.stringify({ amount: user.cart.total }),
       }
-    ).then((res) => res.json());
+    ).then((res) => {
+      if (res.status === 403 || res.status === 401) {
+        dispatch(logout());
+        navigate("/login");
+        Cookies.remove("token");
+      }
+      return res.json();
+    });
     const { paymentIntent } = await stripe.confirmCardPayment(client_secret, {
       payment_method: {
         card: elements.getElement(CardElement),
       },
     });
-
     setPaying(false);
 
     if (paymentIntent) {
@@ -50,7 +56,7 @@ const CheckoutForm = () => {
             toast.success(`Payment ${paymentIntent.status}`);
             setTimeout(() => {
               navigate("/dashboard/odrer");
-            }, 3000);
+            }, 1000);
           }
         }
       );
