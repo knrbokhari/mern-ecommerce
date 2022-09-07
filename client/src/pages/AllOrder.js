@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Badge, Button, Container, Modal, Table } from "react-bootstrap";

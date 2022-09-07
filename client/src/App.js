@@ -6,6 +6,7 @@ import "./App.css";
 import Navigation from "./components/Navigation";
 import ScrollToTop from "./components/ScrollToTop";
 import AllOrder from "./pages/AllOrder";
+import AllUser from "./pages/AllUser";
 import CartPage from "./pages/CartPage";
 import CategoryPage from "./pages/CategoryPage";
 import Checkout from "./pages/Checkout";
@@ -44,6 +45,10 @@ function App() {
         <Route
           path="/product/:id/edit"
           element={user?.isAdmin ? <EditProductPage /> : <Home />}
+        />
+        <Route
+          path="/dashboard/users"
+          element={user?.isAdmin ? <AllUser /> : <Home />}
         />
         <Route
           path="/dashboard/allProduct"
