@@ -44,3 +44,37 @@
   box-shadow: none;
   color: #999;
 }
+
+.notifications-container {
+  padding: 20px;
+  max-height: 200px;
+  overflow-y: scroll;
+  border: 1px solid gray;
+  background-color: white;
+  width: 200px;
+  z-index: 99;
+}
+
+.notification-read {
+  background-color: transparent;
+}
+
+.notification-unread {
+  background-color: #ebebeb;
+}
+.notifications {
+  cursor: pointer;
+}
+.badge-notification {
+  top: 13px;
+  right: -8px;
+}
+
+.dropdown-toggle::after {
+  border: none !important;
+}
+.notifications-dropdown .dropdown-menu[data-bs-popper] {
+  right: 0;
+  left: auto !important;
+  width: 350px;
+}

@@ -1,14 +1,16 @@
 import React from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Signup.css";
 import { useSignupMutation } from "../api/appApi";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 
 const Signup = () => {
-  const [signup, { error, isLoading, isError, data }] = useSignupMutation();
+  const [signup, { error, isLoading, isError, data, isSuccess }] =
+    useSignupMutation();
+  const navigate = useNavigate();
 
   if (data?.token) {
     Cookies.set("token", data?.token, { expires: 1 });
@@ -28,6 +30,10 @@ const Signup = () => {
     const { name, email, password } = data;
     signup({ name, email, password });
   };
+
+  if (isSuccess) {
+    navigate("/");
+  }
 
   return (
     <Container>

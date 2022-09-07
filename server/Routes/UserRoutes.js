@@ -3,6 +3,7 @@ const {
   login,
   getUser,
   getUserOrders,
+  updateUserNotifications,
 } = require("../Controllers/UserControllers");
 const verifyJWT = require("../Middleware/verifyJWT");
 
@@ -19,5 +20,8 @@ router.get("/", getUser);
 
 // get user orders
 router.get("/:id/orders", verifyJWT, getUserOrders);
+
+// update user notifcations
+router.post("/:id/updateNotifications", verifyJWT, updateUserNotifications);
 
 module.exports = router;

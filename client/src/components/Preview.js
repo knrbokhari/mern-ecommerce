@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col } from "react-bootstrap";
+import { Button, Card, Col } from "react-bootstrap";
 import { BiHeart } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
@@ -86,25 +86,39 @@ const Preview = ({ _id, category, name, images, quantity, price }) => {
           >
             Category: {category}
           </p>
-          <div
-            className="position-absolute"
-            style={{ bottom: "15px", width: "90%" }}
-          >
-            <button
-              className="btn btn-primary w-100"
-              onClick={() =>
-                addToCart({
-                  userId: user._id,
-                  productId: _id,
-                  price: price,
-                  image: images[0].url,
-                })
-              }
+          {user && !user?.isAdmin && (
+            <div
+              className="position-absolute"
+              style={{ bottom: "15px", width: "90%" }}
             >
-              Add to Cart
-            </button>
-            <button className="btn btn-success mt-2 w-100">Buy Now</button>
-          </div>
+              <button
+                className="btn btn-primary w-100"
+                onClick={() =>
+                  addToCart({
+                    userId: user._id,
+                    productId: _id,
+                    price: price,
+                    image: images[0].url,
+                  })
+                }
+              >
+                Add to Cart
+              </button>
+              <button className="btn btn-success mt-2 w-100">Buy Now</button>
+            </div>
+          )}
+          {user && user?.isAdmin && (
+            <div
+              className="position-absolute"
+              style={{ bottom: "15px", width: "90%" }}
+            >
+              <LinkContainer to={`/product/${_id}/edit`}>
+                <Button size="lg" className="w-100">
+                  Edit Product
+                </Button>
+              </LinkContainer>
+            </div>
+          )}
         </div>
       </div>
     </Col>

@@ -27,10 +27,9 @@ const AllOrder = () => {
     axios
       .patch(
         `/orders/${orderId}/mark-shipped`,
-        { body: ownerId },
+        { ownerId: ownerId },
         {
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         }

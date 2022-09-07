@@ -8,14 +8,26 @@ import {
 } from "react-bootstrap";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import { BiHeart } from "react-icons/bi";
+import { MdNotifications } from "react-icons/md";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../features/userSlice";
+import { logout, resetNotifications } from "../features/userSlice";
 import Cookies from "js-cookie";
+import axios from "../axios";
+import { format } from "timeago.js";
 
 const Navigation = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const unreadNotifications = user?.notifications.filter(
+    (notification) => notification.status === "unread"
+  );
+
+  const handleToggleNotifications = () => {
+    dispatch(resetNotifications());
+    if (unreadNotifications > 0)
+      axios.post(`/users/${user._id}/updateNotifications`);
+  };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -41,15 +53,6 @@ const Navigation = () => {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3 align-items-center">
-              {/* <Form className="d-flex">
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="me-2"
-                  aria-label="Search"
-                />
-                <Button variant="outline-success">Search</Button>
-              </Form> */}
               <LinkContainer to="/">
                 <Nav.Link>Home</Nav.Link>
               </LinkContainer>
@@ -70,12 +73,12 @@ const Navigation = () => {
                   <NavDropdown.Item>laptops</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>
-              <LinkContainer to="/Wishlist">
+              {/* <LinkContainer to="/Wishlist">
                 <Nav.Link>
                   <BiHeart style={{ width: "30px", height: "30px" }} />
                 </Nav.Link>
-              </LinkContainer>
-              {user && (
+              </LinkContainer> */}
+              {user && !user?.isAdmin && (
                 <LinkContainer to="/cart">
                   <Nav.Link className="position-relative">
                     <BsFillCartCheckFill
@@ -131,6 +134,42 @@ const Navigation = () => {
                   )}
                 </NavDropdown>
               )}
+
+              <div className="notifications-dropdown">
+                {user && !user?.isAdmin && (
+                  <NavDropdown
+                    className="dropdownNotifications"
+                    title={
+                      <>
+                        <MdNotifications
+                          onClick={handleToggleNotifications}
+                          style={{ width: "30px", height: "30px" }}
+                        />
+                        <span className="position-absolute translate-middle badge rounded-pill bg-danger badge-notification">
+                          {unreadNotifications?.length}
+                          <span className="visually-hidden">items</span>
+                        </span>
+                      </>
+                    }
+                  >
+                    {user?.notifications.length === 0 ? (
+                      <p className="text-center mb-0">No notifcations yet</p>
+                    ) : (
+                      user.notifications.map((notification) => (
+                        <p
+                          className={`notification-${notification.status} word-wrap my-1 p-1 notifications`}
+                        >
+                          <span className="d-block ms-2">
+                            {notification?.message} at{" "}
+                            {format(notification?.time)}
+                          </span>
+                        </p>
+                      ))
+                    )}
+                  </NavDropdown>
+                )}
+              </div>
+
               {user ? (
                 <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
               ) : (

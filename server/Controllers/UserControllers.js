@@ -62,6 +62,19 @@ exports.getUserOrders = async (req, res) => {
   }
 };
 
-//  exports.signup = async (req, res) => {}
+exports.updateUserNotifications = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id);
+    user.notifications.forEach((notif) => {
+      notif.status = "read";
+    });
+    user.markModified("notifications");
+    await user.save();
+    res.status(200).send();
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
 //  exports.signup = async (req, res) => {}
 //  exports.signup = async (req, res) => {}
