@@ -7,8 +7,8 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
-  cors: "*",
-  methods: "*",
+  cors: "http://localhost:3000/",
+  methods: ["GET", "POST", "PATCH", "DELETE"],
 });
 const PORT = process.env.PORT || 5000;
 const verifyJWT = require("./Middleware/verifyJWT");

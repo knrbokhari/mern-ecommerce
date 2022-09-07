@@ -1,4 +1,5 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,9 +19,27 @@ import Login from "./pages/Login";
 import OrderPage from "./pages/OrderPage";
 import Product from "./pages/Product";
 import Signup from "./pages/Signup";
+import { io } from "socket.io-client";
+import { addNotification } from "./features/userSlice";
 
 function App() {
   const user = useSelector((state) => state?.user);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const socket = io("ws://localhost:8080");
+    socket.off("notification").on("notification", (msgObj, user_id) => {
+      // logic for notification
+      if (user_id === user._id) {
+        dispatch(addNotification(msgObj));
+      }
+    });
+
+    socket.off("new-order").on("new-order", (msgObj) => {
+      if (user.isAdmin) {
+        dispatch(addNotification(msgObj));
+      }
+    });
+  }, []);
 
   return (
     <div>

@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Container, Table } from "react-bootstrap";
 import axios from "../axios";
@@ -6,11 +7,14 @@ import Loading from "../components/Loading";
 const AllUser = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const token = Cookies.get("token");
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get("/users")
+      .get("/users", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then(({ data }) => {
         setLoading(false);
         setUsers(data);
