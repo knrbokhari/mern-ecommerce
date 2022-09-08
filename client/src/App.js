@@ -52,7 +52,7 @@ function App() {
         <Route path="/product/:id" element={<Product />} />
         <Route path="/category/:category" element={<CategoryPage />} />
         <Route path="/cart" element={user ? <CartPage /> : <Home />} />
-        <Route path="/checkout" element={user ? <Checkout /> : <Home />} />
+        <Route path="/checkout" element={user ? <Checkout /> : <Login />} />
         <Route
           path="dashboard/myodrer"
           element={user ? <OrderPage /> : <Home />}

@@ -76,7 +76,6 @@ const Product = () => {
           <p className="m-0 mb-1 fs-5">
             Category:{" "}
             <Badge bg="primary" className="text-uppercase">
-              {" "}
               {product?.category}
             </Badge>
           </p>

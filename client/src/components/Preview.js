@@ -33,6 +33,7 @@ const Preview = ({ _id, category, name, images, quantity, price }) => {
           backgroundColor: "#e1e1e1",
           height: "430px",
           width: "100%",
+          borderRadius: "10px",
         }}
         className="position-relative"
       >
