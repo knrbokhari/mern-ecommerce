@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { useAddToCartMutation } from "../api/appApi";
 import { logout } from "../features/userSlice";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 const Preview = ({ _id, category, name, images, quantity, price }) => {
   const user = useSelector((state) => state.user);
@@ -42,7 +43,7 @@ const Preview = ({ _id, category, name, images, quantity, price }) => {
           style={{ height: "200px", objectFit: "cover" }}
           alt=""
         />
-        {quantity === 0 ? (
+        {/* {quantity === 0 ? (
           <p
             className="bg-danger text-white fw-semibold text-center position-absolute"
             style={{
@@ -66,7 +67,7 @@ const Preview = ({ _id, category, name, images, quantity, price }) => {
               cursor: "pointer",
             }}
           />
-        )}
+        )} */}
 
         <div style={{ padding: "5%" }}>
           <LinkContainer to={`/product/${_id}`} style={{ cursor: "pointer" }}>
@@ -104,7 +105,33 @@ const Preview = ({ _id, category, name, images, quantity, price }) => {
               >
                 Add to Cart
               </button>
-              <button className="btn btn-success mt-2 w-100">Buy Now</button>
+              <button
+                className="btn btn-success mt-2 w-100"
+                onClick={() => {
+                  addToCart({
+                    userId: user._id,
+                    productId: _id,
+                    price: price,
+                    image: images[0].url,
+                  });
+                  navigate("/checkout");
+                }}
+              >
+                Buy Now
+              </button>
+            </div>
+          )}
+          {!user && (
+            <div
+              className="position-absolute"
+              style={{ bottom: "15px", width: "90%" }}
+            >
+              <p className="fs-5 m-0">
+                <Link to="/login" className="btn btn-info fs-5 py-0">
+                  Login
+                </Link>{" "}
+                to purchase or add items to the cart cart.
+              </p>
             </div>
           )}
           {user && user?.isAdmin && (
