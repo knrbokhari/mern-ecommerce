@@ -103,9 +103,18 @@ export const appApi = createApi({
     createOrder: builder.mutation({
       query: (body) => ({
         url: "/orders",
-        method: "POST",
         headers: { Authorization: token },
+        method: "POST",
         body,
+      }),
+    }),
+
+    // update Notifications
+    updateNotifications: builder.mutation({
+      query: (id) => ({
+        url: `/users/${id}/updateNotifications`,
+        headers: { Authorization: token },
+        method: "POST",
       }),
     }),
   }),
@@ -122,6 +131,7 @@ export const {
   useCreateOrderMutation,
   useDeleteProductMutation,
   useUpdateProductMutation,
+  useUpdateNotificationsMutation,
 } = appApi;
 
 export default appApi;

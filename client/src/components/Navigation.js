@@ -13,20 +13,24 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, resetNotifications } from "../features/userSlice";
 import Cookies from "js-cookie";
-import axios from "../axios";
 import { format } from "timeago.js";
+import { useUpdateNotificationsMutation } from "../api/appApi";
 
 const Navigation = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const [updateNotifications, { error }] = useUpdateNotificationsMutation();
   const unreadNotifications = user?.notifications.filter(
     (notification) => notification.status === "unread"
   );
 
   const handleToggleNotifications = () => {
     dispatch(resetNotifications());
-    if (unreadNotifications > 0)
-      axios.post(`/users/${user._id}/updateNotifications`);
+    updateNotifications(user._id);
+
+    if (error) {
+      console.log(error);
+    }
   };
 
   const handleLogout = () => {
@@ -136,7 +140,7 @@ const Navigation = () => {
               )}
 
               <div className="notifications-dropdown">
-                {user && !user?.isAdmin && (
+                {user && (
                   <NavDropdown
                     className="dropdownNotifications"
                     title={

@@ -9,7 +9,7 @@ const {
 const router = require("express").Router();
 
 // create order
-router.post("/", createOrder);
+router.post("/", verifyJWT, createOrder);
 
 // get all order
 router.get("/", verifyJWT, verifyAdmin, getAllOrder);
