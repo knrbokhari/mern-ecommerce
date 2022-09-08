@@ -23,7 +23,7 @@ router.get("/", getProduct);
 router.get("/:id", getAProduct);
 
 // get best selling products  in all category
-router.get("/bestselling", getBestSellingProducts);
+router.get("/bestselling/:num", getBestSellingProducts);
 
 router.get("/category/:category", category);
 

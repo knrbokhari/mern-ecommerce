@@ -85,7 +85,24 @@ exports.getAProduct = async (req, res) => {
 };
 
 // get best selling products  in all category
-exports.getBestSellingProducts = async (req, res) => {};
+exports.getBestSellingProducts = async (req, res) => {
+  const num = req.params.num;
+
+  try {
+    const laptop = await Product.find({ category: "laptop" })
+      .sort({ totalSell: -1 })
+      .limit(num / 3);
+    const technology = await Product.find({ category: "technology" })
+      .sort({ totalSell: -1 })
+      .limit(num / 3);
+    const phones = await Product.find({ category: "phones" })
+      .sort({ totalSell: -1 })
+      .limit(num / 3);
+    res.status(200).json([...laptop, ...phones, ...technology]);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
 
 exports.category = async (req, res) => {
   const { category } = req.params;
