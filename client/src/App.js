@@ -21,6 +21,7 @@ import Product from "./pages/Product";
 import Signup from "./pages/Signup";
 import { io } from "socket.io-client";
 import { addNotification } from "./features/userSlice";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   const user = useSelector((state) => state?.user);
@@ -57,6 +58,10 @@ function App() {
         <Route
           path="dashboard/myodrer"
           element={user ? <OrderPage /> : <Home />}
+        />
+        <Route
+          path="dashboard/profile"
+          element={user ? <UserProfile /> : <Home />}
         />
         <Route
           path="/dashboard/addProduct"

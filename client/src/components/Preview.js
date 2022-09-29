@@ -88,53 +88,46 @@ const Preview = ({ _id, category, name, images, quantity, price }) => {
           >
             Category: {category}
           </p>
-          {user && !user?.isAdmin && (
-            <div
-              className="position-absolute"
-              style={{ bottom: "15px", width: "90%" }}
-            >
-              <button
-                className="btn btn-primary w-100"
-                onClick={() =>
-                  addToCart({
-                    userId: user._id,
-                    productId: _id,
-                    price: price,
-                    image: images[0].url,
-                  })
+
+          <div
+            className="position-absolute"
+            style={{ bottom: "15px", width: "90%" }}
+          >
+            <button
+              className="btn btn-primary w-100"
+              onClick={() => {
+                if (!user) {
+                  return navigate("/login");
                 }
-              >
-                Add to Cart
-              </button>
-              <button
-                className="btn btn-success mt-2 w-100"
-                onClick={() => {
-                  addToCart({
-                    userId: user._id,
-                    productId: _id,
-                    price: price,
-                    image: images[0].url,
-                  });
-                  navigate("/checkout");
-                }}
-              >
-                Buy Now
-              </button>
-            </div>
-          )}
-          {!user && (
-            <div
-              className="position-absolute"
-              style={{ bottom: "15px", width: "90%" }}
+                addToCart({
+                  userId: user._id,
+                  productId: _id,
+                  price: price,
+                  image: images[0].url,
+                });
+              }}
             >
-              <p className="fs-5 m-0">
-                <Link to="/login" className="btn btn-info fs-5 py-0">
-                  Login
-                </Link>{" "}
-                to purchase or add items to the cart cart.
-              </p>
-            </div>
-          )}
+              Add to Cart
+            </button>
+            <button
+              className="btn btn-success mt-2 w-100"
+              onClick={() => {
+                if (!user) {
+                  return navigate("/login");
+                }
+                addToCart({
+                  userId: user._id,
+                  productId: _id,
+                  price: price,
+                  image: images[0].url,
+                });
+                navigate("/checkout");
+              }}
+            >
+              Buy Now
+            </button>
+          </div>
+
           {user && user?.isAdmin && (
             <div
               className="position-absolute"
