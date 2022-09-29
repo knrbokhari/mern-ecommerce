@@ -9,7 +9,10 @@ const token = `Bearer ${Cookies.get("token")}`;
 // create the api
 export const appApi = createApi({
   reducerPath: "appApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000" }),
+  // baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://calm-beach-92689.herokuapp.com/",
+  }),
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (user) => ({
