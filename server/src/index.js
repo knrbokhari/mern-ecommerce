@@ -10,9 +10,8 @@ const io = new Server(server, {
   cors: "http://localhost:3000/",
   methods: ["GET", "POST", "PATCH", "DELETE"],
 });
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 5000;
 const verifyJWT = require("./Middleware/verifyJWT");
-require("./Connection");
 
 // import routes
 const User = require("./Models/User");
@@ -47,8 +46,10 @@ app.post("/create-payment", verifyJWT, async (req, res) => {
   }
 });
 
-server.listen(PORT, () => {
-  console.log("server running at port", PORT);
-});
+// server.listen(PORT, () => {
+//   console.log("server running at port", PORT);
+// });
 
 app.set("socketio", io);
+
+module.exports = { app, server };
