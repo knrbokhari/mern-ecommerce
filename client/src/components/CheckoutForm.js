@@ -25,8 +25,8 @@ const CheckoutForm = () => {
     if (!stripe || !elements || user.cart.count <= 0) return;
     setPaying(true);
     const { client_secret } = await fetch(
-      // "http://localhost:5000/create-payment",
-      "https://calm-beach-92689.herokuapp.com/create-payment",
+      "http://localhost:5000/create-payment",
+      // "https://calm-beach-92689.herokuapp.com/create-payment",
       {
         method: "POST",
         headers: {
@@ -56,7 +56,7 @@ const CheckoutForm = () => {
           if (!isLoading && !isError) {
             toast.success(`Payment ${paymentIntent.status}`);
             setTimeout(() => {
-              navigate("/dashboard/myodrer");
+              // navigate("/dashboard/myodrer");
             }, 1000);
           }
         }

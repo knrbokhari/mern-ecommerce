@@ -16,11 +16,11 @@ const Preview = ({ _id, category, name, images, quantity, price }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  if (error) {
-    dispatch(logout());
-    navigate("/login");
-    Cookies.remove("token");
-  }
+  // if (error) {
+  //   dispatch(logout());
+  //   navigate("/login");
+  //   Cookies.remove("token");
+  // }
 
   if (isSuccess) {
     // toast.success(`${name} is added to your cart`);
@@ -44,7 +44,7 @@ const Preview = ({ _id, category, name, images, quantity, price }) => {
           style={{ height: "200px", objectFit: "cover" }}
           alt=""
         />
-        {/* {quantity === 0 ? (
+        {quantity === 0 ? (
           <p
             className="bg-danger text-white fw-semibold text-center position-absolute"
             style={{
@@ -57,6 +57,9 @@ const Preview = ({ _id, category, name, images, quantity, price }) => {
             OUT OF STOCK
           </p>
         ) : (
+          ""
+        )}
+        {/* (
           <BiHeart
             className="position-absolute"
             style={{
@@ -68,7 +71,7 @@ const Preview = ({ _id, category, name, images, quantity, price }) => {
               cursor: "pointer",
             }}
           />
-        )} */}
+        ) */}
 
         <div style={{ padding: "5%" }}>
           <LinkContainer to={`/product/${_id}`} style={{ cursor: "pointer" }}>
@@ -87,6 +90,13 @@ const Preview = ({ _id, category, name, images, quantity, price }) => {
             style={{ fontSize: "16px", textTransform: "capitalize" }}
           >
             Category: {category}
+          </p>
+
+          <p
+            className="text-secondary mb-2 fs-6"
+            style={{ fontSize: "16px", textTransform: "capitalize" }}
+          >
+            quantity: {quantity}
           </p>
 
           <div
