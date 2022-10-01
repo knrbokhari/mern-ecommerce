@@ -8,6 +8,7 @@ const {
   getSimilarProductServices,
   findBestSellingProducts,
   deleteProductServices,
+  getProductsByCategoryServices,
 } = require("../Services/ProductServices");
 const { NotFound } = require("../utils/error");
 
@@ -68,7 +69,7 @@ exports.deleteProduct = async (req, res) => {
     }
 
     await deleteProductServices(id);
-    
+
     res
       .status(200)
       .json({ success: true, msg: "Product deleted successfully" });
@@ -113,14 +114,13 @@ exports.getBestSellingProducts = async (req, res) => {
 exports.category = async (req, res) => {
   const { category } = req.params;
   try {
-    const sort = { _id: -1 };
     if (category === "all") {
-      const products = await Product.find().sort(sort);
-      res.status(200).json(products);
-    } else {
-      const products = await Product.find({ category }).sort(sort);
-      res.status(200).json(products);
+      const products = await getProductsServices();
+      return res.status(200).json(products);
     }
+
+    const products = await getProductsByCategoryServices(category);
+    res.status(200).json(products);
   } catch (e) {
     res.status(400).send(e.message);
   }
@@ -129,8 +129,6 @@ exports.category = async (req, res) => {
 // add product to cart
 exports.addToCart = async (req, res) => {
   const { userId, productId, price } = req.body;
-
-  // console.log(req.body);
 
   try {
     const user = await User.findById(userId);

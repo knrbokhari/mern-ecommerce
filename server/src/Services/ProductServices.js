@@ -40,5 +40,9 @@ exports.deleteProductServices = async (id) => {
   return product;
 };
 
-// exports.
+exports.getProductsByCategoryServices = async (data) => {
+  const products = await Product.find({ category: data }).sort({ _id: -1 });
+  return products;
+};
+
 // exports.
