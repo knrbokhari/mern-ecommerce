@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const { NotFound, BadRequest } = require("../utils/error");
 
 const UserSchema = mongoose.Schema(
   {
@@ -54,10 +55,10 @@ const UserSchema = mongoose.Schema(
 // find user
 UserSchema.statics.findByCredentials = async function (email, password) {
   const user = await User.findOne({ email });
-  if (!user) throw new Error("invalid credentials");
+  if (!user) throw new NotFound("Email doesn't exists");
   const isSamePassword = bcrypt.compareSync(password, user.password);
   if (isSamePassword) return user;
-  throw new Error("invalid credentials");
+  throw new BadRequest("invalid credentials");
 };
 
 // removeing password from user object

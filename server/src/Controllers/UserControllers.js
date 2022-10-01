@@ -9,6 +9,7 @@ const {
 
 dotenv.config();
 
+// signup route
 exports.signup = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -37,16 +38,21 @@ exports.signup = async (req, res) => {
   }
 };
 
+// login route
 exports.login = async (req, res) => {
   const { email, password } = req.body;
   try {
+    // finding users by checking email & password
     const user = await User.findByCredentials(email, password);
+
     // jwt token
     const token = jwt.sign(
       { name: user.name, id: user._id },
       process.env.JWTKEY,
       { expiresIn: "1d" }
     );
+
+    // git token to user
     const userWithToken = Object.assign({}, user?._doc);
     userWithToken.token = token;
 
