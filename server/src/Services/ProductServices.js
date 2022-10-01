@@ -35,6 +35,10 @@ exports.findBestSellingProducts = async (category) => {
   return bestSellingProduct;
 };
 
-// exports.
+exports.deleteProductServices = async (id) => {
+  const product = Product.findByIdAndRemove(id);
+  return product;
+};
+
 // exports.
 // exports.

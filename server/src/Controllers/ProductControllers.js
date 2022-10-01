@@ -7,7 +7,9 @@ const {
   getProductServices,
   getSimilarProductServices,
   findBestSellingProducts,
+  deleteProductServices,
 } = require("../Services/ProductServices");
+const { NotFound } = require("../utils/error");
 
 //get products
 exports.getProducts = async (req, res) => {
@@ -59,16 +61,17 @@ exports.updateProduct = async (req, res) => {
 // delete product
 exports.deleteProduct = async (req, res) => {
   const id = req.params.id;
-  console.log(id);
   try {
-    const product = await Product.findById(id);
+    const product = await getProductServices(id);
     if (!product) {
-      return res.status(404).json("Product not found");
+      throw new NotFound("Product not found");
     }
 
-    await Product.findByIdAndDelete(id);
-    const products = await Product.find();
-    res.status(200).json(products);
+    await deleteProductServices(id);
+    
+    res
+      .status(200)
+      .json({ success: true, msg: "Product deleted successfully" });
   } catch (e) {
     res.status(400).send(e.message);
   }
