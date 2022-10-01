@@ -3,6 +3,7 @@ const User = require("../Models/User");
 const {
   getProductsServices,
   addProductServices,
+  updateProductServices,
 } = require("../Services/ProductServices");
 
 //get products
@@ -41,17 +42,21 @@ exports.addProduct = async (req, res) => {
 exports.updateProduct = async (req, res) => {
   const { id } = req.params;
   try {
-    const { name, description, price, category, quantity, images } = req.body;
-    const product = await Product.findByIdAndUpdate(id, {
-      name,
-      description,
-      price,
-      category,
-      quantity,
-      images,
+    // const { name, description, price, category, quantity, images } = req.body;
+    // const product = await Product.findByIdAndUpdate(id, {
+    //   name,
+    //   description,
+    //   price,
+    //   category,
+    //   quantity,
+    //   images,
+    // });
+    const updatedProduct = await updateProductServices(id, req.body);
+    res.status(200).json({
+      success: true,
+      updatedProduct,
+      msg: "Product update successfully",
     });
-    const products = await Product.find();
-    res.status(200).json(products);
   } catch (e) {
     res.status(400).send(e.message);
   }

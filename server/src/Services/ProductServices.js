@@ -9,6 +9,10 @@ exports.addProductServices = async (product) => {
   return newProduct;
 };
 
-// exports.
+exports.updateProductServices = async (id, data) => {
+  const updateProduct = Product.findByIdAndUpdate(id, data, { new: true });
+  return updateProduct;
+};
+
 // exports.
 // exports.
