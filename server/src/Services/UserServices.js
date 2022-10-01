@@ -5,6 +5,11 @@ exports.findUserByEmail = async (email) => {
   return user;
 };
 
+exports.findUserById = async (id) => {
+  const user = await User.findById(id);
+  return user;
+};
+
 exports.createUserServices = async (user) => {
   const savedUser = await User.create(user);
   return savedUser;
@@ -12,6 +17,13 @@ exports.createUserServices = async (user) => {
 
 exports.getUsersServices = async () => {
   const users = await User.find({ isAdmin: false })
+    .populate("orders")
+    .sort({ createdAt: -1 });
+  return users;
+};
+
+exports.getUserOrderById = async (id) => {
+  const users = await User.find({ id })
     .populate("orders")
     .sort({ createdAt: -1 });
   return users;

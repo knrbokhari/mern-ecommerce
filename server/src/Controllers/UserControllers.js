@@ -1,11 +1,13 @@
 const User = require("../Models/User");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-const { BadRequest } = require("../utils/error");
+const { BadRequest, NotFound } = require("../utils/error");
 const {
   findUserByEmail,
   createUserServices,
   getUsersServices,
+  getUserOrderById,
+  findUserById,
 } = require("../Services/UserServices");
 
 dotenv.config();
@@ -79,8 +81,13 @@ exports.getUsers = async (req, res) => {
 exports.getUserOrders = async (req, res) => {
   const id = req.params.id;
   try {
-    const user = await User.findById(id).populate("orders");
-    res.json(user.orders);
+    const user = await findUserById(id);
+    if (!user) {
+      throw new NotFound("User not Exits");
+    }
+    const orders = await getUserOrderById(id);
+    User.findById(id).populate("orders");
+    res.status(200).json(orders);
   } catch (e) {
     res.status(400).send(e.message);
   }
