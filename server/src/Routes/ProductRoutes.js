@@ -28,10 +28,10 @@ router.get("/bestselling/:num", getBestSellingProducts);
 router.get("/category/:category", category);
 
 //create product
-router.post("/",verifyJWT, verifyAdmin, addProduct);
+router.post("/", verifyJWT, verifyAdmin, addProduct);
 
 // update product
-router.patch("/:id", updateProduct);
+router.patch("/:id", verifyJWT, verifyAdmin, updateProduct);
 
 // delete product
 router.delete("/:id", verifyJWT, verifyAdmin, deleteProduct);

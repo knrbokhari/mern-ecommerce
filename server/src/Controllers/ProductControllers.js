@@ -4,6 +4,8 @@ const {
   getProductsServices,
   addProductServices,
   updateProductServices,
+  getProductServices,
+  getSimilarProductServices,
 } = require("../Services/ProductServices");
 
 //get products
@@ -42,15 +44,6 @@ exports.addProduct = async (req, res) => {
 exports.updateProduct = async (req, res) => {
   const { id } = req.params;
   try {
-    // const { name, description, price, category, quantity, images } = req.body;
-    // const product = await Product.findByIdAndUpdate(id, {
-    //   name,
-    //   description,
-    //   price,
-    //   category,
-    //   quantity,
-    //   images,
-    // });
     const updatedProduct = await updateProductServices(id, req.body);
     res.status(200).json({
       success: true,
@@ -84,11 +77,12 @@ exports.deleteProduct = async (req, res) => {
 exports.getAProduct = async (req, res) => {
   const id = req.params.id;
   try {
-    const product = await Product.findById(id);
-    const similar = await Product.find({
-      category: product.category,
-    }).limit(5);
-    // console.log(similar);
+    const product = await getProductServices(id);
+
+    if (!product) throw new NotFound("Product not found");
+
+    const similar = await getSimilarProductServices(product.category);
+
     res.status(200).json({ product, similar });
   } catch (e) {
     res.status(400).send(e.message);

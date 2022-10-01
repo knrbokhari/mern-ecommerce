@@ -14,5 +14,19 @@ exports.updateProductServices = async (id, data) => {
   return updateProduct;
 };
 
+exports.getProductServices = async (id) => {
+  const product = await Product.findById(id);
+  return product;
+};
+
+exports.getSimilarProductServices = async (category) => {
+  const similarProduct = await Product.find({
+    category: category,
+  }).limit(5);
+  return similarProduct;
+};
+
+// exports.
+// exports.
 // exports.
 // exports.
