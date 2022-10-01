@@ -86,6 +86,9 @@ exports.getUserOrders = async (req, res) => {
       throw new NotFound("User not Exits");
     }
     const orders = await getUserOrderById(id);
+    if (!orders) {
+      throw new NotFound("You not have any Orders");
+    }
     User.findById(id).populate("orders");
     res.status(200).json(orders);
   } catch (e) {

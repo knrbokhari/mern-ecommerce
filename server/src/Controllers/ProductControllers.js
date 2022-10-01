@@ -1,11 +1,20 @@
 const Product = require("../Models/Product");
 const User = require("../Models/User");
+const {
+  getProductsServices,
+  addProductServices,
+} = require("../Services/ProductServices");
 
 //get products
-exports.getProduct = async (req, res) => {
+exports.getProducts = async (req, res) => {
   try {
-    const sort = { _id: -1 };
-    const products = await Product.find().sort(sort);
+    const products = await getProductsServices();
+
+    if (!products.length)
+      return res
+        .status(200)
+        .json({ success: true, msg: "No product created yet" });
+
     res.status(200).json(products);
   } catch (e) {
     res.status(400).send(e.message);
@@ -14,18 +23,15 @@ exports.getProduct = async (req, res) => {
 
 //create product
 exports.addProduct = async (req, res) => {
+  // console.log(req.body);
   try {
-    const { name, description, price, category, quantity, images } = req.body;
-    const product = await Product.create({
-      name,
-      description,
-      price,
-      category,
-      images,
-      quantity,
+    const newProduct = await addProductServices(req.body);
+
+    res.status(201).json({
+      success: true,
+      newProduct,
+      msg: "New product added successfully",
     });
-    const products = await Product.find();
-    res.status(201).json(products);
   } catch (e) {
     res.status(400).send(e.message);
   }

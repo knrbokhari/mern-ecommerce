@@ -23,8 +23,8 @@ exports.getUsersServices = async () => {
 };
 
 exports.getUserOrderById = async (id) => {
-  const users = await User.find({ id })
+  const users = await User.findById(id)
     .populate("orders")
     .sort({ createdAt: -1 });
-  return users;
+  return users.order;
 };

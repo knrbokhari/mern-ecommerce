@@ -1,5 +1,5 @@
 const {
-  getProduct,
+  getProducts,
   addProduct,
   deleteProduct,
   updateProduct,
@@ -17,7 +17,7 @@ const verifyAdmin = require("../Middleware/verifyAdmin");
 const router = require("express").Router();
 
 //get products;
-router.get("/", getProduct);
+router.get("/", getProducts);
 
 //get a products;
 router.get("/:id", getAProduct);
@@ -28,7 +28,7 @@ router.get("/bestselling/:num", getBestSellingProducts);
 router.get("/category/:category", category);
 
 //create product
-router.post("/", verifyJWT, addProduct);
+router.post("/", addProduct);
 
 // update product
 router.patch("/:id", verifyJWT, verifyAdmin, updateProduct);
