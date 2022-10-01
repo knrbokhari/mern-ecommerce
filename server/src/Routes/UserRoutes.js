@@ -1,9 +1,9 @@
 const {
   signup,
   login,
-  getUser,
   getUserOrders,
   updateUserNotifications,
+  getUsers,
 } = require("../Controllers/UserControllers");
 const verifyJWT = require("../Middleware/verifyJWT");
 
@@ -16,7 +16,7 @@ router.post("/signup", signup);
 router.post("/login", login);
 
 // get users
-router.get("/", getUser);
+router.get("/", getUsers);
 
 // get user orders
 router.get("/:id/orders", verifyJWT, getUserOrders);

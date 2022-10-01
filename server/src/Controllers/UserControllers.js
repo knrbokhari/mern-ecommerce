@@ -5,6 +5,7 @@ const { BadRequest } = require("../utils/error");
 const {
   findUserByEmail,
   createUserServices,
+  getUsersServices,
 } = require("../Services/UserServices");
 
 dotenv.config();
@@ -62,9 +63,13 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.getUser = async (req, res) => {
+// get users
+exports.getUsers = async (req, res) => {
   try {
-    const users = await User.find({ isAdmin: false }).populate("orders");
+    const users = await getUsersServices();
+    if (!users) {
+      throw new NotFound("User not found");
+    }
     res.status(200).json(users);
   } catch (e) {
     res.status(400).send(e.message);
