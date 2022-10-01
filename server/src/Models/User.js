@@ -32,11 +32,13 @@ const UserSchema = mongoose.Schema(
     },
 
     cart: {
-      type: Object,
-      default: {
-        total: 0,
-        count: 0,
-      },
+      // type: Object,
+      // default: {
+      //   total: 0,
+      //   count: 0,
+      // },
+      type: Array,
+      default: [],
     },
 
     notifications: {

@@ -1,12 +1,25 @@
 const User = require("../Models/User");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const { BadRequest } = require("../utils/error");
+const {
+  findUserByEmail,
+  createUserServices,
+} = require("../Services/UserServices");
+
+dotenv.config();
 
 exports.signup = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    const user = await User.create({ name, email, password });
+    const isUser = await findUserByEmail(email);
+    if (isUser) {
+      throw new BadRequest("Email already Exits");
+    }
+    // creating user
+    const user = await createUserServices({ name, email, password });
+
     // jwt token
     const token = jwt.sign(
       { name: user.name, id: user._id },
@@ -14,12 +27,12 @@ exports.signup = async (req, res) => {
       { expiresIn: "1d" }
     );
 
+    // git token to user
     const userWithToken = Object.assign({}, user?._doc);
     userWithToken.token = token;
 
     res.status(200).json(userWithToken);
   } catch (e) {
-    if (e.code === 11000) return res.status(400).send("Email already exists");
     res.status(400).send(e.message);
   }
 };
