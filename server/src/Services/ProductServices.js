@@ -26,7 +26,15 @@ exports.getSimilarProductServices = async (category) => {
   return similarProduct;
 };
 
-// exports.
+exports.findBestSellingProducts = async (category) => {
+  const bestSellingProduct = await Product.find({
+    category: category,
+  })
+    .sort({ totalSell: -1 })
+    .limit(1);
+  return bestSellingProduct;
+};
+
 // exports.
 // exports.
 // exports.
