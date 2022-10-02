@@ -39,7 +39,7 @@ router.delete("/:id", verifyJWT, verifyAdmin, deleteProduct);
 // cart routes
 router.post("/add-to-cart", addToCart);
 
-router.post("/remove-from-cart", verifyJWT, removeFromCart);
+router.post("/remove-from-cart", removeFromCart);
 
 router.post("/increase-cart", verifyJWT, increaseCartProduct);
 

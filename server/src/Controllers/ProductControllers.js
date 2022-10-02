@@ -161,16 +161,14 @@ exports.removeFromCart = async (req, res) => {
   try {
     const user = await findUserById(userId);
     const userCart = user.cart;
-    console.log(userCart);
 
-    // const user = await User.findById(userId);
-    // const userCart = user.cart;
-    // userCart.total -= Number(userCart[productId]) * Number(price);
-    // userCart.count -= userCart[productId];
-    // delete userCart[productId];
-    // user.cart = userCart;
-    // user.markModified("cart");
-    // await user.save();
+    const updateCart = userCart.filter(
+      (product) => product.productId._id != productId
+    );
+    
+    user.cart = updateCart;
+    user.markModified("cart");
+    await user.save();
     res.status(200).json(user);
   } catch (e) {
     res.status(400).send(e.message);
