@@ -1,12 +1,13 @@
 const User = require("../Models/User");
 
 exports.findUserByEmail = async (email) => {
-  const user = await User.findOne({ email }).populate("cart.productId");
+  const user = await User.findOne({ email });
+  // .populate("cart");
   return user;
 };
 
 exports.findUserById = async (id) => {
-  const user = await User.findById(id).populate("cart.productId");
+  const user = await User.findById(id).populate("cart.cartId");
   return user;
 };
 
@@ -28,3 +29,8 @@ exports.getUserOrderById = async (id) => {
     .sort({ createdAt: -1 });
   return users.order;
 };
+
+// exports.removeCartIdServices = async () => {};
+
+// exports.
+// exports.

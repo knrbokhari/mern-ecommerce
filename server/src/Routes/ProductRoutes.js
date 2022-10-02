@@ -37,12 +37,12 @@ router.patch("/:id", verifyJWT, verifyAdmin, updateProduct);
 router.delete("/:id", verifyJWT, verifyAdmin, deleteProduct);
 
 // cart routes
-router.post("/add-to-cart", addToCart);
+// router.post("/add-to-cart", addToCart);
 
-router.post("/remove-from-cart", removeFromCart);
+// router.post("/remove-from-cart", verifyJWT, removeFromCart);
 
-router.post("/increase-cart", verifyJWT, increaseCartProduct);
+// router.post("/increase-cart", verifyJWT, increaseCartProduct);
 
-router.post("/decrease-cart", verifyJWT, decreaseCartProduct);
+// router.post("/decrease-cart", verifyJWT, decreaseCartProduct);
 
 module.exports = router;

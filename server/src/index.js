@@ -10,7 +10,6 @@ const io = new Server(server, {
   cors: "http://localhost:3000/",
   methods: ["GET", "POST", "PATCH", "DELETE"],
 });
-// const PORT = process.env.PORT || 5000;
 const verifyJWT = require("./Middleware/verifyJWT");
 
 // import routes
@@ -19,6 +18,7 @@ const userRoutes = require("./Routes/UserRoutes");
 const productRoutes = require("./Routes/ProductRoutes");
 const ImageRoutes = require("./Routes/ImageRoutes");
 const OrderRoutes = require("./Routes/OrderRoutes");
+const CartRoutes = require("./Routes/CartRoutes");
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -29,6 +29,7 @@ app.use("/users", userRoutes);
 app.use("/products", productRoutes);
 app.use("/images", ImageRoutes);
 app.use("/orders", OrderRoutes);
+app.use("/cart", CartRoutes);
 
 // creating payment with stripe
 app.post("/create-payment", verifyJWT, async (req, res) => {
@@ -45,10 +46,6 @@ app.post("/create-payment", verifyJWT, async (req, res) => {
     res.status(400).json(e.message);
   }
 });
-
-// server.listen(PORT, () => {
-//   console.log("server running at port", PORT);
-// });
 
 app.set("socketio", io);
 

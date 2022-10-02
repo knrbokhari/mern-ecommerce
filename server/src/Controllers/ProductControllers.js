@@ -10,7 +10,11 @@ const {
   deleteProductServices,
   getProductsByCategoryServices,
 } = require("../Services/ProductServices");
-const { findUserById } = require("../Services/UserServices");
+const {
+  findUserById,
+  alreadyAddedProductServices,
+  removeFromCartServices,
+} = require("../Services/UserServices");
 const { NotFound } = require("../utils/error");
 
 //get products
@@ -127,87 +131,92 @@ exports.category = async (req, res) => {
   }
 };
 
-// add product to cart
-exports.addToCart = async (req, res) => {
-  const { userId, productId, price } = req.body;
+// // add product to cart
+// exports.addToCart = async (req, res) => {
+//   const { userId, productId, price } = req.body;
 
-  try {
-    const user = await findUserById(userId);
-    const userCart = user.cart;
+//   try {
+//     const user = await findUserById(userId);
+//     const userCart = user.cart;
 
-    const alreadyAddedProduct = userCart.find(
-      (pro) => pro.productId == productId
-    );
+//     const addedProduct = await alreadyAddedProductServices(userCart, productId);
 
-    if (!alreadyAddedProduct) {
-      userCart.push({ productId: productId });
-    } else {
-      return res
-        .status(200)
-        .json({ msg: "You already added this product into your cart" });
-    }
+//     if (!addedProduct) {
+//       userCart.push({ productId: productId });
+//     } else {
+//       return res
+//         .status(200)
+//         .json({ msg: "You already added this product into your cart" });
+//     }
 
-    user.markModified("cart");
-    await user.save();
+//     user.markModified("cart");
+//     await user.save();
 
-    res.status(200).json(user);
-  } catch (e) {
-    res.status(400).send(e.message);
-  }
-};
+//     res.status(200).json(user);
+//   } catch (e) {
+//     res.status(400).send(e.message);
+//   }
+// };
 
-exports.removeFromCart = async (req, res) => {
-  const { userId, productId, price } = req.body;
-  try {
-    const user = await findUserById(userId);
-    const userCart = user.cart;
+// // remove product from card
+// exports.removeFromCart = async (req, res) => {
+//   const { userId, productId, price } = req.body;
+//   try {
+//     const user = await findUserById(userId);
+//     const userCart = user.cart;
 
-    const updateCart = userCart.filter(
-      (product) => product.productId._id != productId
-    );
-    
-    user.cart = updateCart;
-    user.markModified("cart");
-    await user.save();
-    res.status(200).json(user);
-  } catch (e) {
-    res.status(400).send(e.message);
-  }
-};
+//     const updateCart = await removeFromCartServices(userCart, productId);
 
-exports.increaseCartProduct = async (req, res) => {
-  const { userId, productId, price } = req.body;
-  try {
-    const user = await User.findById(userId);
-    const userCart = user.cart;
-    userCart.total += Number(price);
-    userCart.count += 1;
-    userCart[productId] += 1;
-    user.cart = userCart;
-    user.markModified("cart");
-    await user.save();
-    res.status(200).json(user);
-  } catch (e) {
-    res.status(400).send(e.message);
-  }
-};
+//     user.cart = updateCart;
+//     user.markModified("cart");
+//     await user.save();
 
-exports.decreaseCartProduct = async (req, res) => {
-  const { userId, productId, price } = req.body;
-  try {
-    const user = await User.findById(userId);
-    const userCart = user.cart;
-    userCart.total -= Number(price);
-    userCart.count -= 1;
-    userCart[productId] -= 1;
-    user.cart = userCart;
-    user.markModified("cart");
-    await user.save();
-    res.status(200).json(user);
-  } catch (e) {
-    res.status(400).send(e.message);
-  }
-};
+//     res.status(200).json(user);
+//   } catch (e) {
+//     res.status(400).send(e.message);
+//   }
+// };
+
+// exports.increaseCartProduct = async (req, res) => {
+//   const { userId, productId, cartId, price } = req.body;
+//   try {
+//     const user = await findUserById(userId);
+//     const userCart = user.cart;
+
+//     // const addedProduct = await alreadyAddedProductServices(userCart, productId);
+
+//     // console.log(addedProduct);
+
+//     // const user = await User.findById(userId);
+//     // const userCart = user.cart;
+//     // userCart.total += Number(price);
+//     // userCart.count += 1;
+//     // userCart[productId] += 1;
+//     // user.cart = userCart;
+//     // user.markModified("cart");
+//     // await user.save();
+//     res.status(200).json(user);
+//   } catch (e) {
+//     res.status(400).send(e.message);
+//   }
+// };
+
+// exports.decreaseCartProduct = async (req, res) => {
+//   const { userId, productId, price } = req.body;
+//   try {
+//     const user = await User.findById(userId);
+//     const userCart = user.cart;
+//     userCart.total -= Number(price);
+//     userCart.count -= 1;
+//     userCart[productId] -= 1;
+//     user.cart = userCart;
+//     user.markModified("cart");
+//     await user.save();
+//     res.status(200).json(user);
+//   } catch (e) {
+//     res.status(400).send(e.message);
+//   }
+// };
 
 // exports.deleteProduct = async (req, res) => {};
 // exports.deleteProduct = async (req, res) => {};
