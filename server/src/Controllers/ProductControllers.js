@@ -10,6 +10,7 @@ const {
   deleteProductServices,
   getProductsByCategoryServices,
 } = require("../Services/ProductServices");
+const { findUserById } = require("../Services/UserServices");
 const { NotFound } = require("../utils/error");
 
 //get products
@@ -131,18 +132,24 @@ exports.addToCart = async (req, res) => {
   const { userId, productId, price } = req.body;
 
   try {
-    const user = await User.findById(userId);
+    const user = await findUserById(userId);
     const userCart = user.cart;
-    if (user.cart[productId]) {
-      userCart[productId] += 1;
+
+    const alreadyAddedProduct = userCart.find(
+      (pro) => pro.productId == productId
+    );
+
+    if (!alreadyAddedProduct) {
+      userCart.push({ productId: productId });
     } else {
-      userCart[productId] = 1;
+      return res
+        .status(200)
+        .json({ msg: "You already added this product into your cart" });
     }
-    userCart.count += 1;
-    userCart.total = Number(userCart.total) + Number(price);
-    user.cart = userCart;
+
     user.markModified("cart");
     await user.save();
+
     res.status(200).json(user);
   } catch (e) {
     res.status(400).send(e.message);
@@ -152,14 +159,18 @@ exports.addToCart = async (req, res) => {
 exports.removeFromCart = async (req, res) => {
   const { userId, productId, price } = req.body;
   try {
-    const user = await User.findById(userId);
+    const user = await findUserById(userId);
     const userCart = user.cart;
-    userCart.total -= Number(userCart[productId]) * Number(price);
-    userCart.count -= userCart[productId];
-    delete userCart[productId];
-    user.cart = userCart;
-    user.markModified("cart");
-    await user.save();
+    console.log(userCart);
+
+    // const user = await User.findById(userId);
+    // const userCart = user.cart;
+    // userCart.total -= Number(userCart[productId]) * Number(price);
+    // userCart.count -= userCart[productId];
+    // delete userCart[productId];
+    // user.cart = userCart;
+    // user.markModified("cart");
+    // await user.save();
     res.status(200).json(user);
   } catch (e) {
     res.status(400).send(e.message);

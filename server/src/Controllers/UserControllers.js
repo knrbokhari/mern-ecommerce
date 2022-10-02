@@ -78,6 +78,20 @@ exports.getUsers = async (req, res) => {
   }
 };
 
+// get user
+exports.getUser = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const user = await findUserById(id);
+    if (!user) {
+      throw new NotFound("User not found");
+    }
+    res.status(200).json(user);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
+
 exports.getUserOrders = async (req, res) => {
   const id = req.params.id;
   try {

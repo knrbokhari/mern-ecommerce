@@ -1,12 +1,12 @@
 const User = require("../Models/User");
 
 exports.findUserByEmail = async (email) => {
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).populate("cart.productId");
   return user;
 };
 
 exports.findUserById = async (id) => {
-  const user = await User.findById(id);
+  const user = await User.findById(id).populate("cart.productId");
   return user;
 };
 
