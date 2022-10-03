@@ -1,5 +1,6 @@
 const User = require("../Models/User");
 const Order = require("../Models/Order");
+const { getAllOrderServices } = require("../Services/OrderServices");
 
 exports.createOrder = async (req, res) => {
   const io = req.app.get("socketio");
@@ -33,7 +34,7 @@ exports.createOrder = async (req, res) => {
 
 exports.getAllOrder = async (req, res) => {
   try {
-    const orders = await Order.find().populate("owner", ["email", "name"]);
+    const orders = await getAllOrderServices();
     res.status(200).json(orders);
   } catch (e) {
     res.status(400).json(e.message);
