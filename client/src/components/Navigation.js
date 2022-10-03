@@ -18,11 +18,19 @@ import { useUpdateNotificationsMutation } from "../api/appApi";
 
 const Navigation = () => {
   const user = useSelector((state) => state.user);
+  const userCarts = user.cart;
   const dispatch = useDispatch();
   const [updateNotifications, { error }] = useUpdateNotificationsMutation();
   const unreadNotifications = user?.notifications.filter(
     (notification) => notification?.status === "unread"
   );
+  let cartItem = 0;
+
+  if (userCarts) {
+    userCarts.map((i) => {
+      cartItem += i.cartId.quantity;
+    });
+  }
 
   const handleToggleNotifications = () => {
     dispatch(resetNotifications());
@@ -89,14 +97,14 @@ const Navigation = () => {
                       style={{ width: "30px", height: "30px" }}
                     />
                     <span className="position-absolute translate-middle badge rounded-pill bg-danger">
-                      {/* {user?.cart?.count < 0 ? (
+                      {cartItem < 0 ? (
                         <></>
                       ) : (
                         <>
-                          {user?.cart?.count}
+                          {cartItem}
                           <span className="visually-hidden">items</span>
                         </>
-                      )} */}
+                      )}
                     </span>
                   </Nav.Link>
                 </LinkContainer>

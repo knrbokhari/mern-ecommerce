@@ -75,7 +75,7 @@ const CartPage = () => {
                         <span className="quantity-indicator d-flex align-items-center justify-content-evenly">
                           <button
                             className="btn btn-outline-secondary"
-                            disabled={user?.cart[item._id] <= 1}
+                            disabled={item.cartId.quantity <= 1}
                             onClick={() =>
                               decreaseCart({
                                 cartId: item.cartId._id,
@@ -87,7 +87,10 @@ const CartPage = () => {
                           <span className="fs-4">{item.cartId.quantity}</span>
                           <button
                             className="btn btn-outline-secondary"
-                            disabled={user.cart[item._id] >= 10}
+                            disabled={
+                              item.cartId.quantity >=
+                              item.cartId.product.quantity
+                            }
                             onClick={() =>
                               increaseCart({
                                 cartId: item.cartId._id,
