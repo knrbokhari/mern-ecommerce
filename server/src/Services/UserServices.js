@@ -7,7 +7,14 @@ exports.findUserByEmail = async (email) => {
 };
 
 exports.findUserById = async (id) => {
-  const user = await User.findById(id).populate("cart.cartId");
+  const user = await User.findById(id).populate({
+    path: "cart.cartId",
+    populate: {
+      path: "product",
+      module: "Product",
+    },
+  });
+
   return user;
 };
 

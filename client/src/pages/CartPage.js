@@ -2,7 +2,6 @@ import React from "react";
 import { Alert, Col, Container, Row, Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import useProduct from "../hooks/useProduct";
 import {
   useIncreaseCartProductMutation,
   useDecreaseCartProductMutation,
@@ -16,12 +15,16 @@ import Loading from "../components/Loading";
 const CartPage = () => {
   const user = useSelector((state) => state.user);
   const userCartObj = user?.cart;
-  const [products] = useProduct();
-  let cart = products.filter((product) => userCartObj[product?._id] != null);
   const [increaseCart] = useIncreaseCartProductMutation();
   const [decreaseCart] = useDecreaseCartProductMutation();
   const [removeFromCart, { isLoading }] = useRemoveFromCartMutation();
   const navigate = useNavigate();
+
+  let totalAmount = 0;
+
+  userCartObj.map((i) => {
+    totalAmount += i.cartId.product.price * i.cartId.quantity;
+  });
 
   if (isLoading) {
     return <Loading />;
@@ -31,14 +34,14 @@ const CartPage = () => {
     <Container className="cart-container">
       <Row>
         <h1 className="pt-2 h3 text-center mb-4">Shopping cart</h1>
-        {cart.length === 0 && (
+        {userCartObj.length === 0 && (
           <Alert variant="info">
             Shopping cart is empty. Add products to your cart{" "}
             <Link to="/category/all"> Add products</Link>
           </Alert>
         )}
 
-        {cart.length > 0 && (
+        {userCartObj.length > 0 && (
           <Col md={12}>
             <>
               <Table responsive="sm" className="cart-table" striped>
@@ -53,12 +56,12 @@ const CartPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {cart?.map((item, i) => (
+                  {userCartObj?.map((item, i) => (
                     <tr key={i}>
                       <td className="fs-4">{i + 1}</td>
                       <td>
                         <img
-                          src={item.images[0].url}
+                          src={item?.cartId?.product?.images[0]?.url}
                           alt=""
                           style={{
                             width: 45,
@@ -67,7 +70,7 @@ const CartPage = () => {
                           }}
                         />
                       </td>
-                      <td className="fs-4">${item.price}</td>
+                      <td className="fs-4">${item.cartId.product.price}</td>
                       <td>
                         <span className="quantity-indicator d-flex align-items-center justify-content-evenly">
                           <button
@@ -75,23 +78,19 @@ const CartPage = () => {
                             disabled={user?.cart[item._id] <= 1}
                             onClick={() =>
                               decreaseCart({
-                                productId: item._id,
-                                price: item.price,
-                                userId: user._id,
+                                cartId: item.cartId._id,
                               })
                             }
                           >
                             <ImMinus className="fs-6" />
                           </button>
-                          <span className="fs-4">{user?.cart[item._id]}</span>
+                          <span className="fs-4">{item.cartId.quantity}</span>
                           <button
                             className="btn btn-outline-secondary"
                             disabled={user.cart[item._id] >= 10}
                             onClick={() =>
                               increaseCart({
-                                productId: item._id,
-                                price: item.price,
-                                userId: user._id,
+                                cartId: item.cartId._id,
                               })
                             }
                           >
@@ -100,16 +99,14 @@ const CartPage = () => {
                         </span>
                       </td>
                       <td className="fs-4">
-                        ${item.price * user.cart[item._id]}
+                        ${item.cartId.product.price * item.cartId.quantity}
                       </td>
                       <td>
                         <button
                           className="btn btn-outline-danger"
                           onClick={() =>
                             removeFromCart({
-                              productId: item._id,
-                              price: item.price,
-                              userId: user._id,
+                              cartId: item.cartId._id,
                             })
                           }
                         >
@@ -121,7 +118,7 @@ const CartPage = () => {
                 </tbody>
               </Table>
               <div className="d-flex align-items-center justify-content-between">
-                <h3 className="h4 m-0">Total: ${user.cart.total}</h3>
+                <h3 className="h4 m-0">Total: ${totalAmount}</h3>
                 <button
                   disabled={user?.cart.count === 0}
                   className="btn btn-warning px-5 d-block fs-5"

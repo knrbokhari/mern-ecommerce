@@ -5,6 +5,7 @@ const {
   increaseCartProductQuantityServices,
   decreaseCartProductQuantityServices,
   removeProductFromCartServices,
+  findCartByIdServices,
 } = require("../Services/CartServices");
 const { findUserById } = require("../Services/UserServices");
 const { NotFound } = require("../utils/error");
@@ -14,21 +15,23 @@ exports.addToCart = async (req, res) => {
   const { userId, productId } = req.body;
 
   try {
+    const user = await findUserById(userId);
     const preCart = await findCartServices(userId, productId);
     if (preCart) {
-      return res
-        .status(200)
-        .json({ msg: "You already added this product into your cart" });
+      await increaseCartProductQuantityServices(preCart._id);
+      const user = await findUserById(userId);
+      return res.status(200).json(user);
     }
 
     const createCart = await addProductIntoCartServices(userId, productId);
 
-    const user = await findUserById(userId);
     user.cart.push({ cartId: createCart._id });
     user.markModified("cart");
     await user.save();
 
-    res.status(200).json(user);
+    const reUser = await findUserById(userId);
+
+    res.status(200).json(reUser);
   } catch (e) {
     res.status(400).send(e.message);
   }
@@ -36,19 +39,29 @@ exports.addToCart = async (req, res) => {
 
 // remove product from card
 exports.removeFromCart = async (req, res) => {
-  const { userId, productId, cartId } = req.body;
+  const { cartId } = req.body;
+
   try {
-    const user = await findUserById(userId);
+    const preCart = await findCartByIdServices(cartId);
 
-    const removeCart = await removeProductFromCartServices(userId, productId);
+    if (!preCart) {
+      throw new NotFound("Product not found");
+    }
 
-    const updateCart = user.cart.filter((p) => p.cartId?._id != removeCart.id);
+    const user = await findUserById(preCart.userId);
+    const userCart = user.cart;
+
+    const updateCart = userCart.filter((i) => i.cartId._id != cartId);
 
     user.cart = updateCart;
     user.markModified("cart");
     await user.save();
 
-    res.status(200).json(user);
+    await removeProductFromCartServices(cartId);
+
+    const reUser = await findUserById(preCart.userId);
+
+    res.status(200).json(reUser);
   } catch (e) {
     res.status(400).send(e.message);
   }
@@ -56,15 +69,18 @@ exports.removeFromCart = async (req, res) => {
 
 // increase Cart quantity
 exports.increaseCartProduct = async (req, res) => {
-  const { userId, productId, price } = req.body;
+  const { cartId } = req.body;
+
   try {
-    const user = await findUserById(userId);
-    const preCart = await findCartServices(userId, productId);
+    const preCart = await findCartByIdServices(cartId);
+
     if (!preCart) {
       throw new NotFound("Product not found");
     }
 
     await increaseCartProductQuantityServices(preCart._id);
+
+    const user = await findUserById(preCart.userId);
 
     res.status(200).json(user);
   } catch (e) {
@@ -74,16 +90,18 @@ exports.increaseCartProduct = async (req, res) => {
 
 // decrease Cart quantity
 exports.decreaseCartProduct = async (req, res) => {
-  const { userId, productId, price } = req.body;
+  const { cartId } = req.body;
+
   try {
-    const user = await findUserById(userId);
-    const preCart = await findCartServices(userId, productId);
+    const preCart = await findCartByIdServices(cartId);
+
     if (!preCart) {
       throw new NotFound("Product not found");
     }
 
     await decreaseCartProductQuantityServices(preCart._id);
 
+    const user = await findUserById(preCart.userId);
     res.status(200).json(user);
   } catch (e) {
     res.status(400).send(e.message);

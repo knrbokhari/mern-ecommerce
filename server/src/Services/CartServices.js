@@ -10,8 +10,13 @@ exports.findCartServices = async (userId, ProductId) => {
   return cart;
 };
 
-exports.removeProductFromCartServices = async (userId, ProductId) => {
-  const cart = Cart.findOneAndRemove({ userId: userId, product: ProductId });
+exports.findCartByIdServices = async (id) => {
+  const cart = Cart.findById(id);
+  return cart;
+};
+
+exports.removeProductFromCartServices = async (id) => {
+  const cart = Cart.findByIdAndDelete(id);
   return cart;
 };
 

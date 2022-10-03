@@ -21,7 +21,7 @@ const Navigation = () => {
   const dispatch = useDispatch();
   const [updateNotifications, { error }] = useUpdateNotificationsMutation();
   const unreadNotifications = user?.notifications.filter(
-    (notification) => notification.status === "unread"
+    (notification) => notification?.status === "unread"
   );
 
   const handleToggleNotifications = () => {
@@ -89,14 +89,14 @@ const Navigation = () => {
                       style={{ width: "30px", height: "30px" }}
                     />
                     <span className="position-absolute translate-middle badge rounded-pill bg-danger">
-                      {user?.cart?.count < 0 ? (
+                      {/* {user?.cart?.count < 0 ? (
                         <></>
                       ) : (
                         <>
                           {user?.cart?.count}
                           <span className="visually-hidden">items</span>
                         </>
-                      )}
+                      )} */}
                     </span>
                   </Nav.Link>
                 </LinkContainer>
