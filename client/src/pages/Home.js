@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../components/Footer";
 import HomeBanner from "../components/HomeBanner";
 import HomeCategories from "../components/HomeCategories";
 import HomeProduct from "../components/HomeProduct";
@@ -12,6 +13,7 @@ const Home = () => {
       <WhyUs />
       <HomeProduct />
       <HomeCategories />
+      <Footer />
     </div>
   );
 };

@@ -1,0 +1,31 @@
+.footer {
+  margin-top: 50px;
+  padding-top: 30px;
+  color: #9d9d9d;
+  background: #dddddd1f;
+}
+.footer h3 {
+  font-size: 20px;
+  font-weight: 900;
+  color: #000;
+  margin-bottom: 20px;
+}
+.footer a {
+  color: #9d9d9d;
+  text-decoration: none;
+  margin-bottom: 10px;
+  display: block;
+}
+.social {
+  display: flex;
+  justify-content: end;
+}
+.social a {
+  margin: 0 10px;
+}
+.social a:hover {
+  color: white;
+}
+.footer a svg {
+  font-size: 20px;
+}

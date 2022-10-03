@@ -5,7 +5,7 @@ const UserProfile = () => {
     <div className="container">
       <h1>User Profile</h1>
 
-      <div className="w-100 card border-1">
+      <div className="w-100 border-1">
         <div className="d-flex p-4">
           <div className="">
             <img
@@ -27,7 +27,7 @@ const UserProfile = () => {
 
       <div className="card mt-4 px-4 pt-4 pb-2">
         <h3 className="mb-3">Order Histry</h3>
-        <table class="table table-hover">
+        <table class="table table-hover responsive">
           <thead>
             <tr>
               <th scope="col">#</th>
