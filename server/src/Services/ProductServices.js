@@ -45,4 +45,12 @@ exports.getProductsByCategoryServices = async (data) => {
   return products;
 };
 
+exports.reduceProductQuantityAfterOrderServices = async (id, quantity) => {
+  const product = await Product.findById(id);
+  product.quantity -= quantity;
+  product.totalSell += quantity;
+  product.markModified("quantity");
+  await product.save();
+  return product;
+};
 // exports.

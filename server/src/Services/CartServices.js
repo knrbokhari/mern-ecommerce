@@ -6,7 +6,11 @@ exports.findAllCartsServices = async () => {
 };
 
 exports.findCartServices = async (userId, ProductId) => {
-  const cart = Cart.findOne({ userId: userId, product: ProductId });
+  const cart = Cart.findOne({
+    userId: userId,
+    product: ProductId,
+    order: false,
+  });
   return cart;
 };
 
@@ -46,7 +50,15 @@ exports.decreaseCartProductQuantityServices = async (id) => {
   return product;
 };
 
-// exports.
+exports.updateCartOnOrderServices = async (id) => {
+  const product = await Cart.findByIdAndUpdate(
+    id,
+    { order: true },
+    { new: true }
+  );
+  return product;
+};
+
 // exports.
 // exports.
 // exports.

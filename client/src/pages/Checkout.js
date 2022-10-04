@@ -14,10 +14,13 @@ const Checkout = () => {
   );
 
   let totalAmount = 0;
+  let items = 0;
 
   userCartObj.map((i) => {
     totalAmount += i.cartId.product.price * i.cartId.quantity;
+    items += i.cartId.quantity;
   });
+
   return (
     <Container>
       <Row>
@@ -64,7 +67,9 @@ const Checkout = () => {
           <h3>Total Price: ${totalAmount}</h3>
         </Col>
         <Col md={6}>
-          <Elements stripe={stripePromise}>{<CheckoutForm />}</Elements>
+          <Elements stripe={stripePromise}>
+            {<CheckoutForm totalAmount={totalAmount} items={items} />}
+          </Elements>
         </Col>
       </Row>
     </Container>

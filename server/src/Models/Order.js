@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 const OrderSchema = mongoose.Schema(
   {
     products: {
-      type: Object,
+      type: Array,
+      default: [],
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
@@ -30,6 +31,10 @@ const OrderSchema = mongoose.Schema(
     },
     country: {
       type: String,
+    },
+    transactionId: {
+      type: String,
+      require: true,
     },
   },
   { minimize: false },

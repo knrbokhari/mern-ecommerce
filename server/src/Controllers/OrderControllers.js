@@ -1,23 +1,47 @@
 const User = require("../Models/User");
 const Order = require("../Models/Order");
-const { getAllOrderServices } = require("../Services/OrderServices");
+const {
+  getAllOrderServices,
+  createOrderServices,
+} = require("../Services/OrderServices");
+const { findUserById } = require("../Services/UserServices");
+const {
+  getProductServices,
+  reduceProductQuantityAfterOrderServices,
+} = require("../Services/ProductServices");
+const { NotFound } = require("../utils/error");
+const { updateCartOnOrderServices } = require("../Services/CartServices");
 
 exports.createOrder = async (req, res) => {
   const io = req.app.get("socketio");
-  const { userId, cart, country, address } = req.body;
+  const { userId, cart, country, address, totalAmount, items, transactionId } =
+    req.body;
   try {
-    const user = await User.findById(userId);
-    const order = await Order.create({
-      owner: user._id,
-      products: cart,
+    const user = await findUserById(userId);
+    if (!user) {
+      throw new NotFound("User not found");
+    }
+
+    const order = await createOrderServices(
+      user._id,
+      cart,
       country,
       address,
+      totalAmount,
+      items,
+      transactionId
+    );
+
+    cart.map(async (i) => {
+      await reduceProductQuantityAfterOrderServices(
+        i.cartId.product._id,
+        i.cartId.quantity
+      );
+      await updateCartOnOrderServices(i.cartId._id);
     });
-    order.count = cart.count;
-    order.total = cart.total;
-    await order.save();
-    user.cart = { total: 0, count: 0 };
-    user.orders.push(order);
+
+    user.cart = [];
+    user.orders.push(order.id);
     const notification = {
       status: "unread",
       message: `New order from ${user.name}`,
@@ -26,6 +50,7 @@ exports.createOrder = async (req, res) => {
     io.sockets.emit("new-order", notification);
     user.markModified("orders");
     await user.save();
+
     res.status(200).json(user);
   } catch (e) {
     res.status(400).json(e.message);

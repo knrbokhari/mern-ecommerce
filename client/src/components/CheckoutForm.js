@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { logout } from "../features/userSlice";
 import Cookies from "js-cookie";
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ totalAmount, items }) => {
   const stripe = useStripe();
   const elements = useElements();
   const user = useSelector((state) => state.user);
@@ -22,7 +22,7 @@ const CheckoutForm = () => {
 
   async function handlePay(e) {
     e.preventDefault();
-    if (!stripe || !elements || user.cart.count <= 0) return;
+    if (!stripe || !elements || user.cart.length <= 0) return;
     setPaying(true);
     const { client_secret } = await fetch(
       "http://localhost:5000/create-payment",
@@ -33,7 +33,7 @@ const CheckoutForm = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ amount: user.cart.total }),
+        body: JSON.stringify({ amount: totalAmount }),
       }
     ).then((res) => {
       if (res.status === 403 || res.status === 401) {
@@ -43,6 +43,7 @@ const CheckoutForm = () => {
       }
       return res.json();
     });
+
     const { paymentIntent } = await stripe.confirmCardPayment(client_secret, {
       payment_method: {
         card: elements.getElement(CardElement),
@@ -51,16 +52,22 @@ const CheckoutForm = () => {
     setPaying(false);
 
     if (paymentIntent) {
-      createOrder({ userId: user._id, cart: user.cart, address, country }).then(
-        (res) => {
-          if (!isLoading && !isError) {
-            toast.success(`Payment ${paymentIntent.status}`);
-            setTimeout(() => {
-              // navigate("/dashboard/myodrer");
-            }, 1000);
-          }
+      createOrder({
+        userId: user._id,
+        cart: user.cart,
+        address,
+        country,
+        totalAmount,
+        items,
+        transactionId: paymentIntent.id,
+      }).then((res) => {
+        if (!isLoading && !isError) {
+          toast.success(`Payment ${paymentIntent.status}`);
+          setTimeout(() => {
+            navigate("/dashboard/myodrer");
+          }, 1000);
         }
-      );
+      });
     }
   }
 
