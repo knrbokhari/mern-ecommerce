@@ -1,7 +1,6 @@
 import React from "react";
 import { Col, Container, Row, Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import useProduct from "../hooks/useProduct";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
@@ -9,13 +8,16 @@ import CheckoutForm from "../components/CheckoutForm";
 const Checkout = () => {
   const user = useSelector((state) => state.user);
   const userCartObj = user.cart;
-  const [products] = useProduct();
-  let cart = products.filter((product) => userCartObj[product._id] != null);
 
   const stripePromise = loadStripe(
     "pk_test_51L17qxHBn8eTkaGlOjG2JgVVcr6jvC5t7ubxyFEBpQr3tv8Xb3TvEKUDRPVOMmgZpFmi4BJg9whkV1PjdhB88hgZ00tq97usGQ"
   );
 
+  let totalAmount = 0;
+
+  userCartObj.map((i) => {
+    totalAmount += i.cartId.product.price * i.cartId.quantity;
+  });
   return (
     <Container>
       <Row>
@@ -31,12 +33,12 @@ const Checkout = () => {
               </tr>
             </thead>
             <tbody>
-              {cart?.map((item, i) => (
+              {userCartObj?.map((item, i) => (
                 <tr key={i}>
                   <td className="fs-4">{i + 1}</td>
                   <td>
                     <img
-                      src={item.images[0].url}
+                      src={item?.cartId?.product?.images[0]?.url}
                       alt=""
                       style={{
                         width: 45,
@@ -45,18 +47,21 @@ const Checkout = () => {
                       }}
                     />
                   </td>
-                  <td className="fs-4">${item.price}</td>
+                  <td className="fs-4">${item.cartId.product.price}</td>
                   <td>
                     <span className="quantity-indicator d-flex align-items-center justify-content-evenly">
-                      <span className="fs-4">{user?.cart[item._id]}</span>
+                      <span className="fs-4">{item.cartId.quantity}</span>
                     </span>
                   </td>
-                  <td className="fs-4">${item.price * user.cart[item._id]}</td>
+                  <td className="fs-4">
+                    ${item.cartId.product.price * item.cartId.quantity}
+                  </td>
+                  <td></td>
                 </tr>
               ))}
             </tbody>
           </Table>
-          <h3>Total Price: ${user.cart.total}</h3>
+          <h3>Total Price: ${totalAmount}</h3>
         </Col>
         <Col md={6}>
           <Elements stripe={stripePromise}>{<CheckoutForm />}</Elements>

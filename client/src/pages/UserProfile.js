@@ -25,7 +25,7 @@ const UserProfile = () => {
         </div>
       </div>
 
-      <div className="card mt-4 px-4 pt-4 pb-2">
+      <div className="mt-4 px-4 pt-4 pb-2">
         <h3 className="mb-3">Order Histry</h3>
         <table class="table table-hover responsive">
           <thead>
