@@ -6,12 +6,12 @@ const {
 } = require("../Services/OrderServices");
 const { findUserById } = require("../Services/UserServices");
 const {
-  getProductServices,
   reduceProductQuantityAfterOrderServices,
 } = require("../Services/ProductServices");
 const { NotFound } = require("../utils/error");
 const { updateCartOnOrderServices } = require("../Services/CartServices");
 
+// create order
 exports.createOrder = async (req, res) => {
   const io = req.app.get("socketio");
   const { userId, cart, country, address, totalAmount, items, transactionId } =
@@ -57,6 +57,7 @@ exports.createOrder = async (req, res) => {
   }
 };
 
+// get all order
 exports.getAllOrder = async (req, res) => {
   try {
     const orders = await getAllOrderServices();
@@ -66,6 +67,7 @@ exports.getAllOrder = async (req, res) => {
   }
 };
 
+// shipping order
 exports.shippingOrder = async (req, res) => {
   const io = req.app.get("socketio");
   const { ownerId } = req.body;

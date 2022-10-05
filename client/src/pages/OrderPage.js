@@ -45,6 +45,7 @@ const OrderPage = () => {
         <thead>
           <tr>
             <th>#</th>
+            <th>Items</th>
             <th>Status</th>
             <th>Date</th>
             <th>Total</th>
@@ -54,6 +55,7 @@ const OrderPage = () => {
           {orders?.map((order) => (
             <tr key={order._id}>
               <td>{order._id}</td>
+              <td>{order.products.length}</td>
               <td>
                 <Badge
                   bg={`${

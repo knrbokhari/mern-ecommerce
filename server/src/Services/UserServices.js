@@ -34,7 +34,7 @@ exports.getUserOrderById = async (id) => {
   const users = await User.findById(id)
     .populate("orders")
     .sort({ createdAt: -1 });
-  return users.order;
+  return users.orders;
 };
 
 // exports.removeCartIdServices = async () => {};

@@ -103,7 +103,6 @@ exports.getUserOrders = async (req, res) => {
     if (!orders) {
       throw new NotFound("You not have any Orders");
     }
-    User.findById(id).populate("orders");
     res.status(200).json(orders);
   } catch (e) {
     res.status(400).send(e.message);
