@@ -1,14 +1,18 @@
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Badge, Container, Table } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import axios from "../axios";
 import Loading from "../components/Loading";
+import { logout } from "../features/userSlice";
 
 const OrderPage = () => {
   const user = useSelector((state) => state.user);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const token = Cookies.get("token");
 
@@ -27,6 +31,11 @@ const OrderPage = () => {
       .catch((e) => {
         setLoading(false);
         console.log(e);
+        if (e.response.status === 401 || e.response.status === 403) {
+          dispatch(logout());
+          navigate("/login");
+          Cookies.remove("token");
+        }
       });
   }, []);
 
