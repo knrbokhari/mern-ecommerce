@@ -35,7 +35,7 @@ exports.signup = async (req, res) => {
     const userWithToken = Object.assign({}, user?._doc);
     userWithToken.token = token;
 
-    res.status(200).json(userWithToken);
+    res.status(201).json(userWithToken);
   } catch (e) {
     res.status(400).send(e.message);
   }
