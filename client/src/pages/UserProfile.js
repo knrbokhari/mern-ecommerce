@@ -86,12 +86,12 @@ const UserProfile = () => {
             <tbody>
               {orders.map((item, i) => (
                 <tr key={i}>
-                  <th scope="row">1</th>
+                  <th scope="row">{i + 1}</th>
                   <td>{item._id}</td>
                   <td>{item.count}</td>
-                  <td> {item.status} </td>
+                  <td>{item.status}</td>
                   <td>{item.date}</td>
-                  <td> {item.transactionId} </td>
+                  <td>{item.transactionId}</td>
                 </tr>
               ))}
             </tbody>
