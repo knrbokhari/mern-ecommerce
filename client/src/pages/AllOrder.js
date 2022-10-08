@@ -46,15 +46,17 @@ const AllOrder = () => {
   };
 
   const showOrder = (productsObj) => {
-    let productsToShow = products.filter((product) => productsObj[product._id]);
-    productsToShow = productsToShow.map((product) => {
-      const productCopy = { ...product };
-      productCopy.count = productsObj[product._id];
-      delete productCopy.description;
-      return productCopy;
-    });
+    // let productsToShow = products.filter((product) => productsObj[product._id]);
+    // productsToShow = productsToShow.map((product) => {
+    //   const productCopy = { ...product };
+    //   productCopy.count = productsObj[product._id];
+    //   delete productCopy.description;
+    //   return productCopy;
+    // });
+    // const productsToShow  = orders.find(order => order._id === )
+    // console.log(productsObj);
     setShow(true);
-    setOrderToShow(productsToShow);
+    setOrderToShow(productsObj);
   };
 
   useEffect(() => {
@@ -79,6 +81,8 @@ const AllOrder = () => {
   if (orders.length === 0) {
     return <h1 className="text-center pt-4">No orders yet</h1>;
   }
+
+  // console.log(orders[14]);
 
   const TableRow = ({
     _id,
@@ -148,17 +152,24 @@ const AllOrder = () => {
         {orderToShow?.map((order) => (
           <div
             key={order._id}
-            className="order-details__container d-flex justify-content-around py-2"
+            className="order-details__container d-flex justify-content-start py-2"
           >
             <img
-              src={order.images[0].url}
+              src={order?.cartId?.product?.images[0].url}
               style={{ maxWidth: 100, height: 100, objectFit: "cover" }}
               alt=""
             />
-            <p>
-              <span>{order.count} x </span> {order.name}
-            </p>
-            <p>Price: ${Number(order.price) * order.count}</p>
+            <div className="ms-3">
+              <p className="fs-4 m-0">
+                <span>{order?.cartId?.quantity} x </span>
+                {order?.cartId?.product?.name}
+              </p>
+              <p className="fs-4">
+                Price: $
+                {Number(order?.cartId?.product?.price) *
+                  order?.cartId?.quantity}
+              </p>
+            </div>
           </div>
         ))}
         <Modal.Footer>

@@ -1,7 +1,9 @@
 const Order = require("../Models/Order");
 
 exports.getAllOrderServices = async () => {
-  const orders = await Order.find().populate("owner", ["email", "name"]);
+  const orders = await Order.find()
+    .populate("owner", ["email", "name"])
+    .sort({ _id: -1 });
   return orders;
 };
 

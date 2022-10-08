@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout, resetNotifications } from "../features/userSlice";
 import Cookies from "js-cookie";
 import { format } from "timeago.js";
+import moment from "moment";
 import { useUpdateNotificationsMutation } from "../api/appApi";
 
 const Navigation = () => {
@@ -175,7 +176,10 @@ const Navigation = () => {
                         >
                           <span className="d-block ms-2">
                             {notification?.message} at{" "}
-                            {format(notification?.time)}
+                            {/* {format(notification?.time)} */}
+                            {moment(notification.time)
+                              .startOf("hour")
+                              .fromNow()}
                           </span>
                         </p>
                       ))
