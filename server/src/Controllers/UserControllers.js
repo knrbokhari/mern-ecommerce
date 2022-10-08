@@ -55,8 +55,15 @@ exports.login = async (req, res) => {
       { expiresIn: "1d" }
     );
 
+    if (user.isAdmin) {
+      const userWithToken = Object.assign({}, user?._doc);
+      userWithToken.token = token;
+      return res.status(200).json(userWithToken);
+    }
+
+    const reUser = await findUserById(user._id);
     // git token to user
-    const userWithToken = Object.assign({}, user?._doc);
+    const userWithToken = Object.assign({}, reUser?._doc);
     userWithToken.token = token;
 
     res.status(200).json(userWithToken);

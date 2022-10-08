@@ -28,7 +28,7 @@ const Navigation = () => {
 
   if (userCarts) {
     userCarts.map((i) => {
-      cartItem += i.cartId.quantity;
+      cartItem += i?.cartId?.quantity;
     });
   }
 
@@ -50,7 +50,9 @@ const Navigation = () => {
     <Navbar key={"lg"} bg="light" expand={"lg"} className="mb-3">
       <Container>
         <LinkContainer to="/">
-          <Navbar.Brand>ECOM</Navbar.Brand>
+          <Navbar.Brand className="ms-5 ps-3 ps-md-0 ms-md-5 ms-lg-0">
+            ECOM
+          </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${"lg"}`} />
         <Navbar.Offcanvas

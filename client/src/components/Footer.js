@@ -17,22 +17,22 @@ const Footer = () => {
             <h3>Store</h3>
             <ul class="list-unstyled nav-links">
               <li>
-                <a href="">Mobile</a>
+                <a href="/">Mobile</a>
               </li>
               <li>
-                <a href="">Laptop</a>
+                <a href="/">Laptop</a>
               </li>
               <li>
-                <a href="">Technology</a>
+                <a href="/">Technology</a>
               </li>
               <li>
-                <a href="">New Arrivals</a>
+                <a href="/">New Arrivals</a>
               </li>
               <li>
-                <a href="">Top Brands</a>
+                <a href="/">Top Brands</a>
               </li>
               <li>
-                <a href="">Best Selling</a>
+                <a href="/">Best Selling</a>
               </li>
             </ul>
           </div>
@@ -40,22 +40,22 @@ const Footer = () => {
             <h3>About</h3>
             <ul class="list-unstyled nav-links">
               <li>
-                <a href="">About us</a>
+                <a href="/">About us</a>
               </li>
               <li>
-                <a href="">Clients</a>
+                <a href="/">Clients</a>
               </li>
               <li>
-                <a href="">Services</a>
+                <a href="/">Services</a>
               </li>
               <li>
-                <a href="">Best sellers</a>
+                <a href="/">Best sellers</a>
               </li>
               <li>
-                <a href="">Blog</a>
+                <a href="/">Blog</a>
               </li>
               <li>
-                <a href="">Contact</a>
+                <a href="/">Contact</a>
               </li>
             </ul>
           </div>
@@ -63,16 +63,16 @@ const Footer = () => {
             <h3>Legal</h3>
             <ul class="list-unstyled nav-links">
               <li>
-                <a href="">Terms &amp; Conditions</a>
+                <a href="/">Terms &amp; Conditions</a>
               </li>
               <li>
-                <a href="">Privacy Policy</a>
+                <a href="/">Privacy Policy</a>
               </li>
               <li>
-                <a href="">Legality</a>
+                <a href="/">Legality</a>
               </li>
               <li>
-                <a href="">Author License</a>
+                <a href="/">Author License</a>
               </li>
             </ul>
           </div>
@@ -105,27 +105,27 @@ const Footer = () => {
           <div class="col-md-6 text-md-right">
             <ul class="social list-unstyled">
               <li>
-                <a href="">
+                <a href="/">
                   <FaFacebook />
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="/">
                   <FaTwitter />
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="/">
                   <FaPinterest />
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="/">
                   <FaInstagram />
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="/">
                   <FaBehance />
                 </a>
               </li>

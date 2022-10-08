@@ -54,13 +54,7 @@ const UserSchema = mongoose.Schema(
 
 // find user
 UserSchema.statics.findByCredentials = async function (email, password) {
-  const user = await User.findOne({ email }).populate({
-    path: "cart.cartId",
-    populate: {
-      path: "product",
-      module: "Product",
-    },
-  });
+  const user = await User.findOne({ email });
   if (!user) throw new NotFound("Email doesn't exists");
   const isSamePassword = bcrypt.compareSync(password, user.password);
   if (isSamePassword) return user;
