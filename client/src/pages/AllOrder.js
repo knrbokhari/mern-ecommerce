@@ -132,6 +132,8 @@ const AllOrder = () => {
             <th>Items</th>
             <th>Total Amount</th>
             <th>Address</th>
+            <th>Status</th>
+            <th>View</th>
           </tr>
         </thead>
         <tbody>
