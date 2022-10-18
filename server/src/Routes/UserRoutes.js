@@ -5,6 +5,7 @@ const {
   updateUserNotifications,
   getUsers,
   getUser,
+  adminLogin,
 } = require("../Controllers/UserControllers");
 const verifyJWT = require("../Middleware/verifyJWT");
 
@@ -15,6 +16,9 @@ router.post("/signup", signup);
 
 // login
 router.post("/login", login);
+
+// admin login from super system
+router.post("/admin_login", adminLogin);
 
 // get users
 router.get("/", getUsers);

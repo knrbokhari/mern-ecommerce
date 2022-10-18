@@ -1,6 +1,7 @@
 const User = require("../Models/User");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const bcrypt = require("bcrypt");
 const { BadRequest, NotFound } = require("../utils/error");
 const {
   findUserByEmail,
@@ -48,6 +49,10 @@ exports.login = async (req, res) => {
     // finding users by checking email & password
     const user = await User.findByCredentials(email, password);
 
+    // removing password from user
+    const userObject = user.toObject();
+    delete userObject.password;
+
     // jwt token
     const token = jwt.sign(
       { name: user.name, id: user._id },
@@ -55,15 +60,8 @@ exports.login = async (req, res) => {
       { expiresIn: "1d" }
     );
 
-    if (user.isAdmin) {
-      const userWithToken = Object.assign({}, user?._doc);
-      userWithToken.token = token;
-      return res.status(200).json(userWithToken);
-    }
-
-    const reUser = await findUserById(user._id);
     // git token to user
-    const userWithToken = Object.assign({}, reUser?._doc);
+    const userWithToken = Object.assign({}, userObject);
     userWithToken.token = token;
 
     res.status(200).json(userWithToken);
@@ -130,5 +128,36 @@ exports.updateUserNotifications = async (req, res) => {
     res.status(400).send(e.message);
   }
 };
-//  exports.signup = async (req, res) => {}
+
+exports.adminLogin = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user || user.isAdmin === false)
+      throw new NotFound("Email doesn't exists");
+    const isSamePassword = bcrypt.compareSync(password, user.password);
+    if (!isSamePassword) throw new BadRequest("invalid credentials");
+
+    if (!user.isAdmin) throw new NotFound("Email doesn't exists");
+
+    // removing password from user
+    const userObject = user.toObject();
+    delete userObject.password;
+
+    // jwt token
+    const token = jwt.sign(
+      { name: user.name, id: user._id },
+      process.env.JWTKEY,
+      { expiresIn: "1d" }
+    );
+
+    // git token to user
+    const userWithToken = Object.assign({}, userObject);
+    userWithToken.token = token;
+
+    res.status(200).json(userWithToken);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
 //  exports.signup = async (req, res) => {}
