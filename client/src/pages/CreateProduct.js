@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useCreateProductMutation } from "../api/appApi";
 import { toast } from "react-toastify";
 import "./CreateProduct.css";
+import Cookies from "js-cookie";
 
 const CreateProduct = () => {
   const [createProduct, { isError, error, isLoading, isSuccess }] =
@@ -15,6 +16,9 @@ const CreateProduct = () => {
   const [imgToRemove, setImgToRemove] = useState(null);
   const [category, setCategory] = useState("");
   const navigate = useNavigate();
+
+  // get Bearer token from Cookie
+  const token = `Bearer ${Cookies.get("token")}`;
 
   const {
     register,
@@ -47,7 +51,9 @@ const CreateProduct = () => {
   const handleRemoveImg = (imgObj) => {
     setImgToRemove(imgObj.public_id);
     axios
-      .delete(`/images/${imgObj.public_id}/`)
+      .delete(`/images/${imgObj.public_id}/`, {
+        headers: { Authorization: token },
+      })
       .then((res) => {
         setImgToRemove(null);
         setImages((prev) =>
@@ -67,8 +73,8 @@ const CreateProduct = () => {
       category,
       images,
     }).then((res) => {
-      console.log(res);
-      if (res.data.length > 0) {
+      // console.log(res);
+      if (res.data.success > 0) {
         setTimeout(() => {
           navigate("/");
           toast.success("Product Created");

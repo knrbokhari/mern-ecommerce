@@ -7,6 +7,7 @@ const {
   getUser,
   adminLogin,
 } = require("../Controllers/UserControllers");
+const verifyAdmin = require("../Middleware/verifyAdmin");
 const verifyJWT = require("../Middleware/verifyJWT");
 
 const router = require("express").Router();
@@ -21,9 +22,9 @@ router.post("/login", login);
 router.post("/admin_login", adminLogin);
 
 // get users
-router.get("/", getUsers);
+router.get("/", verifyJWT, verifyAdmin, getUsers);
 
-router.get("/:id", getUser);
+router.get("/:id", verifyJWT, getUser);
 
 // get user orders
 router.get("/:id/orders", verifyJWT, getUserOrders);
