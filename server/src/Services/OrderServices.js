@@ -7,6 +7,19 @@ exports.getAllOrderServices = async () => {
   return orders;
 };
 
+exports.getOrderServices = async (id) => {
+  const order = await Order.findById(id);
+  return order;
+};
+
+exports.updateOrderStatusServices = async (id, ownerId) => {
+  const order = await Order.findByIdAndUpdate(
+    { _id: id, owner: ownerId },
+    { status: "shipped" }
+  );
+  return order;
+};
+
 exports.createOrderServices = async (
   userId,
   cart,
@@ -27,4 +40,28 @@ exports.createOrderServices = async (
   });
   await order.save();
   return order;
+};
+
+exports.barChartOrderServices = async (query) => {
+  const oldDate = new Date().getTime() - query * 24 * 60 * 60 * 1000;
+  const day = new Date(oldDate);
+
+  const orderData = await Order.aggregate([
+    {
+      $match: {
+        createdAt: {
+          $gte: new Date(day),
+        },
+      },
+    },
+    {
+      $group: {
+        _id: "$createdAt",
+        totalOrder: { $sum: "$count" },
+        totalProductCost: { $sum: "$total" },
+      },
+    },
+  ]).sort({ _id: -1 });
+
+  return orderData;
 };

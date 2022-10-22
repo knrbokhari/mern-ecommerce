@@ -18,7 +18,7 @@ const GetAllProducts = () => {
   // removing the product
   const [deletProduct, { isLoading, isSuccess }] = useDeleteProductMutation();
   const handleDeleteProduct = (id, name) => {
-    deletProduct({ product_id: id, user_id: user._id });
+    deletProduct({ product_id: id });
     toast(`${name} has been Deleted`);
     setShow(false);
   };

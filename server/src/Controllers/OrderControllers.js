@@ -3,6 +3,9 @@ const Order = require("../Models/Order");
 const {
   getAllOrderServices,
   createOrderServices,
+  barChartOrderServices,
+  getOrderServices,
+  updateOrderStatusServices,
 } = require("../Services/OrderServices");
 const { findUserById } = require("../Services/UserServices");
 const {
@@ -73,9 +76,14 @@ exports.shippingOrder = async (req, res) => {
   const { ownerId } = req.body;
   const { id } = req.params;
   try {
-    const user = await User.findById(ownerId);
-    await Order.findByIdAndUpdate(id, { status: "shipped" });
-    const orders = await Order.find().populate("owner", ["email", "name"]);
+    const user = await findUserById(ownerId);
+    if (!user) throw new NotFound("User not found");
+
+    const order = await getOrderServices(id);
+    if (!order) throw new NotFound("order not found");
+
+    await updateOrderStatusServices(id, ownerId);
+
     const notification = {
       status: "unread",
       message: `Order ${id} shipped with success`,
@@ -84,10 +92,48 @@ exports.shippingOrder = async (req, res) => {
     io.sockets.emit("notification", notification, ownerId);
     user.notifications.push(notification);
     await user.save();
-    res.status(200).json(orders);
+    res.status(200).json({ msg: notification.message });
   } catch (e) {
     res.status(400).json(e.message);
   }
 };
 
-// exports.createOrder = async (req, res) => {};
+// last seven days orders data
+exports.barChartForOrder = async (req, res) => {
+  try {
+    let lastSevenDays = 7;
+    let sevenDaysOrderdata = [];
+
+    const orderData = await barChartOrderServices(lastSevenDays);
+
+    for (let i = 0; i < lastSevenDays; i++) {
+      let newDate = new Date().getTime() - i * 24 * 60 * 60 * 1000;
+
+      const fundOrder = orderData.find(
+        (d) =>
+          d._id.toISOString().split("T", 1)[0] ===
+          new Date(newDate).toISOString().split("T", 1)[0]
+      );
+
+      if (!fundOrder) {
+        let data = {
+          date: new Date(newDate),
+          totalOrder: 0,
+          // totalProductCost: 0,
+        };
+        sevenDaysOrderdata.push(data);
+      } else {
+        let data = {
+          date: fundOrder._id,
+          totalOrder: fundOrder.totalOrder,
+          // totalProductCost: fundOrder.totalProductCost,
+        };
+        sevenDaysOrderdata.push(data);
+      }
+    }
+
+    res.status(200).json(sevenDaysOrderdata);
+  } catch (e) {
+    res.status(400).json(e.message);
+  }
+};

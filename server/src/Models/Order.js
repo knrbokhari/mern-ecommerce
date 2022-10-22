@@ -22,10 +22,6 @@ const OrderSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
-    date: {
-      type: String,
-      default: new Date().toISOString().split("T")[0],
-    },
     address: {
       type: String,
     },
@@ -37,7 +33,6 @@ const OrderSchema = mongoose.Schema(
       require: true,
     },
   },
-  { minimize: false },
   { timestamps: true }
 );
 
