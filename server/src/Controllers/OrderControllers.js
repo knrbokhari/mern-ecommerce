@@ -1,4 +1,5 @@
 const User = require("../Models/User");
+const moment = require("moment");
 const Order = require("../Models/Order");
 const {
   getAllOrderServices,
@@ -117,16 +118,16 @@ exports.barChartForOrder = async (req, res) => {
 
       if (!fundOrder) {
         let data = {
-          date: new Date(newDate),
-          totalOrder: 0,
-          // totalProductCost: 0,
+          name: moment(new Date(newDate)).format("dddd"),
+          totalOrder: 0 + i,
+          // pv: 0,
         };
         sevenDaysOrderdata.push(data);
       } else {
         let data = {
-          date: fundOrder._id,
+          name: moment(fundOrder._id).format("dddd"),
           totalOrder: fundOrder.totalOrder,
-          // totalProductCost: fundOrder.totalProductCost,
+          // pv: fundOrder.totalProductCost,
         };
         sevenDaysOrderdata.push(data);
       }

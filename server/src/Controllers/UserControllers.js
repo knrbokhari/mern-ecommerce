@@ -10,6 +10,11 @@ const {
   getUserOrderById,
   findUserById,
 } = require("../Services/UserServices");
+const { getAllOrderServices } = require("../Services/OrderServices");
+const {
+  getProductsServices,
+  totalSellServices,
+} = require("../Services/ProductServices");
 
 dotenv.config();
 
@@ -160,4 +165,21 @@ exports.adminLogin = async (req, res) => {
     res.status(400).send(e.message);
   }
 };
-//  exports.signup = async (req, res) => {}
+exports.dashboard = async (req, res) => {
+  try {
+    const userLength = await getUsersServices();
+    const productLength = await getProductsServices();
+    const orderLength = await getAllOrderServices();
+
+    const paiChart = await totalSellServices();
+
+    res.status(400).json({
+      userLength: userLength.length,
+      productLength: productLength.length,
+      orderLength: orderLength.length,
+      paiChart: paiChart,
+    });
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};

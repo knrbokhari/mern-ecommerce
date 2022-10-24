@@ -6,6 +6,7 @@ const {
   getUsers,
   getUser,
   adminLogin,
+  dashboard,
 } = require("../Controllers/UserControllers");
 const verifyAdmin = require("../Middleware/verifyAdmin");
 const verifyJWT = require("../Middleware/verifyJWT");
@@ -24,7 +25,11 @@ router.post("/admin_login", adminLogin);
 // get users
 router.get("/", verifyJWT, verifyAdmin, getUsers);
 
+// get user
 router.get("/:id", verifyJWT, getUser);
+
+// get dashboard data
+router.get("/dashboard/data", dashboard);
 
 // get user orders
 router.get("/:id/orders", verifyJWT, getUserOrders);

@@ -53,4 +53,35 @@ exports.reduceProductQuantityAfterOrderServices = async (id, quantity) => {
   await product.save();
   return product;
 };
-// exports.
+
+exports.totalSellServices = async () => {
+  // const data = [];
+  const totalSell = await Product.aggregate([
+    {
+      $group: {
+        _id: "Total Sales",
+        value: { $sum: "$totalSell" },
+        // product: { $sum: "$quantity" },
+      },
+    },
+    // {
+    //   $project: {
+    //     _id: "Available Products",
+    //     // totalSells: { $count: "$totalSell" },
+    //     value: { $sum: "$quantity" },
+    //   },
+    // },
+  ]);
+
+  const available = await Product.aggregate([
+    {
+      $group: {
+        _id: "Available Products",
+        // totalSells: { $count: "$totalSell" },
+        value: { $sum: "$quantity" },
+      },
+    },
+  ]);
+
+  return [...totalSell, ...available];
+};
