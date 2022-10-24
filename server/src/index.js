@@ -19,12 +19,17 @@ const productRoutes = require("./Routes/ProductRoutes");
 const ImageRoutes = require("./Routes/ImageRoutes");
 const OrderRoutes = require("./Routes/OrderRoutes");
 const CartRoutes = require("./Routes/CartRoutes");
+const { processRequest } = require("./Middleware/processRequest");
+const { errorLogger, infoLogger } = require("./logger");
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(infoLogger());
+
 // routes middleware
+app.use(processRequest);
 app.use("/users", userRoutes);
 app.use("/products", productRoutes);
 app.use("/images", ImageRoutes);
@@ -47,6 +52,15 @@ app.post("/create-payment", verifyJWT, async (req, res) => {
   }
 });
 
+// error
+app.get("/error", async (req, res, next) => {
+  return next(
+    new Error("This is an error and it should be logged to the console")
+  );
+});
+
 app.set("socketio", io);
+
+app.use(errorLogger());
 
 module.exports = { app, server };
