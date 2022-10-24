@@ -29,7 +29,7 @@ router.get("/", verifyJWT, verifyAdmin, getUsers);
 router.get("/:id", verifyJWT, getUser);
 
 // get dashboard data
-router.get("/dashboard/data", dashboard);
+router.get("/dashboard/data", verifyJWT, verifyAdmin, dashboard);
 
 // get user orders
 router.get("/:id/orders", verifyJWT, getUserOrders);

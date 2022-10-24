@@ -10,7 +10,10 @@ const {
   getUserOrderById,
   findUserById,
 } = require("../Services/UserServices");
-const { getAllOrderServices } = require("../Services/OrderServices");
+const {
+  getAllOrderServices,
+  totalEarnings,
+} = require("../Services/OrderServices");
 const {
   getProductsServices,
   totalSellServices,
@@ -173,10 +176,13 @@ exports.dashboard = async (req, res) => {
 
     const paiChart = await totalSellServices();
 
-    res.status(400).json({
+    const earnings = await totalEarnings();
+
+    res.status(200).json({
       userLength: userLength.length,
       productLength: productLength.length,
       orderLength: orderLength.length,
+      totalEarnings: earnings,
       paiChart: paiChart,
     });
   } catch (e) {

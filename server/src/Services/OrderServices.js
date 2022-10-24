@@ -65,3 +65,16 @@ exports.barChartOrderServices = async (query) => {
 
   return orderData;
 };
+
+exports.totalEarnings = async () => {
+  const earning = await Order.aggregate([
+    {
+      $group: {
+        _id: null,
+        totalEarnings: { $sum: "$total" },
+      },
+    },
+  ]);
+
+  return earning[0].totalEarnings;
+};
