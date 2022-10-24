@@ -144,9 +144,7 @@ const Preview = ({ _id, category, name, images, quantity, price }) => {
               style={{ bottom: "15px", width: "90%" }}
             >
               <LinkContainer to={`/product/${_id}/edit`}>
-                <Button size="lg" className="w-100">
-                  Edit Product
-                </Button>
+                <Button className="w-100">Edit Product</Button>
               </LinkContainer>
             </div>
           )}

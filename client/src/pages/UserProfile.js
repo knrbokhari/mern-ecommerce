@@ -72,7 +72,7 @@ const UserProfile = () => {
         <h3 className="mb-3">Order Histry</h3>
         {orders.length === 0 && <p className="text-center">No orders yet</p>}
         {orders.length !== 0 && (
-          <table class="table table-hover responsive">
+          <table className="table table-hover responsive">
             <thead>
               <tr>
                 <th scope="col">#</th>

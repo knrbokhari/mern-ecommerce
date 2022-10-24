@@ -11,11 +11,11 @@ import "./Footer.css";
 const Footer = () => {
   return (
     <div className="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-md mb-4 mb-md-0">
+      <div className="container">
+        <div className="row">
+          <div className="col-md mb-4 mb-md-0">
             <h3>Store</h3>
-            <ul class="list-unstyled nav-links">
+            <ul className="list-unstyled nav-links">
               <li>
                 <a href="/">Mobile</a>
               </li>
@@ -36,9 +36,9 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div class="col-md mb-4 mb-md-0">
+          <div className="col-md mb-4 mb-md-0">
             <h3>About</h3>
-            <ul class="list-unstyled nav-links">
+            <ul className="list-unstyled nav-links">
               <li>
                 <a href="/">About us</a>
               </li>
@@ -59,9 +59,9 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div class="col-md mb-4 mb-md-0">
+          <div className="col-md mb-4 mb-md-0">
             <h3>Legal</h3>
-            <ul class="list-unstyled nav-links">
+            <ul className="list-unstyled nav-links">
               <li>
                 <a href="/">Terms &amp; Conditions</a>
               </li>
@@ -76,34 +76,34 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div class="col-md-4 mb-4 mb-md-0">
+          <div className="col-md-4 mb-4 mb-md-0">
             <h3>Subscribe</h3>
-            <p class="mb-4">
+            <p className="mb-4">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque
               dolor ducimus doloremque earum ullam. Architecto voluptatum odio
               magni.
             </p>
-            <form action="#" class="subscribe">
+            <form action="#" className="subscribe">
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Enter your e-mail"
               />
               <button className="btn btn-dark mt-2">Send</button>
             </form>
           </div>
         </div>
-        <div class="row align-items-center">
-          <div class="col-12">
-            <hr class="my-3" />
+        <div className="row align-items-center">
+          <div className="col-12">
+            <hr className="my-3" />
           </div>
-          <div class="col-md-6">
+          <div className="col-md-6">
             <p>
               <small>© {new Date().getFullYear()} All Rights Reserved.</small>
             </p>
           </div>
-          <div class="col-md-6 text-md-right">
-            <ul class="social list-unstyled">
+          <div className="col-md-6 text-md-right">
+            <ul className="social list-unstyled">
               <li>
                 <a href="/">
                   <FaFacebook />
