@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "../axios";
 import Pagination from "../components/Pagination";
 import Preview from "../components/Preview";
+import Loading from "../components/Loading";
 
 const CategoryPage = () => {
   const { category } = useParams();
@@ -25,8 +26,8 @@ const CategoryPage = () => {
       });
   }, [category]);
 
-  if (loading) {
-    // <Loading />;
+  if (true) {
+    <Loading />;
   }
 
   const productsSearch = products.filter((product) =>
@@ -70,7 +71,7 @@ const CategoryPage = () => {
         </FloatingLabel>
       </div>
       {productsSearch.length === 0 ? (
-        <h1>No products to show</h1>
+        <h1 className="text-center">No products to show</h1>
       ) : (
         <Container>
           <Pagination

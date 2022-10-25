@@ -27,8 +27,8 @@ function App() {
   const user = useSelector((state) => state?.user);
   const dispatch = useDispatch();
   useEffect(() => {
-    const socket = io.connect("http://localhost:5000");
-    // const socket = io.connect("http://https://calm-beach-92689.herokuapp.com/");
+    // const socket = io.connect("http://localhost:5000");
+    const socket = io.connect("https://calm-beach-92689.herokuapp.com/");
     socket.off("notification").on("notification", (msgObj, user_id) => {
       // logic for notification
       if (user_id === user?._id) {

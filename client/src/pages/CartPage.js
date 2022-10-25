@@ -23,7 +23,7 @@ const CartPage = () => {
   let totalAmount = 0;
 
   userCartObj.map((i) => {
-    totalAmount += i.cartId.product.price * i.cartId.quantity;
+    totalAmount += i.cartId?.product?.price * i?.cartId?.quantity;
   });
 
   if (isLoading) {
@@ -70,30 +70,30 @@ const CartPage = () => {
                           }}
                         />
                       </td>
-                      <td className="fs-4">${item.cartId.product.price}</td>
+                      <td className="fs-4">${item?.cartId?.product?.price}</td>
                       <td>
                         <span className="quantity-indicator d-flex align-items-center justify-content-evenly">
                           <button
                             className="btn btn-outline-secondary"
-                            disabled={item.cartId.quantity <= 1}
+                            disabled={item?.cartId?.quantity <= 1}
                             onClick={() =>
                               decreaseCart({
-                                cartId: item.cartId._id,
+                                cartId: item?.cartId?._id,
                               })
                             }
                           >
                             <ImMinus className="fs-6" />
                           </button>
-                          <span className="fs-4">{item.cartId.quantity}</span>
+                          <span className="fs-4">{item?.cartId?.quantity}</span>
                           <button
                             className="btn btn-outline-secondary"
                             disabled={
-                              item.cartId.quantity >=
-                              item.cartId.product.quantity
+                              item?.cartId?.quantity >=
+                              item?.cartId?.product?.quantity
                             }
                             onClick={() =>
                               increaseCart({
-                                cartId: item.cartId._id,
+                                cartId: item?.cartId?._id,
                               })
                             }
                           >
@@ -102,14 +102,14 @@ const CartPage = () => {
                         </span>
                       </td>
                       <td className="fs-4">
-                        ${item.cartId.product.price * item.cartId.quantity}
+                        ${item?.cartId?.product?.price * item?.cartId?.quantity}
                       </td>
                       <td>
                         <button
                           className="btn btn-outline-danger"
                           onClick={() =>
                             removeFromCart({
-                              cartId: item.cartId._id,
+                              cartId: item?.cartId?._id,
                             })
                           }
                         >
@@ -123,7 +123,7 @@ const CartPage = () => {
               <div className="d-flex align-items-center justify-content-between">
                 <h3 className="h4 m-0">Total: ${totalAmount}</h3>
                 <button
-                  disabled={user?.cart.count === 0}
+                  disabled={user?.cart?.count === 0}
                   className="btn btn-warning px-5 d-block fs-5"
                   onClick={() => navigate("/checkout")}
                 >

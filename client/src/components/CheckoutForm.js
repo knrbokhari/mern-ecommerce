@@ -25,8 +25,8 @@ const CheckoutForm = ({ totalAmount, items }) => {
     if (!stripe || !elements || user.cart.length <= 0) return;
     setPaying(true);
     const { client_secret } = await fetch(
-      "http://localhost:5000/create-payment",
-      // "https://calm-beach-92689.herokuapp.com/create-payment",
+      // "http://localhost:5000/create-payment",
+      "https://calm-beach-92689.herokuapp.com/create-payment",
       {
         method: "POST",
         headers: {

@@ -30,7 +30,7 @@ function Login() {
   if (data?.token) {
     Cookies.set("token", data?.token, { expires: 1 });
   }
-  
+
   if (isSuccess) {
     navigate("/");
   }
@@ -44,7 +44,7 @@ function Login() {
             <Form.Group className="mt-5">
               <Form.Label className="fs-5">Email Address</Form.Label>
               <Form.Control
-                // type="email"
+                defaultValue="user@gmail.com"
                 placeholder="Your Email"
                 className="fs-5"
                 {...register("email", {
@@ -71,6 +71,7 @@ function Login() {
             <Form.Group className="">
               <Form.Label className="fs-5">Password</Form.Label>
               <Form.Control
+                defaultValue="123456"
                 type="password"
                 placeholder="Password"
                 className="fs-5"
