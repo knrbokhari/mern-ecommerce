@@ -83,8 +83,8 @@ const EditProductPage = () => {
       id,
       name,
       description,
-      price: parseInt(price),
-      quantity: parseInt(quantity),
+      price: Number(price).toFixed(2),
+      quantity: Number(quantity).toFixed(2),
       category,
       images,
     }).then((res) => {

@@ -10,14 +10,16 @@ const {
 } = require("../Controllers/UserControllers");
 const verifyAdmin = require("../Middleware/verifyAdmin");
 const verifyJWT = require("../Middleware/verifyJWT");
+const handleValidation = require("../Middleware/handleValidation");
+const validators = require("../validation");
 
 const router = require("express").Router();
 
 // signup
-router.post("/signup", signup);
+router.post("/signup", handleValidation(validators.registerValidation), signup);
 
 // login
-router.post("/login", login);
+router.post("/login", handleValidation(validators.loginValidation), login);
 
 // admin login from super system
 router.post("/admin_login", adminLogin);

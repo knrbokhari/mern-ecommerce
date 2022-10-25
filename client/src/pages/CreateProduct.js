@@ -8,6 +8,8 @@ import { useCreateProductMutation } from "../api/appApi";
 import { toast } from "react-toastify";
 import "./CreateProduct.css";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { logout } from "../features/userSlice";
 
 const CreateProduct = () => {
   const [createProduct, { isError, error, isLoading, isSuccess }] =
@@ -16,6 +18,7 @@ const CreateProduct = () => {
   const [imgToRemove, setImgToRemove] = useState(null);
   const [category, setCategory] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // get Bearer token from Cookie
   const token = `Bearer ${Cookies.get("token")}`;
@@ -68,12 +71,17 @@ const CreateProduct = () => {
     createProduct({
       name,
       description,
-      price: parseInt(price),
-      quantity: parseInt(quantity),
+      price: Number(price).toFixed(2),
+      quantity: Number(quantity).toFixed(2),
       category,
       images,
     }).then((res) => {
-      // console.log(res);
+      console.log(res);
+      if (res.status === 403 || res.status === 401) {
+        dispatch(logout());
+        navigate("/login");
+        Cookies.remove("token");
+      }
       if (res.data.success > 0) {
         setTimeout(() => {
           navigate("/");
@@ -168,7 +176,7 @@ const CreateProduct = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Button type="button" onClick={showWidget}>
+              <Button type="button" className="mb-2" onClick={showWidget}>
                 Upload Images
               </Button>
               <div className="images-preview-container">

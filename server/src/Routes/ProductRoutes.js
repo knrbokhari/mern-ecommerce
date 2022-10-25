@@ -13,6 +13,8 @@ const {
 } = require("../Controllers/ProductControllers");
 const verifyJWT = require("../Middleware/verifyJWT");
 const verifyAdmin = require("../Middleware/verifyAdmin");
+const handleValidation = require("../Middleware/handleValidation");
+const validators = require("../validation");
 
 const router = require("express").Router();
 
@@ -28,7 +30,13 @@ router.get("/bestselling/:num", getBestSellingProducts);
 router.get("/category/:category", category);
 
 //create product
-router.post("/", verifyJWT, verifyAdmin, addProduct);
+router.post(
+  "/",
+  handleValidation(validators.productValidation),
+  verifyJWT,
+  verifyAdmin,
+  addProduct
+);
 
 // update product
 router.patch("/:id", verifyJWT, verifyAdmin, updateProduct);
