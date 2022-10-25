@@ -37,4 +37,9 @@ router.get("/:id/orders", verifyJWT, getUserOrders);
 // update user notifcations
 router.post("/:id/updateNotifications", verifyJWT, updateUserNotifications);
 
-module.exports = router;
+const configureUserRoutes = (app) => {
+  app.use("/users", router);
+};
+
+// module.exports = router;
+module.exports = configureUserRoutes;

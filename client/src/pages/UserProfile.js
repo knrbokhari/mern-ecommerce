@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "../axios";
 import Loading from "../components/Loading";
 import { logout } from "../features/userSlice";
+import moment from "moment";
 
 const UserProfile = () => {
   const user = useSelector((state) => state.user);
@@ -84,14 +85,14 @@ const UserProfile = () => {
               </tr>
             </thead>
             <tbody>
-              {orders.map((item, i) => (
+              {orders?.map((item, i) => (
                 <tr key={i}>
                   <th scope="row">{i + 1}</th>
-                  <td>{item._id}</td>
-                  <td>{item.count}</td>
-                  <td>{item.status}</td>
-                  <td>{item.date}</td>
-                  <td>{item.transactionId}</td>
+                  <td>{item?._id}</td>
+                  <td>{item?.count}</td>
+                  <td>{item?.status}</td>
+                  <td>{moment(item?.createdAt).format("LLL")}</td>
+                  <td>{item?.transactionId}</td>
                 </tr>
               ))}
             </tbody>

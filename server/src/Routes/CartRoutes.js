@@ -20,4 +20,9 @@ router.post("/increase-cart", increaseCartProduct);
 // decrease Cart quantity
 router.post("/decrease-cart", decreaseCartProduct);
 
-module.exports = router;
+const configureCartRoutes = (app) => {
+  app.use("/cart", router);
+};
+
+// module.exports = router;
+module.exports = configureCartRoutes;

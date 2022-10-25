@@ -119,7 +119,7 @@ exports.barChartForOrder = async (req, res) => {
       if (!fundOrder) {
         let data = {
           name: moment(new Date(newDate)).format("dddd"),
-          totalOrder: 0 + i,
+          totalOrder: 0,
           // pv: 0,
         };
         sevenDaysOrderdata.push(data);

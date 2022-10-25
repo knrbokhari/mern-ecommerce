@@ -20,4 +20,9 @@ router.delete("/:public_id", verifyJWT, verifyAdmin, async (req, res) => {
   }
 });
 
-module.exports = router;
+const configureImageRoutes = (app) => {
+  app.use("/images", router);
+};
+
+// module.exports = router;
+module.exports = configureImageRoutes;

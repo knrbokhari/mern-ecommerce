@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "../axios";
 import Loading from "../components/Loading";
 import { logout } from "../features/userSlice";
+import moment from "moment";
 
 const OrderPage = () => {
   const user = useSelector((state) => state.user);
@@ -75,7 +76,7 @@ const OrderPage = () => {
                   {order.status}
                 </Badge>
               </td>
-              <td>{order.date}</td>
+              <td>{moment(order?.createdAt).format("LLL")}</td>
 
               <td>${order.total}</td>
             </tr>

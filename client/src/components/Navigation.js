@@ -7,13 +7,12 @@ import {
   Offcanvas,
 } from "react-bootstrap";
 import { BsFillCartCheckFill } from "react-icons/bs";
-import { BiHeart } from "react-icons/bi";
+// import { BiHeart } from "react-icons/bi";
 import { MdNotifications } from "react-icons/md";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, resetNotifications } from "../features/userSlice";
 import Cookies from "js-cookie";
-import { format } from "timeago.js";
 import moment from "moment";
 import { useUpdateNotificationsMutation } from "../api/appApi";
 
@@ -72,20 +71,29 @@ const Navigation = () => {
                 <Nav.Link>Home</Nav.Link>
               </LinkContainer>
               <NavDropdown
+                style={{ textAlign: "center" }}
                 title="Category"
                 id={`offcanvasNavbarDropdown-expand-${"lg"}`}
               >
                 <LinkContainer to="/category/all">
-                  <NavDropdown.Item>All Products</NavDropdown.Item>
+                  <NavDropdown.Item className="text-center text-lg-start">
+                    All Products
+                  </NavDropdown.Item>
                 </LinkContainer>
                 <LinkContainer to="/category/technology">
-                  <NavDropdown.Item>Technology</NavDropdown.Item>
+                  <NavDropdown.Item className="text-center text-lg-start">
+                    Technology
+                  </NavDropdown.Item>
                 </LinkContainer>
                 <LinkContainer to="/category/phones">
-                  <NavDropdown.Item>Phones</NavDropdown.Item>
+                  <NavDropdown.Item className="text-center text-lg-start">
+                    Phones
+                  </NavDropdown.Item>
                 </LinkContainer>
                 <LinkContainer to="/category/laptop">
-                  <NavDropdown.Item>laptops</NavDropdown.Item>
+                  <NavDropdown.Item className="text-center text-lg-start">
+                    laptops
+                  </NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>
               {/* <LinkContainer to="/Wishlist">
@@ -116,35 +124,48 @@ const Navigation = () => {
                 <NavDropdown
                   title="Dashboard"
                   id={`offcanvasNavbarDropdown-expand-${"lg"}`}
+                  className="text-center"
                 >
                   {user.isAdmin && (
                     <LinkContainer to="/dashboard/users">
-                      <NavDropdown.Item>All Users</NavDropdown.Item>
+                      <NavDropdown.Item className="text-center text-lg-start">
+                        All Users
+                      </NavDropdown.Item>
                     </LinkContainer>
                   )}
                   {user.isAdmin && (
                     <LinkContainer to="/dashboard/addProduct">
-                      <NavDropdown.Item>Create Product</NavDropdown.Item>
+                      <NavDropdown.Item className="text-center text-lg-start">
+                        Create Product
+                      </NavDropdown.Item>
                     </LinkContainer>
                   )}
                   {user.isAdmin && (
                     <LinkContainer to="/dashboard/allProduct">
-                      <NavDropdown.Item>All Product</NavDropdown.Item>
+                      <NavDropdown.Item className="text-center text-lg-start">
+                        All Product
+                      </NavDropdown.Item>
                     </LinkContainer>
                   )}
                   {user.isAdmin && (
                     <LinkContainer to="/dashboard/allOrder">
-                      <NavDropdown.Item>All Order</NavDropdown.Item>
+                      <NavDropdown.Item className="text-center text-lg-start">
+                        All Order
+                      </NavDropdown.Item>
                     </LinkContainer>
                   )}
                   {!user.isAdmin && (
                     <LinkContainer to="/dashboard/profile">
-                      <NavDropdown.Item>Profile</NavDropdown.Item>
+                      <NavDropdown.Item className="text-center text-lg-start">
+                        Profile
+                      </NavDropdown.Item>
                     </LinkContainer>
                   )}
                   {!user.isAdmin && (
                     <LinkContainer to="/dashboard/myodrer">
-                      <NavDropdown.Item>My Order</NavDropdown.Item>
+                      <NavDropdown.Item className="text-center text-lg-start">
+                        My Order
+                      </NavDropdown.Item>
                     </LinkContainer>
                   )}
                 </NavDropdown>

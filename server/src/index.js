@@ -14,13 +14,9 @@ const verifyJWT = require("./Middleware/verifyJWT");
 
 // import routes
 const User = require("./Models/User");
-const userRoutes = require("./Routes/UserRoutes");
-const productRoutes = require("./Routes/ProductRoutes");
-const ImageRoutes = require("./Routes/ImageRoutes");
-const OrderRoutes = require("./Routes/OrderRoutes");
-const CartRoutes = require("./Routes/CartRoutes");
 const { processRequest } = require("./Middleware/processRequest");
 const { errorLogger, infoLogger } = require("./logger");
+const configure = require("./Routes");
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -30,11 +26,7 @@ app.use(infoLogger());
 
 // routes middleware
 app.use(processRequest);
-app.use("/users", userRoutes);
-app.use("/products", productRoutes);
-app.use("/images", ImageRoutes);
-app.use("/orders", OrderRoutes);
-app.use("/cart", CartRoutes);
+configure(app);
 
 // creating payment with stripe
 app.post("/create-payment", verifyJWT, async (req, res) => {

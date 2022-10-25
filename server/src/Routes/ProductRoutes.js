@@ -45,4 +45,9 @@ router.delete("/:id", verifyJWT, verifyAdmin, deleteProduct);
 
 // router.post("/decrease-cart", verifyJWT, decreaseCartProduct);
 
-module.exports = router;
+const configureProductRoutes = (app) => {
+  app.use("/products", router);
+};
+
+// module.exports = router;
+module.exports = configureProductRoutes;

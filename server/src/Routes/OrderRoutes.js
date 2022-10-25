@@ -20,4 +20,9 @@ router.patch("/:id/mark-shipped", verifyJWT, verifyAdmin, shippingOrder);
 
 router.get("/bar-chart", barChartForOrder);
 
-module.exports = router;
+const configureOrderRoutes = (app) => {
+  app.use("/orders", router);
+};
+
+// module.exports = router;
+module.exports = configureOrderRoutes;

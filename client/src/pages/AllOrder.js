@@ -154,7 +154,7 @@ const AllOrder = () => {
         {orderToShow?.map((order) => (
           <div
             key={order._id}
-            className="order-details__container d-flex justify-content-start py-2"
+            className="order-details__container d-flex justify-content-start py-2 ms-4"
           >
             <img
               src={order?.cartId?.product?.images[0].url}
