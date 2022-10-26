@@ -55,7 +55,13 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
   try {
     // finding users by checking email & password
-    const user = await User.findByCredentials(email, password);
+    const isUser = await User.findByCredentials(email, password);
+    let user;
+    if (!isUser.isAdmin) {
+      user = await findUserById(isUser._id);
+    } else {
+      user = isUser;
+    }
 
     // removing password from user
     const userObject = user.toObject();
