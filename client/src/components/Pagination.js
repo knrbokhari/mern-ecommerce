@@ -10,7 +10,7 @@ const Pagination = ({
   tablePagination,
 }) => {
   // const [pages] = useState(Math.floor(data.length / dataLimit) + 1);
-  const pages = Math.floor(data.length / dataLimit) + 1;
+  const pages = Math.floor(data?.length / dataLimit) + 1;
   const [currentPage, setCurrentPage] = useState(1);
 
   const goToNextPage = () => {
@@ -22,33 +22,35 @@ const Pagination = ({
   };
 
   const changePage = (event) => {
-    const pageNumber = Number(event.target.textContent);
+    const pageNumber = Number(event?.target?.textContent);
     setCurrentPage(pageNumber);
   };
 
   const getPaginatedData = () => {
     const startIndex = currentPage * dataLimit - dataLimit;
     const endIndex = startIndex + dataLimit;
-    return data.slice(startIndex, endIndex);
+    return data?.slice(startIndex, endIndex);
   };
+
+  // console.log(data);
 
   const getPaginationGroup = () => {
     let start = Math.floor((currentPage - 1) / pageLimit) * pageLimit;
 
-    return new Array(pageLimit).fill().map((_, idx) => start + idx + 1);
+    return new Array(pageLimit).fill()?.map((_, idx) => start + idx + 1);
   };
 
   return (
     <>
       {tablePagination ? (
-        getPaginatedData().map((data, idx) => (
+        getPaginatedData()?.map((data, idx) => (
           <RenderComponent key={idx} {...data} />
         ))
       ) : (
         <Row style={{ rowGap: "20px" }}>
           <h1>{title}</h1>
 
-          {getPaginatedData().map((data, idx) => (
+          {getPaginatedData()?.map((data, idx) => (
             <RenderComponent key={idx} {...data} />
           ))}
         </Row>
@@ -63,7 +65,7 @@ const Pagination = ({
           >
             prev
           </button>
-          {getPaginationGroup().map((item, index) => (
+          {getPaginationGroup()?.map((item, index) => (
             <button
               key={index}
               onClick={changePage}

@@ -6,6 +6,7 @@ import "./Signup.css";
 import { useLoginMutation } from "../api/appApi";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import { useEffect } from "react";
 
 function Login() {
   const [login, { error, isLoading, isError, data, isSuccess }] =
@@ -18,9 +19,11 @@ function Login() {
     handleSubmit,
   } = useForm();
 
-  if (isError) {
-    toast.error(error.data);
-  }
+  useEffect(() => {
+    if (isError) {
+      toast.error(error.data);
+    }
+  }, [isError]);
 
   const onSubmit = (data) => {
     const { email, password } = data;
@@ -38,7 +41,7 @@ function Login() {
   return (
     <Container>
       <Row>
-        <Col md={6} className="login__form--container">
+        <Col lg={6} className="login__form--container">
           <Form style={{ width: "100%" }} onSubmit={handleSubmit(onSubmit)}>
             <h1>Login to your account</h1>
             <Form.Group className="mt-5">
@@ -111,7 +114,7 @@ function Login() {
             </p>
           </Form>
         </Col>
-        <Col md={6} className="login__image--container d-none d-md-block"></Col>
+        <Col lg={6} className="login__image--container d-none d-md-block"></Col>
       </Row>
     </Container>
   );

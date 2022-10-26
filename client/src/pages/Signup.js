@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -22,9 +22,11 @@ const Signup = () => {
     handleSubmit,
   } = useForm();
 
-  if (isError) {
-    toast.error(error.data);
-  }
+  useEffect(() => {
+    if (isError) {
+      toast.error(error.data);
+    }
+  }, [isError]);
 
   const onSubmit = (data) => {
     const { name, email, password } = data;
@@ -38,7 +40,7 @@ const Signup = () => {
   return (
     <Container>
       <Row>
-        <Col md={6} className="signup__form--container">
+        <Col lg={6} className="signup__form--container">
           <Form style={{ width: "100%" }} onSubmit={handleSubmit(onSubmit)}>
             <h1>Create an account</h1>
             <Form.Group className="mt-5">
@@ -129,7 +131,7 @@ const Signup = () => {
           </Form>
         </Col>
         <Col
-          md={6}
+          lg={6}
           className="signup__image--container  d-none d-md-block"
         ></Col>
       </Row>

@@ -23,7 +23,7 @@ const Preview = ({ _id, category, name, images, quantity, price }) => {
   // }
 
   if (isSuccess) {
-    // toast.success(`${name} is added to your cart`);
+    toast.success(`${name} is added to your cart`);
   }
 
   return (
@@ -105,6 +105,7 @@ const Preview = ({ _id, category, name, images, quantity, price }) => {
           >
             <button
               className="btn btn-primary w-100"
+              disabled={user?.isAdmin}
               onClick={() => {
                 if (!user) {
                   return navigate("/login");

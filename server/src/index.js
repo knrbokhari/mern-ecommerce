@@ -7,7 +7,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
-  cors: "http://localhost:3000/",
+  cors: ["http://localhost:3000/", "https://quiet-cat-ecom.netlify.app/"],
   methods: ["GET", "POST", "PATCH", "DELETE"],
 });
 const verifyJWT = require("./Middleware/verifyJWT");

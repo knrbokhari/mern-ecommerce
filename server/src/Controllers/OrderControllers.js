@@ -93,7 +93,8 @@ exports.shippingOrder = async (req, res) => {
     io.sockets.emit("notification", notification, ownerId);
     user.notifications.push(notification);
     await user.save();
-    res.status(200).json({ msg: notification.message });
+    const orders = await getAllOrderServices();
+    res.status(200).json(orders);
   } catch (e) {
     res.status(400).json(e.message);
   }
