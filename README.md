@@ -2,7 +2,7 @@
 
 [Live link](https://quiet-cat-ecom.netlify.app/).
 
-Technology Used: 
+## Technology Used: 
 * ReactJS
 * Redux
 * NodeJS
