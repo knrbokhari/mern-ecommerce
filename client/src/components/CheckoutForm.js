@@ -26,7 +26,7 @@ const CheckoutForm = ({ totalAmount, items }) => {
     setPaying(true);
     const { client_secret } = await fetch(
       // "http://localhost:5000/create-payment",
-      "https://calm-beach-92689.herokuapp.com/create-payment",
+      "https://ecommerce-server.up.railway.app/create-payment",
       {
         method: "POST",
         headers: {
