@@ -1,6 +1,6 @@
 # mern-ecommerce
 
-[Live link](https://quiet-cat-ecom.netlify.app/).
+[Live link](https://quiet-cat-ecom.netlify.app/)
 
 ## Built With
 * Node.js
