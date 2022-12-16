@@ -10,7 +10,7 @@
 
 ## Requirements
 
-For development, you will only need Node.js v16+ installed in your environnement.
+For development, you will only need Node.js v16+ installed in your environnement..
 
 ## Install 
     using SSH:
