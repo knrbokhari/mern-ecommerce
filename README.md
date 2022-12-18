@@ -23,7 +23,7 @@ For development, you will only need Node.js v16+ installed in your environnement
     $ cd server
     $ npm install
 
-Open `server/` and create `.env` then You will need to give your MONGO_DB URL, CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET, STRIPE_SECRET and JWTKEY:
+Open `server/` and create `.env` file then You will need to give your MONGO_DB URL, CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET, STRIPE_SECRET and JWTKEY:
 
 ```
 MONGO_DB = 
